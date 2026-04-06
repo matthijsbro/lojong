@@ -10,6 +10,7 @@ export type AppSettings = {
   notifMode: NotifMode;
   notifTime: string; // 'HH:MM', used when notifMode === 'fixed'
   lastSloganIndex: number;
+  lastSloganId: number;
 };
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -18,6 +19,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   notifMode: 'off',
   notifTime: '08:00',
   lastSloganIndex: 0,
+  lastSloganId: 1,
 };
 
 const STORAGE_KEY = '@lojong_settings';

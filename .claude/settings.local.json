@@ -16,7 +16,8 @@
       "Bash(npm uninstall:*)",
       "Bash(brew install:*)",
       "Bash(pdftoppm -v)",
-      "Bash(pdftotext \"/Users/matthijs/dev/lojong/pdf-content/Commentary on the Seven Points.pdf\" -)"
+      "Bash(pdftotext \"/Users/matthijs/dev/lojong/pdf-content/Commentary on the Seven Points.pdf\" -)",
+      "Bash(git fetch:*)"
     ]
   }
 }

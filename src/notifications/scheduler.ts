@@ -25,22 +25,26 @@ export type ScheduleResult = 'scheduled' | 'disabled' | 'permission-denied';
 
 /**
  * Schedule the next 30 daily notifications based on current settings.
- * Always cancels existing scheduled notifications first.
+ * Replaces existing scheduled notifications after permission is granted.
  */
 export async function scheduleNotifications(settings: AppSettings): Promise<ScheduleResult> {
-  await cancelAllNotifications();
-
-  if (settings.notifMode === 'off') return 'disabled';
+  if (settings.notifMode === 'off') {
+    await cancelAllNotifications();
+    return 'disabled';
+  }
 
   const granted = await requestNotificationPermission();
   if (!granted) return 'permission-denied';
 
+  await cancelAllNotifications();
+
   const title = settings.language === 'de' ? 'Lojong' : 'Lojong';
   const count = Math.min(slogans.length, 30); // schedule up to 30 (OS limit)
+  const scheduledSlogans = buildScheduledSlogans(settings, count);
 
   for (let dayOffset = 0; dayOffset < count; dayOffset++) {
     const trigger = buildTrigger(settings, dayOffset);
-    const slogan = slogans[dayOffset % slogans.length];
+    const slogan = scheduledSlogans[dayOffset];
     const body = slogan[settings.language].slogan;
 
     await Notifications.scheduleNotificationAsync({
@@ -50,6 +54,23 @@ export async function scheduleNotifications(settings: AppSettings): Promise<Sche
   }
 
   return 'scheduled';
+}
+
+function buildScheduledSlogans(settings: AppSettings, count: number) {
+  if (settings.order === 'random') {
+    return Array.from({ length: count }, () => slogans[Math.floor(Math.random() * slogans.length)]);
+  }
+
+  const lastSloganIndex = findSloganIndexById(settings.lastSloganId);
+  return Array.from({ length: count }, (_value, offset) => {
+    const nextIndex = (lastSloganIndex + offset + 1) % slogans.length;
+    return slogans[nextIndex];
+  });
+}
+
+function findSloganIndexById(sloganId: number): number {
+  const index = slogans.findIndex((slogan) => slogan.id === sloganId);
+  return index >= 0 ? index : 0;
 }
 
 function buildTrigger(
@@ -84,13 +105,18 @@ function buildTrigger(
     }
   }
 
-  return { date: target };
+  return {
+    type: Notifications.SchedulableTriggerInputTypes.DATE,
+    date: target,
+    channelId: Platform.OS === 'android' ? CHANNEL_ID : undefined,
+  };
 }
 
 export function configureNotificationHandler(): void {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
       shouldPlaySound: false,
       shouldSetBadge: false,
     }),

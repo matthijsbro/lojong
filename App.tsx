@@ -12,12 +12,35 @@ export type Screen = 'home' | 'settings' | 'license';
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home');
+  const [notificationSloganId, setNotificationSloganId] = useState<number | null>(null);
   const { settings } = useSettings();
 
   useEffect(() => {
-    const sub = Notifications.addNotificationResponseReceivedListener(() => {
+    const openNotificationSlogan = async (response: Notifications.NotificationResponse | null) => {
+      if (
+        !response ||
+        response.actionIdentifier !== Notifications.DEFAULT_ACTION_IDENTIFIER
+      ) {
+        return;
+      }
+
+      const rawSloganId = response.notification.request.content.data?.sloganId;
+      const sloganId = typeof rawSloganId === 'number' ? rawSloganId : Number(rawSloganId);
+      if (!Number.isInteger(sloganId)) {
+        return;
+      }
+
+      setNotificationSloganId(sloganId);
       setScreen('home');
+      await Notifications.clearLastNotificationResponseAsync();
+    };
+
+    void Notifications.getLastNotificationResponseAsync().then(openNotificationSlogan);
+
+    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      void openNotificationSlogan(response);
     });
+
     return () => sub.remove();
   }, []);
 
@@ -29,5 +52,11 @@ export default function App() {
     return <LicenseScreen language={settings.language} onBack={() => setScreen('settings')} />;
   }
 
-  return <HomeScreen onOpenSettings={() => setScreen('settings')} />;
+  return (
+    <HomeScreen
+      onOpenSettings={() => setScreen('settings')}
+      notificationSloganId={notificationSloganId}
+      onNotificationSloganHandled={() => setNotificationSloganId(null)}
+    />
+  );
 }

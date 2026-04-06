@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -24,9 +24,18 @@ type Props = {
 };
 
 export function SettingsScreen({ onBack, onOpenLicense }: Props) {
-  const { settings, update } = useSettings();
-  const t = ui[settings.language];
-  const [savedFeedback, setSavedFeedback] = useState(false);
+  const { settings, replace, loaded } = useSettings();
+  const [draftSettings, setDraftSettings] = useState(settings);
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'success' | 'warning' | 'error'>(
+    'idle',
+  );
+
+  useEffect(() => {
+    if (!loaded) return;
+    setDraftSettings(settings);
+  }, [loaded, settings]);
+
+  const t = ui[draftSettings.language];
 
   const parseTimeToDate = (time: string): Date => {
     const [hoursRaw, minutesRaw] = time.split(':').map(Number);
@@ -43,29 +52,40 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
     return `${hh}:${mm}`;
   };
 
-  const handleLanguage = (lang: Language) => update({ language: lang });
-  const handleOrder = (order: Order) => update({ order });
-
-  const handleNotifMode = async (mode: NotifMode) => {
-    const updated = await update({ notifMode: mode });
-    if (mode === 'off') {
-      await cancelAllNotifications();
-    } else {
-      const result = await scheduleNotifications(updated);
-      if (result === 'permission-denied') {
-        Alert.alert(t.notifPermissionTitle, t.notifPermissionMessage);
-      }
+  const resetSaveState = () => {
+    if (saveState !== 'idle') {
+      setSaveState('idle');
     }
   };
 
-  const handleNotifTime = (time: string) => update({ notifTime: time });
+  const updateDraft = (patch: Partial<typeof draftSettings>) => {
+    resetSaveState();
+    setDraftSettings((prev) => ({ ...prev, ...patch }));
+  };
+
+  const handleLanguage = (lang: Language) => updateDraft({ language: lang });
+  const handleOrder = (order: Order) => updateDraft({ order });
+  const handleNotifMode = (mode: NotifMode) => updateDraft({ notifMode: mode });
+  const handleNotifTime = (time: string) => updateDraft({ notifTime: time });
+
+  const normalizeTime = (time: string): string | null => {
+    const match = time.trim().match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) return null;
+
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    if (!Number.isInteger(hours) || !Number.isInteger(minutes)) return null;
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return null;
+
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+  };
 
   const handlePickTime = () => {
     if (Platform.OS === 'android') {
       DateTimePickerAndroid.open({
         mode: 'time',
         is24Hour: true,
-        value: parseTimeToDate(settings.notifTime),
+        value: parseTimeToDate(draftSettings.notifTime),
         onChange: (_event, selectedDate) => {
           if (!selectedDate) return;
           void handleNotifTime(formatTime(selectedDate));
@@ -75,21 +95,41 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
   };
 
   const handleSaveAndClose = async () => {
-    let permissionDenied = false;
-    if (settings.notifMode !== 'off') {
-      const result = await scheduleNotifications(settings);
-      permissionDenied = result === 'permission-denied';
-    }
+    const normalizedTime =
+      draftSettings.notifMode === 'fixed' ? normalizeTime(draftSettings.notifTime) : draftSettings.notifTime;
 
-    setSavedFeedback(true);
-    setTimeout(() => setSavedFeedback(false), 1200);
-
-    if (permissionDenied) {
-      Alert.alert(t.notifPermissionTitle, t.notifPermissionMessage);
+    if (draftSettings.notifMode === 'fixed' && !normalizedTime) {
+      setSaveState('error');
+      Alert.alert(t.save, t.notifTimeInvalidMessage);
       return;
     }
 
-    Alert.alert(t.saved, t.settingsSavedMessage);
+    const nextSettings = {
+      ...draftSettings,
+      notifTime: normalizedTime ?? draftSettings.notifTime,
+    };
+
+    setSaveState('saving');
+
+    try {
+      await replace(nextSettings);
+
+      const scheduleResult = await scheduleNotifications(nextSettings);
+      if (scheduleResult === 'permission-denied') {
+        setSaveState('warning');
+        Alert.alert(t.notifPermissionTitle, t.settingsSavedNotifBlockedMessage);
+        return;
+      }
+
+      if (scheduleResult === 'disabled') {
+        await cancelAllNotifications();
+      }
+
+      setSaveState('success');
+    } catch {
+      setSaveState('error');
+      Alert.alert(t.save, t.settingsSaveErrorMessage);
+    }
   };
 
   return (
@@ -99,7 +139,7 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
         {/* Header with back button */}
         <View style={styles.topBar}>
           <TouchableOpacity onPress={onBack} style={styles.backButton}>
-            <Text style={styles.backText}>&#x2190; Back</Text>
+            <Text style={styles.backText}>&#x2190; {t.backLabel}</Text>
           </TouchableOpacity>
         </View>
 
@@ -114,10 +154,12 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
             {(['en', 'de'] as Language[]).map((lang) => (
               <TouchableOpacity
                 key={lang}
-                style={[styles.chip, settings.language === lang && styles.chipActive]}
+                style={[styles.chip, draftSettings.language === lang && styles.chipActive]}
                 onPress={() => handleLanguage(lang)}
               >
-                <Text style={[styles.chipText, settings.language === lang && styles.chipTextActive]}>
+                <Text
+                  style={[styles.chipText, draftSettings.language === lang && styles.chipTextActive]}
+                >
                   {lang.toUpperCase()}
                 </Text>
               </TouchableOpacity>
@@ -133,10 +175,12 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
               ([val, label]) => (
                 <TouchableOpacity
                   key={val}
-                  style={[styles.chip, settings.order === val && styles.chipActive]}
+                  style={[styles.chip, draftSettings.order === val && styles.chipActive]}
                   onPress={() => handleOrder(val)}
                 >
-                  <Text style={[styles.chipText, settings.order === val && styles.chipTextActive]}>
+                  <Text
+                    style={[styles.chipText, draftSettings.order === val && styles.chipTextActive]}
+                  >
                     {label}
                   </Text>
                 </TouchableOpacity>
@@ -156,28 +200,33 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
             ] as [NotifMode, string][]).map(([val, label]) => (
               <TouchableOpacity
                 key={val}
-                style={[styles.chip, settings.notifMode === val && styles.chipActive]}
+                style={[styles.chip, draftSettings.notifMode === val && styles.chipActive]}
                 onPress={() => handleNotifMode(val)}
               >
-                <Text style={[styles.chipText, settings.notifMode === val && styles.chipTextActive]}>
+                <Text
+                  style={[
+                    styles.chipText,
+                    draftSettings.notifMode === val && styles.chipTextActive,
+                  ]}
+                >
                   {label}
                 </Text>
               </TouchableOpacity>
             ))}
           </View>
 
-          {settings.notifMode === 'fixed' && (
+          {draftSettings.notifMode === 'fixed' && (
             <View style={styles.timeRow}>
               <Text style={styles.fieldLabel}>{t.notifTime}</Text>
               {Platform.OS === 'android' ? (
                 <TouchableOpacity style={styles.timePickerButton} onPress={handlePickTime}>
-                  <Text style={styles.timePickerValue}>{settings.notifTime}</Text>
+                  <Text style={styles.timePickerValue}>{draftSettings.notifTime}</Text>
                   <Text style={styles.timePickerHint}>{t.notifChooseTime}</Text>
                 </TouchableOpacity>
               ) : (
                 <TextInput
                   style={styles.timeInput}
-                  value={settings.notifTime}
+                  value={draftSettings.notifTime}
                   onChangeText={handleNotifTime}
                   placeholder="08:00"
                   keyboardType="numbers-and-punctuation"
@@ -186,15 +235,40 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
               )}
             </View>
           )}
-          {settings.notifMode === 'random' && (
+          {draftSettings.notifMode === 'random' && (
             <Text style={styles.hint}>{t.notifRandomDesc}</Text>
           )}
         </View>
 
         {/* Save button */}
-        <TouchableOpacity style={styles.saveButton} onPress={handleSaveAndClose}>
-          <Text style={styles.saveButtonText}>{savedFeedback ? t.saved : t.save}</Text>
+        <TouchableOpacity
+          style={[styles.saveButton, saveState === 'saving' && styles.saveButtonDisabled]}
+          onPress={handleSaveAndClose}
+          disabled={saveState === 'saving'}
+        >
+          <Text style={styles.saveButtonText}>
+            {saveState === 'saving' ? t.saving : saveState === 'success' ? t.saved : t.save}
+          </Text>
         </TouchableOpacity>
+
+        {saveState !== 'idle' && saveState !== 'saving' && (
+          <View
+            style={[
+              styles.feedbackBanner,
+              saveState === 'success' && styles.feedbackBannerSuccess,
+              saveState === 'warning' && styles.feedbackBannerWarning,
+              saveState === 'error' && styles.feedbackBannerError,
+            ]}
+          >
+            <Text style={styles.feedbackText}>
+              {saveState === 'success'
+                ? t.settingsSavedMessage
+                : saveState === 'warning'
+                  ? t.settingsSavedNotifBlockedMessage
+                  : t.settingsSaveErrorMessage}
+            </Text>
+          </View>
+        )}
 
         {/* About / Attribution */}
         <View style={styles.section}>
@@ -210,8 +284,9 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{t.sources}</Text>
           {attributions.map((attr) => {
-            const title = settings.language === 'de' && attr.titleDe ? attr.titleDe : attr.titleEn;
-            const translator = settings.language === 'de' && attr.translatorDe ? attr.translatorDe : attr.translator;
+            const title = draftSettings.language === 'de' && attr.titleDe ? attr.titleDe : attr.titleEn;
+            const translator =
+              draftSettings.language === 'de' && attr.translatorDe ? attr.translatorDe : attr.translator;
             return (
               <View key={attr.key} style={styles.sourceEntry}>
                 <Text style={styles.sourceTitle}>{title}</Text>
@@ -362,10 +437,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
+  saveButtonDisabled: {
+    opacity: 0.7,
+  },
   saveButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '700',
+  },
+  feedbackBanner: {
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    marginBottom: 12,
+  },
+  feedbackBannerSuccess: {
+    backgroundColor: '#d8ead3',
+  },
+  feedbackBannerWarning: {
+    backgroundColor: '#f4e0b8',
+  },
+  feedbackBannerError: {
+    backgroundColor: '#f1d1cc',
+  },
+  feedbackText: {
+    fontSize: 13,
+    color: '#4a3520',
+    lineHeight: 19,
   },
   aboutText: {
     fontSize: 13,

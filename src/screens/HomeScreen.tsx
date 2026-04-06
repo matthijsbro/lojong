@@ -12,28 +12,78 @@ import { LanguageToggle } from '@/components/LanguageToggle';
 import { useSettings } from '@/hooks/useSettings';
 import { useActiveSlogans } from '@/hooks/useActiveSlogans';
 import { ui } from '@/i18n/ui';
+import { scheduleNotifications } from '@/notifications/scheduler';
 
 type Props = {
   onOpenSettings: () => void;
+  notificationSloganId?: number | null;
+  onNotificationSloganHandled?: () => void;
 };
 
-export function HomeScreen({ onOpenSettings }: Props) {
+export function HomeScreen({
+  onOpenSettings,
+  notificationSloganId = null,
+  onNotificationSloganHandled,
+}: Props) {
   const { settings, update, loaded } = useSettings();
   const [index, setIndex] = useState(0);
-  const slogans = useActiveSlogans(settings.order);
+  const activeSlogans = useActiveSlogans(settings.order);
   const t = ui[settings.language];
 
+  const persistCurrentSlogan = useCallback(
+    async (nextIndex: number, shouldReschedule: boolean) => {
+      const slogan = activeSlogans[nextIndex];
+      if (!slogan) return;
+
+      const nextSettings = await update({
+        lastSloganIndex: nextIndex,
+        lastSloganId: slogan.id,
+      });
+
+      if (shouldReschedule && nextSettings.notifMode !== 'off' && nextSettings.order === 'fixed') {
+        await scheduleNotifications(nextSettings);
+      }
+    },
+    [activeSlogans, update],
+  );
+
+  const showSloganById = useCallback(
+    (sloganId: number, shouldReschedule: boolean) => {
+      const nextIndex = activeSlogans.findIndex((slogan) => slogan.id === sloganId);
+      if (nextIndex < 0) return;
+
+      setIndex(nextIndex);
+      void persistCurrentSlogan(nextIndex, shouldReschedule);
+    },
+    [activeSlogans, persistCurrentSlogan],
+  );
+
   React.useEffect(() => {
-    if (loaded) setIndex(settings.lastSloganIndex);
-  }, [loaded]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!loaded || activeSlogans.length === 0) return;
+
+    const savedIndex = activeSlogans.findIndex((slogan) => slogan.id === settings.lastSloganId);
+    if (savedIndex >= 0) {
+      setIndex(savedIndex);
+      return;
+    }
+
+    setIndex(Math.max(0, Math.min(activeSlogans.length - 1, settings.lastSloganIndex)));
+  }, [activeSlogans, loaded, settings.lastSloganId, settings.lastSloganIndex]);
+
+  React.useEffect(() => {
+    if (!loaded || notificationSloganId == null) return;
+
+    showSloganById(notificationSloganId, settings.order === 'fixed');
+    onNotificationSloganHandled?.();
+  }, [loaded, notificationSloganId, onNotificationSloganHandled, settings.order, showSloganById]);
 
   const goTo = useCallback(
     (nextIndex: number) => {
-      const clamped = Math.max(0, Math.min(slogans.length - 1, nextIndex));
+      const clamped = Math.max(0, Math.min(activeSlogans.length - 1, nextIndex));
       setIndex(clamped);
-      update({ lastSloganIndex: clamped });
+      void persistCurrentSlogan(clamped, true);
     },
-    [slogans.length, update],
+    [activeSlogans.length, persistCurrentSlogan],
   );
 
   if (!loaded) {
@@ -44,7 +94,7 @@ export function HomeScreen({ onOpenSettings }: Props) {
     );
   }
 
-  const currentSlogan = slogans[index];
+  const currentSlogan = activeSlogans[index];
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -72,7 +122,7 @@ export function HomeScreen({ onOpenSettings }: Props) {
           slogan={currentSlogan}
           language={settings.language}
           index={index}
-          total={slogans.length}
+          total={activeSlogans.length}
         />
       </View>
 
@@ -87,10 +137,10 @@ export function HomeScreen({ onOpenSettings }: Props) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => goTo(index + 1)}
-          disabled={index === slogans.length - 1}
+          disabled={index === activeSlogans.length - 1}
           style={[
             styles.navButton,
-            index === slogans.length - 1 && styles.navButtonDisabled,
+            index === activeSlogans.length - 1 && styles.navButtonDisabled,
           ]}
           accessibilityLabel={t.next}
         >

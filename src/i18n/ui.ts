@@ -30,8 +30,12 @@ export type UiStrings = {
   notifPermissionTitle: string;
   notifPermissionMessage: string;
   save: string;
+  saving: string;
   saved: string;
   settingsSavedMessage: string;
+  settingsSavedNotifBlockedMessage: string;
+  settingsSaveErrorMessage: string;
+  notifTimeInvalidMessage: string;
   backLabel: string;
 
   // About screen
@@ -75,8 +79,12 @@ export const ui: Record<Language, UiStrings> = {
     notifPermissionTitle: 'Notifications are off',
     notifPermissionMessage: 'Allow notifications in Android settings to receive daily reminders.',
     save: 'Save',
+    saving: 'Saving...',
     saved: 'Saved',
     settingsSavedMessage: 'Your settings were saved.',
+    settingsSavedNotifBlockedMessage: 'Settings were saved, but notifications are disabled in system settings.',
+    settingsSaveErrorMessage: 'Settings could not be saved. Please try again.',
+    notifTimeInvalidMessage: 'Enter a valid time in HH:MM format.',
     backLabel: 'Back',
 
     aboutTitle: 'About Lojong',
@@ -119,8 +127,12 @@ export const ui: Record<Language, UiStrings> = {
     notifPermissionTitle: 'Benachrichtigungen sind aus',
     notifPermissionMessage: 'Aktiviere Benachrichtigungen in den Android-Einstellungen, um tägliche Erinnerungen zu erhalten.',
     save: 'Speichern',
+    saving: 'Speichere...',
     saved: 'Gespeichert',
     settingsSavedMessage: 'Deine Einstellungen wurden gespeichert.',
+    settingsSavedNotifBlockedMessage: 'Die Einstellungen wurden gespeichert, aber Benachrichtigungen sind in den Systemeinstellungen deaktiviert.',
+    settingsSaveErrorMessage: 'Die Einstellungen konnten nicht gespeichert werden. Bitte versuche es erneut.',
+    notifTimeInvalidMessage: 'Gib eine gueltige Uhrzeit im Format HH:MM ein.',
     backLabel: 'Zurück',
 
     aboutTitle: 'Über Lojong',

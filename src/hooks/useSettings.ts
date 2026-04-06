@@ -12,15 +12,16 @@ export function useSettings() {
     });
   }, []);
 
-  const update = useCallback(async (patch: Partial<AppSettings>) => {
-    let updated: AppSettings = settings;
-    setSettings((prev) => {
-      updated = { ...prev, ...patch };
-      return updated;
-    });
-    await saveSettings(updated);
-    return updated;
-  }, [settings]);
+  const replace = useCallback(async (nextSettings: AppSettings) => {
+    await saveSettings(nextSettings);
+    setSettings(nextSettings);
+    return nextSettings;
+  }, []);
 
-  return { settings, update, loaded };
+  const update = useCallback(async (patch: Partial<AppSettings>) => {
+    const nextSettings = { ...settings, ...patch };
+    return replace(nextSettings);
+  }, [replace, settings]);
+
+  return { settings, update, replace, loaded };
 }
