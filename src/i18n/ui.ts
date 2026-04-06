@@ -48,6 +48,7 @@ export type UiStrings = {
   readAppLicense: string;
   licenseSourceNote: string;
   privacyNote: string;
+  viewSourceCode: string;
   visitSource: string;
 };
 
@@ -97,6 +98,7 @@ export const ui: Record<Language, UiStrings> = {
     readAppLicense: 'Read the AGPL 3.0 license text',
     licenseSourceNote: 'This is the app license text from LICENSE.md.',
     privacyNote: 'This app does not collect, transmit, store, or share any user data whatsoever.',
+    viewSourceCode: 'View source code on GitHub',
     visitSource: 'Visit source',
   },
 
@@ -145,6 +147,7 @@ export const ui: Record<Language, UiStrings> = {
     readAppLicense: 'AGPL-3.0-Lizenztext lesen',
     licenseSourceNote: 'Dies ist der App-Lizenztext aus LICENSE.md.',
     privacyNote: 'Diese App erhebt, überträgt, speichert oder teilt keinerlei Nutzerdaten.',
+    viewSourceCode: 'Quellcode auf GitHub anschauen',
     visitSource: 'Quelle besuchen',
   },
 };

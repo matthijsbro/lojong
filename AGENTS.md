@@ -10,10 +10,10 @@ A React Native (Expo) flashcard app for Lojong Buddhist mind-training slogans. T
 
 ## Tech Stack
 
-- **Expo** (managed workflow, SDK 51+)
+- **Expo** (managed workflow, SDK 54)
 - **React Native** with TypeScript (strict mode)
 - **AsyncStorage** (`@react-native-async-storage/async-storage`) for settings persistence
-- **expo-notifications** for daily reminder scheduling
+- **expo-notifications** for daily reminder scheduling with slogan-id targeting
 - **React Navigation** (stack) for screen routing
 - No state management library — local state + custom hooks only
 
@@ -34,15 +34,35 @@ src/
     HomeScreen.tsx    ← Main card view
     SettingsScreen.tsx ← Notifications, order, language, About
   hooks/
-    useSettings.ts       ← Read/write persisted app settings
+    useSettings.ts       ← Read/write persisted app settings (includes lastSloganId)
     useActiveSlogans.ts  ← Returns the ordered/shuffled slogan list
   notifications/
-    scheduler.ts      ← Schedules/cancels daily expo-notifications
+    scheduler.ts      ← Schedules up to 30 daily notifications with sloganId payload
   i18n/
     ui.ts             ← UI label strings in EN and DE
   store/
     settings.ts       ← AsyncStorage key names + read/write helpers
 ```
+
+---
+
+## Notification System
+
+### Fixed-Order Reminders
+When `notifMode: 'fixed'` and `order: 'fixed'`, the app:
+1. Saves the current slogan's `id` in `lastSloganId` whenever the user navigates
+2. When scheduling reminders, generates the next 30 slogans starting from `lastSloganId + 1` in sequence
+3. Each notification's body shows the slogan text and carries the corresponding `sloganId` in the payload
+
+### Random-Order Reminders
+When `order: 'random'`, each scheduled notification receives a randomly selected slogan. The notification body and payload each get a different random slogan.
+
+### Notification Tap Handling
+When a user taps a notification:
+1. The app extracts the `sloganId` from the notification payload
+2. `HomeScreen` resolves that id to the current active deck (respecting the current order setting)
+3. The app jumps to that card and persists the card as `lastSloganId`
+4. For fixed-order mode, future reminders will continue from that newly opened position
 
 ---
 

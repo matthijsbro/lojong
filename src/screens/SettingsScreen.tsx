@@ -279,6 +279,9 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
             <Text style={styles.sourceLink}>{t.readAppLicense}</Text>
           </TouchableOpacity>
           <Text style={styles.aboutText}>{t.privacyNote}</Text>
+          <TouchableOpacity onPress={() => Linking.openURL('https://github.com/matthijsbro/lojong')}>
+            <Text style={styles.sourceLink}>{t.viewSourceCode}</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
