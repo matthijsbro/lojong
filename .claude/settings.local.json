@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(file /Users/matthijs/dev/lojong/pdf-content/*.pdf)",
+      "Bash(npm audit:*)",
+      "Bash(npm install:*)",
+      "Bash(npx expo-doctor:*)",
+      "Bash(npx expo:*)",
+      "Bash(node -e ':*)",
+      "Bash(node -e \"require.resolve\\('babel-preset-expo', {paths:['/Users/matthijs/dev/lojong']}\\); console.log\\('babel-preset-expo: OK'\\)\")",
+      "Bash(node -e \"require.resolve\\('babel-plugin-module-resolver', {paths:['/Users/matthijs/dev/lojong']}\\); console.log\\('babel-plugin-module-resolver: OK'\\)\")",
+      "Bash(curl -s http://localhost:8081)",
+      "Bash(kill 24990)",
+      "Bash(xargs kill:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(brew install:*)",
+      "Bash(pdftoppm -v)",
+      "Bash(pdftotext \"/Users/matthijs/dev/lojong/pdf-content/Commentary on the Seven Points.pdf\" -)"
+    ]
+  }
+}
