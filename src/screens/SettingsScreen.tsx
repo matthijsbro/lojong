@@ -6,10 +6,12 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  Alert,
   TextInput,
   Linking,
   Platform,
 } from 'react-native';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { useSettings } from '@/hooks/useSettings';
 import { ui, Language } from '@/i18n/ui';
 import { Order, NotifMode } from '@/store/settings';
@@ -18,12 +20,28 @@ import { scheduleNotifications, cancelAllNotifications } from '@/notifications/s
 
 type Props = {
   onBack: () => void;
+  onOpenLicense: () => void;
 };
 
-export function SettingsScreen({ onBack }: Props) {
+export function SettingsScreen({ onBack, onOpenLicense }: Props) {
   const { settings, update } = useSettings();
   const t = ui[settings.language];
   const [savedFeedback, setSavedFeedback] = useState(false);
+
+  const parseTimeToDate = (time: string): Date => {
+    const [hoursRaw, minutesRaw] = time.split(':').map(Number);
+    const hours = Number.isFinite(hoursRaw) ? Math.min(Math.max(hoursRaw, 0), 23) : 8;
+    const minutes = Number.isFinite(minutesRaw) ? Math.min(Math.max(minutesRaw, 0), 59) : 0;
+    const value = new Date();
+    value.setHours(hours, minutes, 0, 0);
+    return value;
+  };
+
+  const formatTime = (date: Date): string => {
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mm = String(date.getMinutes()).padStart(2, '0');
+    return `${hh}:${mm}`;
+  };
 
   const handleLanguage = (lang: Language) => update({ language: lang });
   const handleOrder = (order: Order) => update({ order });
@@ -33,21 +51,45 @@ export function SettingsScreen({ onBack }: Props) {
     if (mode === 'off') {
       await cancelAllNotifications();
     } else {
-      await scheduleNotifications(updated);
+      const result = await scheduleNotifications(updated);
+      if (result === 'permission-denied') {
+        Alert.alert(t.notifPermissionTitle, t.notifPermissionMessage);
+      }
     }
   };
 
   const handleNotifTime = (time: string) => update({ notifTime: time });
 
-  const handleSaveAndClose = async () => {
-    if (settings.notifMode !== 'off') {
-      await scheduleNotifications(settings);
+  const handlePickTime = () => {
+    if (Platform.OS === 'android') {
+      DateTimePickerAndroid.open({
+        mode: 'time',
+        is24Hour: true,
+        value: parseTimeToDate(settings.notifTime),
+        onChange: (_event, selectedDate) => {
+          if (!selectedDate) return;
+          void handleNotifTime(formatTime(selectedDate));
+        },
+      });
     }
+  };
+
+  const handleSaveAndClose = async () => {
+    let permissionDenied = false;
+    if (settings.notifMode !== 'off') {
+      const result = await scheduleNotifications(settings);
+      permissionDenied = result === 'permission-denied';
+    }
+
     setSavedFeedback(true);
-    setTimeout(() => {
-      setSavedFeedback(false);
-      onBack();
-    }, 600);
+    setTimeout(() => setSavedFeedback(false), 1200);
+
+    if (permissionDenied) {
+      Alert.alert(t.notifPermissionTitle, t.notifPermissionMessage);
+      return;
+    }
+
+    Alert.alert(t.saved, t.settingsSavedMessage);
   };
 
   return (
@@ -127,14 +169,21 @@ export function SettingsScreen({ onBack }: Props) {
           {settings.notifMode === 'fixed' && (
             <View style={styles.timeRow}>
               <Text style={styles.fieldLabel}>{t.notifTime}</Text>
-              <TextInput
-                style={styles.timeInput}
-                value={settings.notifTime}
-                onChangeText={handleNotifTime}
-                placeholder="08:00"
-                keyboardType={Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'numeric'}
-                maxLength={5}
-              />
+              {Platform.OS === 'android' ? (
+                <TouchableOpacity style={styles.timePickerButton} onPress={handlePickTime}>
+                  <Text style={styles.timePickerValue}>{settings.notifTime}</Text>
+                  <Text style={styles.timePickerHint}>{t.notifChooseTime}</Text>
+                </TouchableOpacity>
+              ) : (
+                <TextInput
+                  style={styles.timeInput}
+                  value={settings.notifTime}
+                  onChangeText={handleNotifTime}
+                  placeholder="08:00"
+                  keyboardType="numbers-and-punctuation"
+                  maxLength={5}
+                />
+              )}
             </View>
           )}
           {settings.notifMode === 'random' && (
@@ -152,17 +201,22 @@ export function SettingsScreen({ onBack }: Props) {
           <Text style={styles.sectionLabel}>{t.aboutTitle}</Text>
           <Text style={styles.aboutText}>{t.aboutIntro}</Text>
           <Text style={styles.aboutText}>{t.nonCommercial}</Text>
+          <TouchableOpacity onPress={onOpenLicense}>
+            <Text style={styles.sourceLink}>{t.readAppLicense}</Text>
+          </TouchableOpacity>
+          <Text style={styles.aboutText}>{t.privacyNote}</Text>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{t.sources}</Text>
           {attributions.map((attr) => {
             const title = settings.language === 'de' && attr.titleDe ? attr.titleDe : attr.titleEn;
+            const translator = settings.language === 'de' && attr.translatorDe ? attr.translatorDe : attr.translator;
             return (
               <View key={attr.key} style={styles.sourceEntry}>
                 <Text style={styles.sourceTitle}>{title}</Text>
                 <Text style={styles.sourceMeta}>{attr.author}</Text>
-                <Text style={styles.sourceMeta}>trans. {attr.translator}</Text>
+                <Text style={styles.sourceMeta}>trans. {translator}</Text>
                 <TouchableOpacity onPress={() => Linking.openURL(attr.url)}>
                   <Text style={styles.sourceLink}>{t.visitSource}</Text>
                 </TouchableOpacity>
@@ -276,6 +330,25 @@ const styles = StyleSheet.create({
     color: '#2c1f0e',
     width: 80,
     backgroundColor: '#fff',
+  },
+  timePickerButton: {
+    borderWidth: 1,
+    borderColor: '#c4b49a',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: '#fff',
+    minWidth: 130,
+  },
+  timePickerValue: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#2c1f0e',
+  },
+  timePickerHint: {
+    fontSize: 11,
+    color: '#8b5e3c',
+    marginTop: 2,
   },
   hint: {
     fontSize: 12,

@@ -1,7 +1,10 @@
-// Slogans sourced from:
+// Slogans sourced literally from:
 //   Root text: Geshe Chekawa Yeshe Dorje, trans. Adam Pearcey (EN), Juliane Wenzel (DE)
-//   Explanations: Gyalse Tokme Zangpo (commentary) and Jamyang Khyentse Chökyi Lodrö (notes),
-//   both translated by Adam Pearcey. All published by Lotsawa House under CC BY-NC 4.0.
+// Explanations:
+//   English explanations quote directly from Gyalse Tokme Zangpo's
+//   "Commentary on the Seven Points of Mind Training" (trans. Adam Pearcey).
+//   German explanations are in-app translations based on that English commentary.
+// All published by Lotsawa House under CC BY-NC 4.0.
 //
 // To edit content: modify the entries below.
 // To add a slogan: append an entry with a unique id and matching attributionKey.
@@ -21,36 +24,33 @@ export type Slogan = {
 };
 
 export const slogans: Slogan[] = [
-  // ─── Point 1: The Preliminaries ─────────────────────────────────────────────
   {
     id: 1,
     point: 1,
     en: {
       slogan: 'First, train in the preliminaries.',
       explanation:
-        'Train in three contemplations: the difficulty of finding freedoms and advantages, death and impermanence, and the trials of saṃsāra. These create the foundation for all further practice.',
+        'This consists of three contemplations: i) on the difficulty of finding the freedoms and advantages; ii) on death and impermanence; and iii) on the trials of saṃsāra.',
     },
     de: {
       slogan: 'Übe als erstes die Vorbereitenden Übungen.',
       explanation:
-        'Übe drei Betrachtungen: die Seltenheit des kostbaren Menschenlebens, Tod und Unbeständigkeit sowie die Leiden des Saṃsāra. Diese bilden die Grundlage für alle weiteren Praktiken.',
+        'Dies besteht aus drei Betrachtungen: i) über die Schwierigkeit, die Freiheiten und Vorzüge zu finden; ii) über Tod und Vergänglichkeit; und iii) über die Leiden des Saṃsāra.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
-
-  // ─── Point 2: The Main Practice — Ultimate Bodhicitta ───────────────────────
   {
     id: 2,
     point: 2,
     en: {
       slogan: 'Consider all things and events as dreamlike.',
       explanation:
-        'Appearances are delusory perceptions of mind with no objective reality. Recognizing their dream-like nature frees you from clinging to them as solid or real.',
+        'As this indicates, the whole environment and the beings within it, which we perceive as objects, are dreamlike. That is to say, they appear as they do because our own minds are deluded and not as a result of even the slightest factor aside from mind.',
     },
     de: {
       slogan: 'Betrachte alle Dinge und Begebenheiten als traumgleich.',
       explanation:
-        'Erscheinungen sind trügerische Wahrnehmungen des Geistes ohne objektive Realität. Das Erkennen ihrer traumgleichen Natur befreit uns vom Festhalten an ihrer Solidität.',
+        'Wie dies andeutet, sind die ganze Umgebung und die Wesen darin, die wir als Objekte wahrnehmen, traumgleich. Das heißt: Sie erscheinen so, weil unsere eigenen Geister verblendet sind und nicht aufgrund auch nur des geringsten Faktors außerhalb des Geistes.',
     },
     attributionKey: 'commentary',
   },
@@ -60,12 +60,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Examine the nature of unborn awareness.',
       explanation:
-        'Mind is empty of arising, remaining, and ceasing; it has no fixed character. Resting in this recognition is the ultimate training.',
+        'Mind itself is empty of the three stages of arising, remaining and ceasing. It has no fixed character at all and cannot therefore be apprehended in any way.',
     },
     de: {
       slogan: 'Untersuche die Natur der ungeborenen Bewusstheit.',
       explanation:
-        'Der Geist ist leer von Entstehen, Verweilen und Vergehen; er hat keinen festen Charakter. Im Erkennen dieser Wahrheit zu ruhen ist das höchste Training.',
+        'Der Geist selbst ist leer von den drei Phasen des Entstehens, Verweilens und Vergehens. Er hat überhaupt keinen festen Charakter und kann daher in keiner Weise erfasst werden.',
     },
     attributionKey: 'commentary',
   },
@@ -75,12 +75,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Let even the antidote be freed in its own place.',
       explanation:
-        'Even the antidote to delusion has no true nature. Recognize that the remedy itself need not be held onto — let it dissolve naturally.',
+        'This means that we look into the essence of the antidote itself, and when we realize that it has no true nature, we rest with that experience.',
     },
     de: {
       slogan: 'Lass selbst das Gegenmittel in sich selbst befreit sein.',
       explanation:
-        'Auch das Gegenmittel gegen Täuschung hat keine wahre Natur. Erkenne, dass das Heilmittel selbst nicht festgehalten werden muss — lass es sich natürlich auflösen.',
+        'Das bedeutet, dass wir in die Essenz des Gegenmittels selbst schauen, und wenn wir erkennen, dass es keine wahre Natur hat, ruhen wir in dieser Erfahrung.',
     },
     attributionKey: 'commentary',
   },
@@ -90,12 +90,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Rest in the ālaya, the essence.',
       explanation:
-        'Settle with lucid clarity in the ground of experience beyond thought. This is resting in the fundamental nature of mind without conceptual elaboration.',
+        'We must settle with lucid clarity in an experience that is beyond thought. We must not mentally fixate in any way on what has no fixed character at all.',
     },
     de: {
       slogan: 'Verweile in ālaya, der Essenz.',
       explanation:
-        'Ruhe mit strahlender Klarheit im Grund der Erfahrung jenseits des Gedankens. Dies ist das Ruhen in der grundlegenden Natur des Geistes ohne begriffliche Ausschmückung.',
+        'Wir müssen uns mit leuchtender Klarheit in einer Erfahrung niederlassen, die jenseits des Denkens ist. Wir dürfen uns geistig in keiner Weise auf etwas fixieren, das überhaupt keinen festen Charakter hat.',
     },
     attributionKey: 'commentary',
   },
@@ -105,31 +105,29 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Between sessions, be a conjurer of illusions.',
       explanation:
-        'During post-meditation, carry the recognition that all appearances are unreal into daily activity. View everything as a magician\'s display — vivid but without solidity.',
+        'We allow the experience of the meditation session to continue into the post-meditation. Whatever appears is just like an illusion and has no true reality.',
     },
     de: {
       slogan: 'Zwischen den Sitzungen sei ein Beschwörer der Illusionen.',
       explanation:
-        'Bringe zwischen den Meditationssitzungen die Erkenntnis, dass alle Erscheinungen unwirklich sind, in den Alltag. Betrachte alles wie die Vorstellung eines Zauberers — lebendig, aber ohne Festigkeit.',
+        'Wir lassen die Erfahrung der Meditationssitzung in die Zeit nach der Meditation hineinreichen. Was auch immer erscheint, ist wie eine Illusion und hat keine wahre Wirklichkeit.',
     },
     attributionKey: 'commentary',
   },
-
-  // ─── Point 2: The Main Practice — Relative Bodhicitta ───────────────────────
   {
     id: 7,
     point: 2,
     en: {
-      slogan: 'Train in the two — giving and taking — alternately.',
+      slogan: 'Train in the two—giving and taking—alternately.',
       explanation:
-        'Begin with loving kindness and compassion, then practice tonglen: exchanging self for others. As you breathe out, give your happiness to all beings; as you breathe in, take on their suffering.',
+        'Take on and absorb all their suffering and give them your own body, possessions and virtuous deeds of the past, present and future. Consider that, as a result, they are happy and their virtue increases.',
     },
     de: {
-      slogan: 'Übe die beiden — Geben und Nehmen — abwechselnd.',
+      slogan: 'Übe die beiden - Geben und Nehmen- abwechselnd.',
       explanation:
-        'Beginne mit liebevoller Güte und Mitgefühl, und übe dann Tonglen: das Austauschen von sich selbst mit anderen. Beim Ausatmen gib dein Glück an alle Wesen; beim Einatmen nimm ihr Leiden auf dich.',
+        'Nimm all ihr Leiden in dich auf und gib ihnen deinen eigenen Körper, deine Besitztümer und tugendhaften Handlungen der Vergangenheit, Gegenwart und Zukunft. Betrachte, dass sie dadurch glücklich werden und ihre Tugend zunimmt.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
   {
     id: 8,
@@ -137,12 +135,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'These two are to be mounted on the breath.',
       explanation:
-        'As you breathe out, send your happiness and virtue to all beings. As you breathe in, take on their suffering and negativity. The breath is the vehicle for this practice.',
+        'As you breathe out, consider that all your own happiness and virtues goes to others. And as you breathe in, consider that all their non-virtue and suffering comes to you.',
     },
     de: {
       slogan: 'Diese beiden sollen mit dem Atem einhergehen.',
       explanation:
-        'Beim Ausatmen sende dein Glück und deine Verdienste an alle Wesen. Beim Einatmen nimm ihr Leiden und ihre Negativität auf dich. Der Atem ist das Fahrzeug dieser Praxis.',
+        'Während du ausatmest, betrachte, dass all dein eigenes Glück und deine Tugenden zu anderen gehen. Und während du einatmest, betrachte, dass all ihre Untugend und ihr Leiden zu dir kommt.',
     },
     attributionKey: 'commentary',
   },
@@ -152,12 +150,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Three objects, three poisons and three sources of virtue.',
       explanation:
-        'Work with the three objects (pleasant, unpleasant, neutral) that trigger the three poisons (attachment, aversion, indifference). Taking these on cultivates the three sources of virtue.',
+        'On the basis of the three types of object—pleasant, unpleasant and neutral—we experience the three emotions of attachment, aversion and dull indifference. As a result, they gain the threefold virtue of being without attachment, aversion and dull indifference.',
     },
     de: {
       slogan: 'Drei Objekte, drei Gifte und drei Quellen der Tugend.',
       explanation:
-        'Arbeite mit den drei Objekten (angenehm, unangenehm, neutral), die die drei Gifte (Anhaftung, Abneigung, Gleichgültigkeit) auslösen. Ihre Aufnahme kultiviert die drei Quellen der Tugend.',
+        'Auf der Grundlage der drei Arten von Objekten — angenehm, unangenehm und neutral — erleben wir die drei Emotionen Anhaftung, Abneigung und dumpfe Gleichgültigkeit. Dadurch gewinnen sie die dreifache Tugend, frei von Anhaftung, Abneigung und dumpfer Gleichgültigkeit zu sein.',
     },
     attributionKey: 'commentary',
   },
@@ -167,14 +165,14 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'In all activities, train by applying slogans.',
       explanation:
-        'Throughout the day, recite and apply the mind-training instructions. Let them guide how you meet whatever arises — especially difficulties.',
+        'We should recite, "May all the negative actions and suffering of beings ripen on me! May all my happiness and virtue ripen on other beings!" And with this, we should feel intense resolve.',
     },
     de: {
       slogan: 'Übe bei allen Aktivitäten die Anwendung von Leitsätzen.',
       explanation:
-        'Rezitiere und wende die Unterweisungen des Geistestrainings den ganzen Tag über an. Lass sie leiten, wie du allem begegnest, was entsteht — besonders Schwierigkeiten.',
+        'Wir sollten rezitieren: "Mögen alle negativen Handlungen und das Leiden der Wesen auf mir reifen! Mögen all mein Glück und meine Tugend auf anderen Wesen reifen!" Und damit sollten wir starke Entschlossenheit empfinden.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
   {
     id: 11,
@@ -182,31 +180,29 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Begin the process of taking with yourself.',
       explanation:
-        'Start tonglen practice by taking on your own future suffering before taking on others\' misery. This builds the capacity and willingness needed.',
+        'By first taking on our own future suffering in the present, we will become capable of taking on even the misery of others.',
     },
     de: {
       slogan: 'Beginne mit der Übung des Nehmens bei Dir selbst.',
       explanation:
-        'Beginne die Tonglen-Praxis damit, dein eigenes zukünftiges Leiden auf dich zu nehmen, bevor du das Leid anderer aufnimmst. Dies baut die benötigte Fähigkeit und Bereitschaft auf.',
+        'Indem wir zuerst unser eigenes zukünftiges Leiden in der Gegenwart auf uns nehmen, werden wir fähig, sogar das Elend anderer auf uns zu nehmen.',
     },
     attributionKey: 'commentary',
   },
-
-  // ─── Point 3: Transforming Adversity ────────────────────────────────────────
   {
     id: 12,
     point: 3,
     en: {
       slogan: 'When all the world is filled with evil, transform adversity into the path of enlightenment.',
       explanation:
-        'When the environment, the age, and beings seem oppressive, use the practice to transform these conditions rather than be overwhelmed by them.',
+        'When many such forms of suffering arise, they can be transformed into the path of enlightenment through both intention and action.',
     },
     de: {
-      slogan: 'Wenn die ganze Welt mit Leid erfüllt ist, transformiere Widrigkeiten in den Weg zur Erleuchtung.',
+      slogan: 'Wenn die ganze Welt mit Leid erfüllt ist, transformiere Widrigkeiten in den Weg zu Erleuchtung.',
       explanation:
-        'Wenn Umgebung, Zeitalter und Wesen bedrückend erscheinen, nutze die Praxis, um diese Bedingungen zu transformieren, anstatt von ihnen überwältigt zu werden.',
+        'Wenn viele solche Formen des Leidens entstehen, können sie sowohl durch die Absicht als auch durch die Handlung in den Weg zur Erleuchtung verwandelt werden.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
   {
     id: 13,
@@ -214,12 +210,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Drive all blames into one.',
       explanation:
-        'Recognize that all suffering arises from self-grasping, not from others. When something goes wrong, trace it back to the root of self-cherishing rather than blaming external circumstances.',
+        'Whatever suffering we experience is the fault of our own grasping at a self; others are not to blame.',
     },
     de: {
       slogan: 'Suche alle Schuld in einem.',
       explanation:
-        'Erkenne, dass alles Leiden aus dem Festhalten am Selbst entsteht, nicht von anderen. Wenn etwas schiefgeht, führe es auf die Wurzel der Selbstbezogenheit zurück, anstatt äußere Umstände zu beschuldigen.',
+        'Welches Leiden wir auch erfahren, es ist die Schuld unseres eigenen Greifens nach einem Selbst; andere sind nicht daran schuld.',
     },
     attributionKey: 'commentary',
   },
@@ -229,12 +225,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Meditate on the great kindness of all.',
       explanation:
-        'All beings have been your kind parents in past lives. Recognize their fundamental kindness and cultivate gratitude toward all, even those who seem hostile.',
+        'Generally speaking, all beings have been our kind parents in the course of beginningless time. We must therefore cultivate intense love and compassion for sentient beings.',
     },
     de: {
       slogan: 'Meditiere auf die große Güte aller.',
       explanation:
-        'Alle Wesen waren in vergangenen Leben deine liebevollen Eltern. Erkenne ihre grundlegende Güte und kultiviere Dankbarkeit gegenüber allen, auch gegenüber denen, die feindlich erscheinen.',
+        'Allgemein gesprochen sind alle Wesen im Verlauf anfangsloser Zeit unsere gütigen Eltern gewesen. Deshalb müssen wir intensive Liebe und Mitgefühl für fühlende Wesen kultivieren.',
     },
     attributionKey: 'commentary',
   },
@@ -244,12 +240,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Meditating on delusory perceptions as the four kāyas is the unsurpassable śūnyatā protection.',
       explanation:
-        'View afflictions and difficulties as lacking true reality and recognize them as the four buddha-bodies. This transforms obstacles into opportunities for realization.',
+        'Whenever we experience mental afflictions or suffering caused by harm from the outer environment or beings within it, these afflictions and sufferings are delusory perceptions of our own mind. They thus lack even the slightest true existence.',
     },
     de: {
-      slogan: 'Auf die trügerischen Wahrnehmungen als die vier kāyas zu meditieren ist der unübertreffliche śūnyatā-Schutz.',
+      slogan: 'Auf die trügerischen Wahrnehmungen als die vier kāyas zu meditieren ist der unübertreffliche śūnyatā Schutz.',
       explanation:
-        'Betrachte Störgefühle und Schwierigkeiten als ohne wahre Realität und erkenne sie als die vier Buddha-Körper. Dies verwandelt Hindernisse in Möglichkeiten zur Verwirklichung.',
+        'Wann immer wir geistige Affliktionen oder Leiden erfahren, die durch Schaden von der äußeren Umgebung oder den Wesen darin verursacht werden, sind diese Affliktionen und Leiden trügerische Wahrnehmungen unseres eigenen Geistes. Daher fehlt ihnen selbst die geringste wahre Existenz.',
     },
     attributionKey: 'commentary',
   },
@@ -259,12 +255,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'The fourfold practice is the best of methods.',
       explanation:
-        'Four practices: (1) accumulating merit through offerings; (2) purifying negativity through the four powers; (3) offering to harmful influences with compassion; (4) offering to dharma protectors.',
+        'The fourfold practice is the best of methods: 1. The Practice of Accumulating Merit. 2. The Practice of Purifying Negative Actions. 3. The Practice of Offering to Harmful Influences. 4. The Practice of Offering to the Dharma Protectors.',
     },
     de: {
       slogan: 'Die vierfache Praxis ist die beste Methode.',
       explanation:
-        'Vier Praktiken: (1) Verdienste ansammeln durch Opfergaben; (2) Negativität durch die vier Kräfte reinigen; (3) schädlichen Einflüssen mit Mitgefühl opfern; (4) Dharma-Beschützern opfern.',
+        'Die vierfache Praxis ist die beste Methode: 1. die Praxis des Ansammelns von Verdienst. 2. die Praxis der Reinigung negativer Handlungen. 3. die Praxis des Darbringens an schädliche Einflüsse. 4. die Praxis des Darbringens an die Dharma-Beschützer.',
     },
     attributionKey: 'commentary',
   },
@@ -274,29 +270,27 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Whatever you encounter, apply the practice.',
       explanation:
-        'Transform any adversity — illness, conflict, loss — into the path through compassion and the recognition of emptiness. Nothing is excluded from practice.',
+        'Should you see someone in distress, immediately take their suffering upon yourself. And whenever you or another experience a strong mental affliction cultivate the heartfelt wish to take on the mental afflictions of others.',
     },
     de: {
       slogan: 'Was auch immer Dir begegnet, wende die Praxis an.',
       explanation:
-        'Verwandle jede Widrigkeit — Krankheit, Konflikt, Verlust — durch Mitgefühl und das Erkennen der Leerheit in den Weg. Nichts ist von der Praxis ausgeschlossen.',
+        'Wenn du jemanden in Not siehst, nimm sein Leiden sofort auf dich. Und wann immer du oder jemand anderes eine starke geistige Affliktion erlebt, kultiviere den herzlichen Wunsch, die geistigen Affliktionen anderer auf dich zu nehmen.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
-
-  // ─── Point 4: Applying the Practice throughout Life ─────────────────────────
   {
     id: 18,
     point: 4,
     en: {
       slogan: 'The essence of the instruction, briefly stated, is to apply yourself to the five strengths.',
       explanation:
-        'The five strengths: (1) impetus — resolve never to part from bodhicitta; (2) familiarization — train repeatedly; (3) wholesome seeds — accumulate merit; (4) revulsion — reflect on the harm of self-cherishing; (5) aspiration — make aspirations after virtuous deeds.',
+        'The five strengths are as follows: 1. The strength of impetus. 2. The strength of familiarization. 3. The strength of wholesome seeds. 4. The strength of revulsion. 5. The strength of aspiration.',
     },
     de: {
       slogan: 'Die Essenz der Unterweisungen ist, kurz gesagt, die Anwendung der fünf Kräfte.',
       explanation:
-        'Die fünf Kräfte: (1) Antrieb — entschließe dich, niemals vom Bodhicitta zu weichen; (2) Vertrautheit — trainiere wiederholt; (3) heilsame Samen — sammle Verdienste; (4) Abscheu — besinne dich auf den Schaden der Selbstbezogenheit; (5) Aspiration — treffe Wünsche nach tugendhaften Taten.',
+        'Die fünf Kräfte sind die folgenden: 1. die Kraft des Antriebs. 2. die Kraft der Vertrautheit. 3. die Kraft heilsamer Samen. 4. die Kraft des Widerwillens. 5. die Kraft der Aspiration.',
     },
     attributionKey: 'commentary',
   },
@@ -304,33 +298,31 @@ export const slogans: Slogan[] = [
     id: 19,
     point: 4,
     en: {
-      slogan: 'The Mahāyāna advice for transference involves the same five strengths. Conduct is important.',
+      slogan: 'The mahāyāna advice for transference involves the same five strengths. Conduct is important.',
       explanation:
-        'At the moment of death, apply the same five strengths with special conduct: lie on the right side, block the right nostril, and continue tonglen practice until the last moment.',
+        'The particular conduct is to lie on one\'s right side, with the right hand supporting the right cheek. Then, with love and compassion as a preliminary, train in giving and taking as you breathe in and out.',
     },
     de: {
-      slogan: 'Der Mahāyāna-Rat für die Übertragung umfasst dieselben fünf Kräfte. Verhalten ist wichtig.',
+      slogan: 'Der Mahāyāna Rat für die Übertragung umfasst dieselben fünf Kräfte. Verhalten ist wichtig.',
       explanation:
-        'Im Moment des Todes wende dieselben fünf Kräfte mit besonderem Verhalten an: Lege dich auf die rechte Seite, verschließe das rechte Nasenloch und führe die Tonglen-Praxis bis zum letzten Moment fort.',
+        'Das besondere Verhalten besteht darin, auf der rechten Seite zu liegen, wobei die rechte Hand die rechte Wange stützt. Dann übe, mit Liebe und Mitgefühl als Vorbereitung, beim Ein- und Ausatmen Geben und Nehmen.',
     },
     attributionKey: 'commentary',
   },
-
-  // ─── Point 5: The Measure of Mind Training ──────────────────────────────────
   {
     id: 20,
     point: 5,
     en: {
       slogan: 'All teachings share a single purpose.',
       explanation:
-        'All dharma teachings aim at one thing: taming self-grasping. Use this as the measure of whether your practice is working — is it reducing self-cherishing?',
+        'The purpose of all the teachings of the greater and lesser vehicles is to tame self-grasping.',
     },
     de: {
       slogan: 'Alle Belehrungen haben das gleiche Ziel.',
       explanation:
-        'Alle Dharma-Belehrungen zielen auf eine Sache ab: das Zähmen des Festhaltens am Selbst. Nutze dies als Maß dafür, ob deine Praxis wirkt — verringert sie die Selbstbezogenheit?',
+        'Der Zweck aller Lehren der größeren und kleineren Fahrzeuge ist es, das Greifen nach dem Selbst zu zähmen.',
     },
-    attributionKey: 'notes',
+    attributionKey: 'commentary',
   },
   {
     id: 21,
@@ -338,12 +330,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Of the two witnesses, rely upon the principal one.',
       explanation:
-        'Trust your own honest self-examination rather than others\' opinions about your practice. You are the most reliable witness to the state of your own mind.',
+        'The principal witness, therefore, is an unembarassed look at one\'s own mind. To examine oneself thoroughly with an honest mind and have no cause to feel ashamed is a sign of having trained the mind.',
     },
     de: {
       slogan: 'Bei zwei Zeugen verlass Dich auf den Hauptzeugen.',
       explanation:
-        'Vertraue deiner eigenen ehrlichen Selbstprüfung statt der Meinung anderer über deine Praxis. Du bist der zuverlässigste Zeuge für den Zustand deines eigenen Geistes.',
+        'Der Hauptzeuge ist daher ein unbeschämter Blick auf den eigenen Geist. Sich mit einem ehrlichen Geist gründlich zu prüfen und keinen Grund zur Scham zu haben, ist ein Zeichen dafür, den Geist trainiert zu haben.',
     },
     attributionKey: 'commentary',
   },
@@ -353,14 +345,14 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Always maintain only a joyful attitude.',
       explanation:
-        'If you can see adversity as an ally in practice, this shows mental mastery. Contentment and lightness of heart are signs that mind training is taking effect.',
+        'Whatever negative circumstances arise, cultivate joy. And train yourself so that you have no hesitation in taking on the adversity of others as well.',
     },
     de: {
       slogan: 'Bewahre immer eine freudvolle Haltung.',
       explanation:
-        'Wenn du Widrigkeiten als Verbündete in der Praxis betrachten kannst, zeigt dies die Meisterschaft des Geistes. Zufriedenheit und Leichtigkeit des Herzens sind Zeichen, dass das Geistestraining wirkt.',
+        'Welche negativen Umstände auch entstehen, kultiviere Freude. Und trainiere dich so, dass du keine Zögerlichkeit hast, auch die Widrigkeiten anderer auf dich zu nehmen.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
   {
     id: 23,
@@ -368,29 +360,27 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'If this can be done even when distracted, you are proficient.',
       explanation:
-        'Like a skilled rider who stays balanced even on rough ground, if you can apply the practice naturally during distraction, your training has become stable.',
+        'A skilled rider will not fall from a horse even when distracted. Similarly, whenever adversity arises, transform the adversity into a support for mind training.',
     },
     de: {
       slogan: 'Wenn dies auch bei Ablenkung gehalten werden kann, bist Du erfahren.',
       explanation:
-        'Wie ein geschickter Reiter, der auch auf unebenem Boden das Gleichgewicht hält: Wenn du die Praxis auch bei Ablenkung natürlich anwenden kannst, ist dein Training stabil geworden.',
+        'Ein geschickter Reiter wird selbst bei Ablenkung nicht vom Pferd fallen. Ebenso sollst du, wann immer Widrigkeit entsteht, die Widrigkeit in eine Unterstützung für das Geistestraining verwandeln.',
     },
     attributionKey: 'commentary',
   },
-
-  // ─── Point 6: The Commitments of Mind Training ──────────────────────────────
   {
     id: 24,
     point: 6,
     en: {
       slogan: 'Train constantly in three basic principles.',
       explanation:
-        'Three principles: (1) do not transgress your commitments; (2) do not be reckless or embarrass others; (3) do not fall into partiality — apply practice equally to all.',
+        'The three basic principles are 1) not to transgress the mind training commitments, 2) not to be reckless, and 3) not to fall into partiality.',
     },
     de: {
       slogan: 'Übe stets die drei grundlegenden Prinzipien.',
       explanation:
-        'Drei Prinzipien: (1) Übertriff nicht deine Verpflichtungen; (2) sei nicht rücksichtslos und bringe andere nicht in Verlegenheit; (3) verfalle nicht in Parteilichkeit — wende die Praxis auf alle gleich an.',
+        'Die drei grundlegenden Prinzipien sind 1) die Verpflichtungen des Geistestrainings nicht zu übertreten, 2) nicht leichtsinnig zu sein und 3) nicht in Parteilichkeit zu verfallen.',
     },
     attributionKey: 'commentary',
   },
@@ -400,12 +390,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Change your attitude, but remain natural.',
       explanation:
-        'Inwardly transform self-cherishing into cherishing others, but outwardly maintain ordinary, natural conduct. Don\'t display a special spiritual persona.',
+        'Transform your attitude from one of self-cherishing to one of cherishing others, while ensuring that your actions of body and speech are in harmony with those of our Dharma companions.',
     },
     de: {
       slogan: 'Ändere Deine Haltung, aber bleibe natürlich.',
       explanation:
-        'Verwandle innerlich die Selbstbezogenheit in die Fürsorge für andere, aber behalte äußerlich ein gewöhnliches, natürliches Verhalten bei. Zeige keine besondere spirituelle Persona.',
+        'Verwandle deine Haltung von Selbstbezogenheit in das Wertschätzen anderer, und sorge zugleich dafür, dass deine Handlungen von Körper und Sprache mit denen unserer Dharma-Gefährten im Einklang sind.',
     },
     attributionKey: 'commentary',
   },
@@ -413,14 +403,14 @@ export const slogans: Slogan[] = [
     id: 26,
     point: 6,
     en: {
-      slogan: 'Don\'t speak of injured limbs.',
+      slogan: 'Don’t speak of injured limbs.',
       explanation:
-        'Do not point out others\' physical disabilities or faults in order to embarrass them. Maintain kindness in speech.',
+        'Do not say unpleasant things about others, whether this is pointing out disabilities such as blindness or spiritual flaws such as compromised ethical discipline.',
     },
     de: {
       slogan: 'Sprich nicht über verletzte Glieder.',
       explanation:
-        'Weise nicht auf körperliche Gebrechen oder Fehler anderer hin, um sie in Verlegenheit zu bringen. Wahre Güte in der Sprache.',
+        'Sage nichts Unangenehmes über andere, sei es das Hinweisen auf Behinderungen wie Blindheit oder auf spirituelle Fehler wie geschwächte ethische Disziplin.',
     },
     attributionKey: 'commentary',
   },
@@ -428,14 +418,14 @@ export const slogans: Slogan[] = [
     id: 27,
     point: 6,
     en: {
-      slogan: 'Don\'t ponder others\' flaws.',
+      slogan: 'Don’t ponder others’ flaws.',
       explanation:
-        'Attribute perceived faults to your own impure perception rather than dwelling on others\' shortcomings. Your perception of a flaw reflects your own mind.',
+        'Whenever you see faults in sentient beings in general or especially in those who have entered the door of the Dharma, attribute this to your own impure perception.',
     },
     de: {
       slogan: 'Beschäftige Dich nicht mit den Makeln anderer.',
       explanation:
-        'Führe wahrgenommene Fehler auf deine eigene unreine Wahrnehmung zurück, anstatt bei den Schwächen anderer zu verweilen. Deine Wahrnehmung eines Fehlers spiegelt deinen eigenen Geist wider.',
+        'Wann immer du Fehler in fühlenden Wesen im Allgemeinen oder besonders in jenen siehst, die durch das Tor des Dharma eingetreten sind, führe dies auf deine eigene unreine Wahrnehmung zurück.',
     },
     attributionKey: 'commentary',
   },
@@ -445,14 +435,14 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Train first with the strongest destructive emotions.',
       explanation:
-        'Identify your most powerful affliction — anger, jealousy, pride — and address it first. Taming your greatest obstacle yields the greatest benefit.',
+        'Check to see which is the strongest destructive emotion in your mind and, combining all practices into an antidote to that emotion, address it first.',
     },
     de: {
       slogan: 'Übe zuerst mit den stärksten störenden Gefühlen.',
       explanation:
-        'Erkenne dein mächtigstes Störgefühl — Ärger, Eifersucht, Stolz — und befasse dich zuerst damit. Das Zähmen deines größten Hindernisses bringt den größten Nutzen.',
+        'Prüfe, welches störende Gefühl in deinem Geist am stärksten ist, und richte es zuerst an, indem du alle Praktiken zu einem Gegenmittel gegen eben dieses Gefühl zusammenführst.',
     },
-    attributionKey: 'notes',
+    attributionKey: 'commentary',
   },
   {
     id: 29,
@@ -460,12 +450,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Abandon any expectations of results.',
       explanation:
-        'Give up selfish concerns about gaining respect, health, or favorable rebirths from practice. Act purely for the benefit of others without seeking personal reward.',
+        'Let go of all selfish concerns, such as seeking to gain wealth and respect in this life, happiness in future lives as a god or human being, or gaining nirvāṇa for oneself, as a result of practising mind training.',
     },
     de: {
       slogan: 'Lass jegliche Erwartungen an Ergebnisse los.',
       explanation:
-        'Gib eigennützige Sorgen um Ansehen, Gesundheit oder günstige Wiedergeburten durch die Praxis auf. Handle rein zum Wohl anderer, ohne persönliche Belohnung zu suchen.',
+        'Lass alle selbstbezogenen Anliegen los, etwa in diesem Leben Wohlstand und Respekt zu gewinnen, in zukünftigen Leben als Gott oder Mensch Glück zu erlangen oder Nirvāṇa für dich selbst zu gewinnen, als Ergebnis der Praxis des Geistestrainings.',
     },
     attributionKey: 'commentary',
   },
@@ -475,12 +465,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Give up poisonous food.',
       explanation:
-        'Abandon virtuous activity that is contaminated by the poison of self-cherishing or desire for recognition. Such actions undermine the purpose of practice.',
+        'Abandon all virtuous activity that is contaminated by clinging to things as real or thoughts of self-cherishing, just as you would avoid food that is laced with poison.',
     },
     de: {
       slogan: 'Gib das vergiftete Essen auf.',
       explanation:
-        'Lass tugendhafte Handlungen los, die durch das Gift der Selbstbezogenheit oder den Wunsch nach Anerkennung befleckt sind. Solche Handlungen untergraben den Zweck der Praxis.',
+        'Lass jede tugendhafte Aktivität los, die durch das Festhalten an Dingen als wirklich oder durch Gedanken der Selbstbezogenheit verunreinigt ist, so wie du Nahrung meiden würdest, die mit Gift versetzt ist.',
     },
     attributionKey: 'commentary',
   },
@@ -488,14 +478,14 @@ export const slogans: Slogan[] = [
     id: 31,
     point: 6,
     en: {
-      slogan: 'Don\'t be so loyal to the cause.',
+      slogan: 'Don’t be so loyal to the cause.',
       explanation:
-        'Do not hold grudges. When someone harms you, do not nurse resentment while waiting for an opportunity to retaliate.',
+        'Avoid holding grudges based on the harm others do to you and refusing to let go of resentment.',
     },
     de: {
       slogan: 'Sei nicht so loyal mit der Ursache.',
       explanation:
-        'Hege keine Groll. Wenn jemand dir schadet, pflege keine Verbitterung, während du auf eine Gelegenheit zur Vergeltung wartest.',
+        'Vermeide es, Groll festzuhalten aufgrund des Schadens, den andere dir zufügen, und weigere dich nicht, Verbitterung loszulassen.',
     },
     attributionKey: 'commentary',
   },
@@ -503,14 +493,14 @@ export const slogans: Slogan[] = [
     id: 32,
     point: 6,
     en: {
-      slogan: 'Don\'t lash out in retaliation.',
+      slogan: 'Don’t lash out in retaliation.',
       explanation:
-        'When insulted or harmed, do not respond with harsh words or actions. Retaliation only perpetuates conflict and undermines the training.',
+        'When others speak ill of you, do not respond with harsh words intended to hurt. And do not label misfortune as a just reward.',
     },
     de: {
       slogan: 'Übe nicht Vergeltung.',
       explanation:
-        'Wenn du beleidigt oder verletzt wirst, reagiere nicht mit harten Worten oder Handlungen. Vergeltung perpetuiert nur Konflikte und untergräbt das Training.',
+        'Wenn andere schlecht über dich sprechen, antworte nicht mit harten Worten, die verletzen sollen. Und bezeichne Unglück nicht als gerechte Vergeltung.',
     },
     attributionKey: 'commentary',
   },
@@ -518,14 +508,14 @@ export const slogans: Slogan[] = [
     id: 33,
     point: 6,
     en: {
-      slogan: 'Don\'t lie in ambush.',
+      slogan: 'Don’t lie in ambush.',
       explanation:
-        'Do not dwell on a harm done to you while waiting for the right moment to retaliate. Let it go rather than nursing the wound.',
+        'Do not dwell on the harm others do to you while waiting for an opportunity to retaliate.',
     },
     de: {
       slogan: 'Liege nicht im Hinterhalt.',
       explanation:
-        'Verweile nicht bei einem dir zugefügten Schaden, während du auf den richtigen Moment zur Vergeltung wartest. Lass es los, anstatt die Wunde zu pflegen.',
+        'Verweile nicht bei dem Schaden, den andere dir zufügen, während du auf eine Gelegenheit zur Vergeltung wartest.',
     },
     attributionKey: 'commentary',
   },
@@ -533,14 +523,14 @@ export const slogans: Slogan[] = [
     id: 34,
     point: 6,
     en: {
-      slogan: 'Don\'t strike a vulnerable point.',
+      slogan: 'Don’t strike a vulnerable point.',
       explanation:
-        'Do not expose another person\'s hidden faults or weaknesses to harm them. This applies especially to using someone\'s confidences against them.',
+        'Do not act in a way that causes pain to the minds of others, such as by exposing people\'s hidden faults or reciting the "life-force mantras" of non-human beings.',
     },
     de: {
       slogan: 'Berühre nicht einen wunden Punkt.',
       explanation:
-        'Enthülle nicht die verborgenen Fehler oder Schwächen einer anderen Person, um ihr zu schaden. Dies gilt besonders für die Verwendung von Vertrauen gegen jemanden.',
+        'Handle nicht auf eine Weise, die den Geist anderer verletzt, etwa indem du verborgene Fehler von Menschen aufdeckst oder die "Lebenskraft-Mantras" nichtmenschlicher Wesen rezitierst.',
     },
     attributionKey: 'commentary',
   },
@@ -548,14 +538,14 @@ export const slogans: Slogan[] = [
     id: 35,
     point: 6,
     en: {
-      slogan: 'Don\'t transfer the ox\'s burden to the cow.',
+      slogan: 'Don’t transfer the ox’s burden to the cow.',
       explanation:
-        'Do not transfer your own responsibilities, mistakes, or burdens onto others who are less able to bear them.',
+        'Avoid the negative behaviour of deviously transferring to others any responsibility or blame that is rightly yours.',
     },
     de: {
       slogan: 'Bürde nicht die Last eines Ochsen einer Kuh auf.',
       explanation:
-        'Übertrage deine eigenen Verantwortlichkeiten, Fehler oder Lasten nicht auf andere, die sie weniger gut tragen können.',
+        'Vermeide das negative Verhalten, anderen auf hinterlistige Weise irgendeine Verantwortung oder Schuld zu übertragen, die eigentlich dir zusteht.',
     },
     attributionKey: 'commentary',
   },
@@ -563,14 +553,14 @@ export const slogans: Slogan[] = [
     id: 36,
     point: 6,
     en: {
-      slogan: 'Don\'t be competitive.',
+      slogan: 'Don’t be competitive.',
       explanation:
-        'Avoid scheming to acquire possessions, reputation, or praise that are commonly available. Give up the drive to beat others.',
+        'Avoid any thoughts and actions focused on acquiring through various means possessions that are held in common.',
     },
     de: {
       slogan: 'Wetteifere nicht mit anderen.',
       explanation:
-        'Vermeide es, durch Ränke Besitz, Ruf oder Lob anzustreben, der für alle zugänglich ist. Gib den Drang auf, andere zu übertreffen.',
+        'Vermeide alle Gedanken und Handlungen, die darauf ausgerichtet sind, sich auf verschiedene Weise Besitztümer anzueignen, die gemeinsam gehalten werden.',
     },
     attributionKey: 'commentary',
   },
@@ -578,14 +568,14 @@ export const slogans: Slogan[] = [
     id: 37,
     point: 6,
     en: {
-      slogan: 'Don\'t misperform the rites.',
+      slogan: 'Don’t misperform the rites.',
       explanation:
-        'Practice with genuine intention to eliminate self-cherishing. Misperforming means going through spiritual motions while secretly serving your own ego.',
+        'Mind training that involves a partial attitude and which is understood as a beneficial method for dealing with demons and harmful influences is no different from shamanic ritual. To qualify as Dharma it must function as an antidote to mental afflictions and ordinary thoughts.',
     },
     de: {
       slogan: 'Führe die Riten nicht falsch aus.',
       explanation:
-        'Praktiziere mit echter Absicht, die Selbstbezogenheit zu beseitigen. Falsch Ausführen bedeutet, spirituelle Formen durchzugehen, während man heimlich dem eigenen Ego dient.',
+        'Geistestraining, das eine partielle Haltung einschließt und als nützliche Methode gegen Dämonen und schädliche Einflüsse verstanden wird, ist nicht anders als schamanisches Ritual. Um als Dharma zu gelten, muss es als Gegenmittel gegen geistige Affliktionen und gewöhnliche Gedanken wirken.',
     },
     attributionKey: 'commentary',
   },
@@ -593,14 +583,14 @@ export const slogans: Slogan[] = [
     id: 38,
     point: 6,
     en: {
-      slogan: 'Don\'t reduce gods to demons.',
+      slogan: 'Don’t reduce gods to demons.',
       explanation:
-        'Do not let pride or arrogance arise from your spiritual practice. Gaining wisdom and merit that feeds the ego is turning a god into a demon.',
+        'If the practice of mind training leads to an increase in pride and arrogance, the Dharma has become non-Dharma. Mind training must discipline one\'s character.',
     },
     de: {
       slogan: 'Reduziere Götter nicht auf Dämonen.',
       explanation:
-        'Lass keinen Stolz oder Arroganz aus deiner spirituellen Praxis entstehen. Weisheit und Verdienst anzusammeln, die das Ego nähren, bedeutet, einen Gott in einen Dämon zu verwandeln.',
+        'Wenn die Praxis des Geistestrainings zu einer Zunahme von Stolz und Arroganz führt, ist das Dharma zu Nicht-Dharma geworden. Geistestraining muss den eigenen Charakter disziplinieren.',
     },
     attributionKey: 'commentary',
   },
@@ -608,31 +598,29 @@ export const slogans: Slogan[] = [
     id: 39,
     point: 6,
     en: {
-      slogan: 'Don\'t seek others\' misery as crutches of your own happiness.',
+      slogan: 'Don’t seek others’ misery as crutches of your own happiness.',
       explanation:
-        'Do not wish for others to suffer misfortune so you can benefit from or feel superior to their situation. True happiness cannot be built on others\' misery.',
+        'Avoid wishing that others suffer as a means to your own happiness.',
     },
     de: {
       slogan: 'Suche nicht das Elend anderer als Krücke für Dein eigenes Glück.',
       explanation:
-        'Wünsche nicht, dass andere Unglück erleiden, damit du von ihrer Situation profitieren oder dich ihr überlegen fühlen kannst. Wahres Glück kann nicht auf dem Elend anderer aufgebaut werden.',
+        'Vermeide den Wunsch, dass andere leiden, als Mittel zu deinem eigenen Glück.',
     },
     attributionKey: 'commentary',
   },
-
-  // ─── Point 7: The Precepts of Mind Training ─────────────────────────────────
   {
     id: 40,
     point: 7,
     en: {
       slogan: 'Do everything with a single intention.',
       explanation:
-        'Whatever you do — eating, walking, working — dedicate it with the intention to benefit all beings. This single intention purifies all activity.',
+        'Carry out all activities, such the yogas of eating and dressing, purely with the intention of benefitting others.',
     },
     de: {
       slogan: 'Tue alles mit einer einzigen Absicht.',
       explanation:
-        'Was auch immer du tust — essen, gehen, arbeiten — widme es der Absicht, allen Wesen zu nützen. Diese einzige Absicht reinigt alle Aktivitäten.',
+        'Führe alle Aktivitäten, etwa die Yogas des Essens und Ankleidens, rein mit der Absicht aus, anderen zu nützen.',
     },
     attributionKey: 'commentary',
   },
@@ -642,12 +630,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Counter all adversity with a single remedy.',
       explanation:
-        'When difficulties arise, apply one remedy: the compassion of tonglen and the recognition of emptiness. One medicine for all afflictions.',
+        'If we feel compassion for them, we can aspire to take all their problems on ourselves and meditate on giving and taking (tonglen).',
     },
     de: {
       slogan: 'Begegne allen Widrigkeiten mit einem einzigen Gegenmittel.',
       explanation:
-        'Wenn Schwierigkeiten entstehen, wende ein Gegenmittel an: das Mitgefühl des Tonglen und das Erkennen der Leerheit. Eine Medizin für alle Leiden.',
+        'Wenn wir Mitgefühl für sie empfinden, können wir danach streben, all ihre Probleme auf uns zu nehmen und auf Geben und Nehmen (Tonglen) zu meditieren.',
     },
     attributionKey: 'commentary',
   },
@@ -657,14 +645,14 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Two tasks: one at the beginning and one at the end.',
       explanation:
-        'In the morning, set your motivation: "Today I will not give in to self-cherishing." In the evening, review: "Did I maintain bodhicitta? What needs correction?"',
+        'In the morning create the right impetus by thinking, "Today I shall not part from twofold bodhicitta!" In the evening when preparing to sleep review the day\'s activities.',
     },
     de: {
       slogan: 'Zwei Aufgaben: Eine am Anfang und eine am Ende.',
       explanation:
-        'Setze morgens deine Motivation: "Heute werde ich der Selbstbezogenheit nicht nachgeben." Überprüfe abends: "Habe ich Bodhicitta aufrechterhalten? Was braucht Korrektur?"',
+        'Erschaffe am Morgen den richtigen Antrieb, indem du denkst: "Heute werde ich mich nicht von der zweifachen Bodhicitta trennen!" Prüfe am Abend, wenn du dich zum Schlafen bereit machst, die Handlungen des Tages.',
     },
-    attributionKey: 'notes',
+    attributionKey: 'commentary',
   },
   {
     id: 43,
@@ -672,12 +660,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Whichever of the two occurs, be patient.',
       explanation:
-        'Whether prosperity or hardship comes, avoid arrogance in good times and despondency in bad. Practice equanimity with whatever arises.',
+        'Should you accumulate followers and a wealth of possessions, do not let them become a cause of arrogance. Should you become so destitute that you are lower than everything but water, recognize that this too is illusory.',
     },
     de: {
       slogan: 'Egal, was von den beiden erscheint, sei geduldig.',
       explanation:
-        'Ob Wohlstand oder Schwierigkeiten kommen — vermeide Arroganz in guten Zeiten und Mutlosigkeit in schlechten. Übe Gleichmut mit allem, was entsteht.',
+        'Solltest du Anhänger und Reichtum an Besitztümern ansammeln, lass dies nicht zu einer Ursache von Arroganz werden. Solltest du so verarmt sein, dass du niedriger bist als alles außer Wasser, erkenne, dass auch dies illusorisch ist.',
     },
     attributionKey: 'commentary',
   },
@@ -685,14 +673,14 @@ export const slogans: Slogan[] = [
     id: 44,
     point: 7,
     en: {
-      slogan: 'Keep the two, even at your life\'s expense.',
+      slogan: 'Keep the two, even at your life’s expense.',
       explanation:
-        'Guard both your general dharma commitments and your mind-training commitments even if it costs your life. These are the most precious things you have.',
+        'Unless you keep the commitments of the Dharma in general and mind training in particular you will not experience happiness in this or future lives. So guard them more dearly than your own life.',
     },
     de: {
       slogan: 'Halte die beiden, selbst unter Einsatz Deines Lebens.',
       explanation:
-        'Hüte sowohl deine allgemeinen Dharma-Verpflichtungen als auch deine Geistestrainings-Verpflichtungen, auch wenn es dein Leben kostet. Diese sind das Wertvollste, was du hast.',
+        'Wenn du die Verpflichtungen des Dharma im Allgemeinen und des Geistestrainings im Besonderen nicht bewahrst, wirst du in diesem oder künftigen Leben kein Glück erfahren. Hüte sie daher kostbarer als dein eigenes Leben.',
     },
     attributionKey: 'commentary',
   },
@@ -702,14 +690,14 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Train in the three difficulties.',
       explanation:
-        'Three stages: (1) recognize the affliction arising; (2) apply the antidote in the middle; (3) ensure the affliction does not arise again. Each step is difficult — train in all three.',
+        'When mental afflictions arise, it is difficult to notice them in the beginning, difficult to avert them in the middle and difficult to interrupt their continuity in the end.',
     },
     de: {
       slogan: 'Übe Dich in den drei Schwierigkeiten.',
       explanation:
-        'Drei Stufen: (1) das entstehende Störgefühl erkennen; (2) in der Mitte das Gegenmittel anwenden; (3) sicherstellen, dass das Störgefühl nicht wieder entsteht. Jeder Schritt ist schwierig — trainiere in allen dreien.',
+        'Wenn geistige Affliktionen entstehen, ist es schwierig, sie am Anfang zu bemerken, schwierig, sie in der Mitte abzuwenden, und schwierig, ihre Kontinuität am Ende zu unterbrechen.',
     },
-    attributionKey: 'notes',
+    attributionKey: 'commentary',
   },
   {
     id: 46,
@@ -717,12 +705,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Acquire the three main provisions.',
       explanation:
-        'Three essentials: (1) meet a qualified teacher; (2) practice authentically; (3) gather conducive conditions. These are the provisions needed for the journey.',
+        'The most important provisions for Dharma practice are meeting a good teacher, practising authentically with a workable mind, and gathering the conditions conducive to Dharma practice.',
     },
     de: {
       slogan: 'Erstrebe die drei Vorbedingungen.',
       explanation:
-        'Drei Wesentliches: (1) einen qualifizierten Lehrer treffen; (2) authentisch praktizieren; (3) günstige Bedingungen sammeln. Dies sind die Vorräte, die für die Reise benötigt werden.',
+        'Die wichtigsten Voraussetzungen für die Dharma-Praxis sind, einem guten Lehrer zu begegnen, authentisch mit einem brauchbaren Geist zu praktizieren und die Bedingungen zu sammeln, die der Dharma-Praxis förderlich sind.',
     },
     attributionKey: 'commentary',
   },
@@ -732,12 +720,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Cultivate the three that must not decline.',
       explanation:
-        'Three qualities to maintain: devotion to the teacher, enthusiasm for practice, and careful keeping of precepts. Do not let any of these diminish.',
+        'Since all the qualities of the great vehicle depend on devotion to the guru, this devotion must not decline. Mind training is the quintessence of Mahāyāna Dharma, so enthusiasm for its practice must not decline.',
     },
     de: {
       slogan: 'Kultiviere die drei, die nicht abnehmen dürfen.',
       explanation:
-        'Drei Qualitäten zu erhalten: Hingabe an den Lehrer, Begeisterung für die Praxis und sorgfältige Einhaltung der Gelübde. Lass keinen dieser Aspekte nachlassen.',
+        'Da alle Qualitäten des großen Fahrzeugs von Hingabe an den Guru abhängen, darf diese Hingabe nicht abnehmen. Geistestraining ist die Quintessenz des Mahāyāna-Dharma, daher darf die Begeisterung für seine Praxis nicht abnehmen.',
     },
     attributionKey: 'commentary',
   },
@@ -747,12 +735,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Keep the three from which you must not separate.',
       explanation:
-        'Ensure that body, speech, and mind never deviate from virtue. Keep these three in alignment with the practice at all times.',
+        'Ensure that your body, speech and mind never deviate from virtue.',
     },
     de: {
       slogan: 'Halte die drei, die Du Dich nicht aufgeben darfst.',
       explanation:
-        'Stelle sicher, dass Körper, Sprache und Geist niemals von der Tugend abweichen. Halte diese drei jederzeit im Einklang mit der Praxis.',
+        'Sorge dafür, dass dein Körper, deine Sprache und dein Geist niemals von der Tugend abweichen.',
     },
     attributionKey: 'commentary',
   },
@@ -762,14 +750,14 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Apply the training impartially to all.',
       explanation:
-        'Use the mind-training techniques equally toward all beings — friends, strangers, and enemies alike. There is no hierarchy in the objects of your compassion.',
+        'Mind training must be applied to all sentient beings and insentient objects equally and without partiality.',
     },
     de: {
       slogan: 'Wende das Training auf alle gleichermaßen an.',
       explanation:
-        'Setze die Geistestrainingstechniken gleichermaßen gegenüber allen Wesen ein — Freunden, Fremden und Feinden gleichermaßen. Es gibt keine Hierarchie in den Objekten deines Mitgefühls.',
+        'Geistestraining muss auf alle fühlenden Wesen und unbelebten Objekte gleichermaßen und ohne Parteilichkeit angewendet werden.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
   {
     id: 50,
@@ -777,12 +765,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'It is vital that it be deep and all-pervasive.',
       explanation:
-        'The training must penetrate all aspects of life, not remain confined to formal meditation sessions. Deep means rooted in emptiness; all-pervasive means continuous.',
+        'You must apply the techniques to everything that arises in the mind. This should not be mere lip service but deep competence.',
     },
     de: {
       slogan: 'Es ist entscheidend, dass es tiefgründig und alldurchdringend ist.',
       explanation:
-        'Das Training muss alle Lebensbereiche durchdringen und darf nicht auf formelle Meditationssitzungen beschränkt bleiben. Tiefgründig bedeutet in der Leerheit verwurzelt; alldurchdringend bedeutet kontinuierlich.',
+        'Du musst die Techniken auf alles anwenden, was im Geist entsteht. Das sollte nicht bloß Lippenbekenntnis sein, sondern tiefe Kompetenz.',
     },
     attributionKey: 'commentary',
   },
@@ -790,14 +778,14 @@ export const slogans: Slogan[] = [
     id: 51,
     point: 7,
     en: {
-      slogan: 'Meditate constantly on those who\'ve been set apart.',
+      slogan: 'Meditate constantly on those who’ve been set apart.',
       explanation:
-        'Direct special meditation toward those you find most difficult — those you resent, fear, or exclude. These are precisely the beings who need your compassion most.',
+        'There are some for whom we find it difficult to feel love and compassion, and they should be the special focus of meditation: rivals, regular companions, those who harm us without provocation, and those who dislike us for karmic reasons.',
     },
     de: {
       slogan: 'Meditiere stets auf diejenigen, die sich unterscheiden.',
       explanation:
-        'Richte besondere Meditation auf diejenigen, die dir am schwierigsten fallen — auf die du grollst, fürchtest oder ausschließt. Diese Wesen brauchen dein Mitgefühl am meisten.',
+        'Es gibt einige, für die es uns schwerfällt, Liebe und Mitgefühl zu empfinden, und sie sollten der besondere Fokus der Meditation sein: Rivalen, vertraute Gefährten, jene, die uns ohne Provokation schaden, und jene, die uns aus karmischen Gründen nicht mögen.',
     },
     attributionKey: 'commentary',
   },
@@ -805,14 +793,14 @@ export const slogans: Slogan[] = [
     id: 52,
     point: 7,
     en: {
-      slogan: 'Don\'t be dependent on external conditions.',
+      slogan: 'Don’t be dependent on external conditions.',
       explanation:
-        'Integrate adversity into the path regardless of circumstances. Do not require ideal conditions to practice; transformation is possible in any situation.',
+        'Do not rely on gathering all the right conditions, such as food and clothing, protection against human and non-human forces, good health and so on. If you cannot gather these conditions integrate that very situation onto the path by means of the two types of bodhicitta.',
     },
     de: {
       slogan: 'Sei nicht abhängig von äußeren Bedingungen.',
       explanation:
-        'Integriere Widrigkeiten in den Weg unabhängig von den Umständen. Verlange keine idealen Bedingungen zum Üben; Transformation ist in jeder Situation möglich.',
+        'Verlass dich nicht darauf, alle richtigen Bedingungen zu sammeln, etwa Nahrung und Kleidung, Schutz vor menschlichen und nichtmenschlichen Kräften, gute Gesundheit und so weiter. Wenn du diese Bedingungen nicht sammeln kannst, integriere genau diese Situation durch die zwei Arten von Bodhicitta auf den Weg.',
     },
     attributionKey: 'commentary',
   },
@@ -820,29 +808,29 @@ export const slogans: Slogan[] = [
     id: 53,
     point: 7,
     en: {
-      slogan: 'This time, practise what\'s most important.',
+      slogan: 'This time, practise what’s most important.',
       explanation:
-        'Do not postpone dharma practice. The opportunity of this human life is rare and precious; prioritize practice over worldly concerns now.',
+        'More important than the affairs of this life is the Dharma. More important than Dharma study and teaching is practice. More important than other forms of practice is training in bodhicitta.',
     },
     de: {
       slogan: 'Praktiziere dieses Mal das, was am wichtigsten ist.',
       explanation:
-        'Verschiebe die Dharma-Praxis nicht. Die Gelegenheit dieses menschlichen Lebens ist selten und kostbar; stelle die Praxis jetzt über weltliche Belange.',
+        'Wichtiger als die Angelegenheiten dieses Lebens ist das Dharma. Wichtiger als Dharma-Studium und Lehren ist Praxis. Wichtiger als andere Formen der Praxis ist das Training in Bodhicitta.',
     },
-    attributionKey: 'notes',
+    attributionKey: 'commentary',
   },
   {
     id: 54,
     point: 7,
     en: {
-      slogan: 'Don\'t misunderstand.',
+      slogan: 'Don’t misunderstand.',
       explanation:
-        'Avoid six forms of misunderstanding: misplaced patience (enduring hardship for worldly goals), misplaced intention, misplaced relish, misplaced compassion, misplaced pursuit, and misplaced joy.',
+        'There are six forms of misunderstanding to be avoided: misplaced patience, misplaced intention, misplaced relish, misplaced compassion, misplaced pursuit, and misplaced joy.',
     },
     de: {
       slogan: 'Verstehe nicht falsch.',
       explanation:
-        'Vermeide sechs Formen des Missverständnisses: unangemessene Geduld (Härten für weltliche Ziele ertragen), unangemessene Absicht, unangemessenes Wohlgefallen, unangemessenes Mitgefühl, unangemessenes Streben und unangemessene Freude.',
+        'Es gibt sechs Formen des Missverstehens, die vermieden werden müssen: fehlgeleitete Geduld, fehlgeleitete Absicht, fehlgeleiteter Genuss, fehlgeleitetes Mitgefühl, fehlgeleitetes Streben und fehlgeleitete Freude.',
     },
     attributionKey: 'commentary',
   },
@@ -850,14 +838,14 @@ export const slogans: Slogan[] = [
     id: 55,
     point: 7,
     en: {
-      slogan: 'Don\'t be inconsistent.',
+      slogan: 'Don’t be inconsistent.',
       explanation:
-        'Train in mind training single-pointedly without interruption. Inconsistency — practicing intensely then abandoning it — prevents genuine progress.',
+        'Avoid the kind of sporadic practice that can occur when one does not yet have confidence in the Dharma. Train your mind single-pointedly and without interruption.',
     },
     de: {
       slogan: 'Sei nicht inkonsequent.',
       explanation:
-        'Trainiere das Geistestraining einspitzig ohne Unterbrechung. Inkonsequenz — intensiv üben und es dann aufgeben — verhindert echten Fortschritt.',
+        'Vermeide die Art von sporadischer Praxis, die auftreten kann, wenn man noch kein Vertrauen in das Dharma hat. Trainiere deinen Geist einspitzig und ohne Unterbrechung.',
     },
     attributionKey: 'commentary',
   },
@@ -867,14 +855,14 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Train wholeheartedly.',
       explanation:
-        'Devote yourself to the practice with complete commitment. Half-hearted effort yields half-hearted results; genuine transformation requires full engagement.',
+        'Devote yourself entirely to the mind training and practise emphatically.',
     },
     de: {
       slogan: 'Übe von ganzem Herzen.',
       explanation:
-        'Widme dich der Praxis mit vollem Engagement. Halbherzige Bemühung erzeugt halbherzige Ergebnisse; echte Transformation erfordert volles Engagement.',
+        'Widme dich dem Geistestraining vollständig und praktiziere mit Nachdruck.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
   {
     id: 57,
@@ -882,12 +870,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Gain freedom through discernment and analysis.',
       explanation:
-        'Investigate your strongest afflictions with wisdom and apply targeted antidotes. Liberation comes through understanding, not through suppression.',
+        'Determine which of your mental afflictions is the strongest and make that the focus of intensive effort. If it does arise, apply an antidote to overcome it, and make every effort until it no longer arises.',
     },
     de: {
       slogan: 'Gewinne Freiheit durch Einsicht und Analyse.',
       explanation:
-        'Untersuche deine stärksten Störgefühle mit Weisheit und wende gezielte Gegenmittel an. Befreiung kommt durch Verstehen, nicht durch Unterdrückung.',
+        'Bestimme, welche deiner geistigen Affliktionen die stärkste ist, und mache sie zum Fokus intensiver Bemühung. Wenn sie tatsächlich entsteht, wende ein Gegenmittel an, um sie zu überwinden, und bemühe dich, bis sie nicht mehr entsteht.',
     },
     attributionKey: 'commentary',
   },
@@ -895,14 +883,14 @@ export const slogans: Slogan[] = [
     id: 58,
     point: 7,
     en: {
-      slogan: 'Don\'t be boastful.',
+      slogan: 'Don’t be boastful.',
       explanation:
-        'Avoid pride about your kindness toward others, how long you have practiced, or how much you have learned. Boasting contaminates the virtue it references.',
+        'Do not boast about how kind you are to others, how long you have strenuously practised the Dharma, or how learned and disciplined you are.',
     },
     de: {
       slogan: 'Sei nicht prahlerisch.',
       explanation:
-        'Vermeide Stolz auf deine Güte gegenüber anderen, wie lange du geübt hast oder wie viel du gelernt hast. Prahlen verunreinigt die Tugend, auf die es sich bezieht.',
+        'Prahle nicht damit, wie gütig du zu anderen bist, wie lange du das Dharma angestrengt praktiziert hast oder wie gelehrt und diszipliniert du bist.',
     },
     attributionKey: 'commentary',
   },
@@ -910,14 +898,14 @@ export const slogans: Slogan[] = [
     id: 59,
     point: 7,
     en: {
-      slogan: 'Don\'t be irritable.',
+      slogan: 'Don’t be irritable.',
       explanation:
-        'When humiliated or insulted, do not retaliate even subtly. Absorb criticism and insult without reacting. This is the direct test of mind training.',
+        'Do not retaliate even if others humiliate you in front of many people and do not be annoyed. Ensure that Dharma functions properly as an antidote to self-grasping.',
     },
     de: {
       slogan: 'Sei nicht reizbar.',
       explanation:
-        'Wenn du gedemütigt oder beleidigt wirst, vergilt nicht, nicht einmal subtil. Nimm Kritik und Beleidigung auf, ohne zu reagieren. Dies ist der direkte Test des Geistestrainings.',
+        'Übe keine Vergeltung, selbst wenn andere dich vor vielen Menschen demütigen, und sei nicht verärgert. Sorge dafür, dass das Dharma richtig als Gegenmittel gegen das Greifen nach dem Selbst wirkt.',
     },
     attributionKey: 'commentary',
   },
@@ -925,14 +913,14 @@ export const slogans: Slogan[] = [
     id: 60,
     point: 7,
     en: {
-      slogan: 'Don\'t be temperamental.',
+      slogan: 'Don’t be temperamental.',
       explanation:
-        'Maintain consistent, steady emotional expression. Do not swing between warmth and coldness toward the same person based on how they treat you.',
+        'Do not change your expression from cheery to depressed at the slightest provocation, because this will only upset your companions.',
     },
     de: {
       slogan: 'Sei nicht launisch.',
       explanation:
-        'Behalte einen beständigen, gleichmäßigen emotionalen Ausdruck. Schwinge nicht zwischen Wärme und Kälte gegenüber derselben Person hin und her, basierend darauf, wie sie dich behandelt.',
+        'Verändere deinen Ausdruck nicht schon bei der geringsten Provokation von heiter zu niedergeschlagen, denn das wird nur deine Gefährten verstören.',
     },
     attributionKey: 'commentary',
   },
@@ -940,25 +928,31 @@ export const slogans: Slogan[] = [
     id: 61,
     point: 7,
     en: {
-      slogan: 'Don\'t seek acknowledgement.',
+      slogan: 'Don’t seek acknowledgement.',
       explanation:
-        'Practice without expecting thanks, fame, or recognition. The moment you seek acknowledgement, the purity of the action is compromised.',
+        'Do not expect words of thanks or fame and renown for benefitting others or practising the Dharma.',
     },
     de: {
       slogan: 'Suche nicht nach Anerkennung.',
       explanation:
-        'Übe ohne Dankbarkeit, Ruhm oder Anerkennung zu erwarten. In dem Moment, in dem du Anerkennung suchst, wird die Reinheit der Handlung beeinträchtigt.',
+        'Erwarte weder Worte des Dankes noch Ruhm und Ansehen dafür, anderen zu nützen oder das Dharma zu praktizieren.',
     },
-    attributionKey: 'root-text',
+    attributionKey: 'commentary',
   },
 ];
 
 export const POINT_LABELS: Record<number, { en: string; de: string }> = {
   1: { en: 'The Preliminaries', de: 'Die Vorbereitenden Übungen' },
   2: { en: 'The Main Practice', de: 'Die Hauptpraxis' },
-  3: { en: 'Transforming Adversity', de: 'Widrigkeiten Transformieren' },
-  4: { en: 'Practice throughout Life', de: 'Praxis im ganzen Leben' },
+  3: {
+    en: 'Transforming Adversity into the Path of Enlightenment',
+    de: 'Widrigkeiten in den Weg zur Erleuchtung transformieren',
+  },
+  4: {
+    en: 'Applying the Practice throughout the Whole of Life',
+    de: 'Die Praxis im ganzen Leben anwenden',
+  },
   5: { en: 'The Measure of Mind Training', de: 'Das Ausmaß des Geistestrainings' },
-  6: { en: 'The Commitments', de: 'Die Verpflichtungen' },
-  7: { en: 'The Precepts', de: 'Die Gebote' },
+  6: { en: 'The Commitments of Mind Training', de: 'Die Verpflichtungen des Geistestrainings' },
+  7: { en: 'The Precepts of Mind Training', de: 'Die Gebote des Geistestrainings' },
 };

@@ -21,24 +21,26 @@ export async function cancelAllNotifications(): Promise<void> {
   await Notifications.cancelAllScheduledNotificationsAsync();
 }
 
+export type ScheduleResult = 'scheduled' | 'disabled' | 'permission-denied';
+
 /**
  * Schedule the next 30 daily notifications based on current settings.
  * Always cancels existing scheduled notifications first.
  */
-export async function scheduleNotifications(settings: AppSettings): Promise<void> {
+export async function scheduleNotifications(settings: AppSettings): Promise<ScheduleResult> {
   await cancelAllNotifications();
 
-  if (settings.notifMode === 'off') return;
+  if (settings.notifMode === 'off') return 'disabled';
 
   const granted = await requestNotificationPermission();
-  if (!granted) return;
+  if (!granted) return 'permission-denied';
 
   const title = settings.language === 'de' ? 'Lojong' : 'Lojong';
   const count = Math.min(slogans.length, 30); // schedule up to 30 (OS limit)
 
-  for (let dayOffset = 1; dayOffset <= count; dayOffset++) {
+  for (let dayOffset = 0; dayOffset < count; dayOffset++) {
     const trigger = buildTrigger(settings, dayOffset);
-    const slogan = slogans[(dayOffset - 1) % slogans.length];
+    const slogan = slogans[dayOffset % slogans.length];
     const body = slogan[settings.language].slogan;
 
     await Notifications.scheduleNotificationAsync({
@@ -46,6 +48,8 @@ export async function scheduleNotifications(settings: AppSettings): Promise<void
       trigger,
     });
   }
+
+  return 'scheduled';
 }
 
 function buildTrigger(
@@ -54,16 +58,30 @@ function buildTrigger(
 ): Notifications.NotificationTriggerInput {
   const now = new Date();
   const target = new Date(now);
-  target.setDate(target.getDate() + dayOffset);
 
   if (settings.notifMode === 'fixed') {
-    const [hours, minutes] = settings.notifTime.split(':').map(Number);
+    const [hoursRaw, minutesRaw] = settings.notifTime.split(':').map(Number);
+    const hours = Number.isFinite(hoursRaw) ? Math.min(Math.max(hoursRaw, 0), 23) : 8;
+    const minutes = Number.isFinite(minutesRaw) ? Math.min(Math.max(minutesRaw, 0), 59) : 0;
     target.setHours(hours, minutes, 0, 0);
+
+    // For the first item, use today if possible; otherwise move to tomorrow.
+    if (dayOffset === 0 && target <= now) {
+      target.setDate(target.getDate() + 1);
+    } else {
+      target.setDate(target.getDate() + dayOffset);
+    }
   } else {
     // Random time between 6:00 and 22:00
     const randomHour = 6 + Math.floor(Math.random() * 16);
     const randomMinute = Math.floor(Math.random() * 60);
     target.setHours(randomHour, randomMinute, 0, 0);
+
+    if (dayOffset === 0 && target <= now) {
+      target.setDate(target.getDate() + 1);
+    } else {
+      target.setDate(target.getDate() + dayOffset);
+    }
   }
 
   return { date: target };

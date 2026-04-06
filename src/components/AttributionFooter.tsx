@@ -11,6 +11,7 @@ type Props = {
 export function AttributionFooter({ attributionKey, language }: Props) {
   const attr = getAttribution(attributionKey);
   const title = language === 'de' && attr.titleDe ? attr.titleDe : attr.titleEn;
+  const translator = language === 'de' && attr.translatorDe ? attr.translatorDe : attr.translator;
 
   const handlePress = () => {
     Linking.openURL(attr.url).catch(() => {/* ignore */});
@@ -26,7 +27,7 @@ export function AttributionFooter({ attributionKey, language }: Props) {
         <Text style={styles.source}>
           {title} · {attr.author}
         </Text>
-        <Text style={styles.translator}>trans. {attr.translator}</Text>
+        <Text style={styles.translator}>trans. {translator}</Text>
         <Text style={styles.publisher}>{attr.source}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleLicensePress} accessibilityRole="link">

@@ -13,8 +13,11 @@ export function useSettings() {
   }, []);
 
   const update = useCallback(async (patch: Partial<AppSettings>) => {
-    const updated = { ...settings, ...patch };
-    setSettings(updated);
+    let updated: AppSettings = settings;
+    setSettings((prev) => {
+      updated = { ...prev, ...patch };
+      return updated;
+    });
     await saveSettings(updated);
     return updated;
   }, [settings]);
