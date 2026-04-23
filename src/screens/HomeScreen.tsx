@@ -4,15 +4,14 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { SloganCard } from '@/components/SloganCard';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { useSettings } from '@/hooks/useSettings';
 import { useActiveSlogans } from '@/hooks/useActiveSlogans';
 import { ui } from '@/i18n/ui';
-import { scheduleNotifications } from '@/notifications/scheduler';
 
 type Props = {
   onOpenSettings: () => void;
@@ -31,29 +30,25 @@ export function HomeScreen({
   const t = ui[settings.language];
 
   const persistCurrentSlogan = useCallback(
-    async (nextIndex: number, shouldReschedule: boolean) => {
+    async (nextIndex: number) => {
       const slogan = activeSlogans[nextIndex];
       if (!slogan) return;
 
-      const nextSettings = await update({
+      await update({
         lastSloganIndex: nextIndex,
         lastSloganId: slogan.id,
       });
-
-      if (shouldReschedule && nextSettings.notifMode !== 'off' && nextSettings.order === 'fixed') {
-        await scheduleNotifications(nextSettings);
-      }
     },
     [activeSlogans, update],
   );
 
   const showSloganById = useCallback(
-    (sloganId: number, shouldReschedule: boolean) => {
+    (sloganId: number) => {
       const nextIndex = activeSlogans.findIndex((slogan) => slogan.id === sloganId);
       if (nextIndex < 0) return;
 
       setIndex(nextIndex);
-      void persistCurrentSlogan(nextIndex, shouldReschedule);
+      void persistCurrentSlogan(nextIndex);
     },
     [activeSlogans, persistCurrentSlogan],
   );
@@ -73,15 +68,15 @@ export function HomeScreen({
   React.useEffect(() => {
     if (!loaded || notificationSloganId == null) return;
 
-    showSloganById(notificationSloganId, settings.order === 'fixed');
+    showSloganById(notificationSloganId);
     onNotificationSloganHandled?.();
-  }, [loaded, notificationSloganId, onNotificationSloganHandled, settings.order, showSloganById]);
+  }, [loaded, notificationSloganId, onNotificationSloganHandled, showSloganById]);
 
   const goTo = useCallback(
     (nextIndex: number) => {
       const clamped = Math.max(0, Math.min(activeSlogans.length - 1, nextIndex));
       setIndex(clamped);
-      void persistCurrentSlogan(clamped, true);
+      void persistCurrentSlogan(clamped);
     },
     [activeSlogans.length, persistCurrentSlogan],
   );
@@ -121,7 +116,6 @@ export function HomeScreen({
         <SloganCard
           slogan={currentSlogan}
           language={settings.language}
-          index={index}
           total={activeSlogans.length}
         />
       </View>

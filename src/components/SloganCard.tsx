@@ -14,11 +14,10 @@ import { AttributionFooter } from './AttributionFooter';
 type Props = {
   slogan: Slogan;
   language: Language;
-  index: number;
   total: number;
 };
 
-export function SloganCard({ slogan, language, index, total }: Props) {
+export function SloganCard({ slogan, language, total }: Props) {
   const [showBack, setShowBack] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
@@ -81,7 +80,7 @@ export function SloganCard({ slogan, language, index, total }: Props) {
             </Text>
             <Text style={styles.sloganText}>{content.slogan}</Text>
             <View>
-              <Text style={styles.counter}>{index + 1} {t.of} {total}</Text>
+              <Text style={styles.counter}>{slogan.id} {t.of} {total}</Text>
               <Text style={styles.flipHint}>{t.tapToFlip}</Text>
             </View>
           </View>

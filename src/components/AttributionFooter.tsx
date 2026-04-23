@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet, Linking, View } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import { getAttribution } from '@/content/attribution';
 import { Language } from '@/i18n/ui';
 
@@ -13,26 +13,14 @@ export function AttributionFooter({ attributionKey, language }: Props) {
   const title = language === 'de' && attr.titleDe ? attr.titleDe : attr.titleEn;
   const translator = language === 'de' && attr.translatorDe ? attr.translatorDe : attr.translator;
 
-  const handlePress = () => {
-    Linking.openURL(attr.url).catch(() => {/* ignore */});
-  };
-
-  const handleLicensePress = () => {
-    Linking.openURL(attr.licenseUrl).catch(() => {/* ignore */});
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handlePress} accessibilityRole="link">
-        <Text style={styles.source}>
-          {title} · {attr.author}
-        </Text>
-        <Text style={styles.translator}>trans. {translator}</Text>
-        <Text style={styles.publisher}>{attr.source}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleLicensePress} accessibilityRole="link">
-        <Text style={styles.license}>{attr.licenseId}</Text>
-      </TouchableOpacity>
+      <Text style={styles.source}>
+        {title} · {attr.author}
+      </Text>
+      <Text style={styles.translator}>trans. {translator}</Text>
+      <Text style={styles.publisher}>{attr.source}</Text>
+      <Text style={styles.license}>{attr.licenseId}</Text>
     </View>
   );
 }
@@ -61,7 +49,6 @@ const styles = StyleSheet.create({
   license: {
     fontSize: 11,
     color: '#8b5e3c',
-    textDecorationLine: 'underline',
     marginTop: 4,
   },
 });
