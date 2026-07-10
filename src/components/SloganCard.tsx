@@ -96,60 +96,67 @@ export function SloganCard({ slogan, language, total, intro = false }: Props) {
 
   const contextOpacity = contextAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [0.45, 1],
+    outputRange: [0.68, 1],
   });
 
   return (
-    <TouchableWithoutFeedback onPress={handleFlip} accessibilityRole="button">
-      <Animated.View
-        style={[
-          styles.card,
-          showBack ? styles.cardBack : styles.cardFront,
-          {
-            opacity: immersionAnim.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0.55, 1],
-            }),
-            transform: [
-              { rotateY: rotate },
-              {
-                scale: immersionAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0.96, 1],
-                }),
-              },
-            ],
-          },
-        ]}
-      >
-        {showBack ? (
-          <ScrollView
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false}
-            onScrollBeginDrag={revealContext}
-          >
-            <Text style={styles.pointText}>{t.explanation}</Text>
-            <Text style={styles.sloganSmall}>{content.slogan}</Text>
-            {content.contextBefore ? (
-              <Animated.Text style={[styles.contextText, styles.contextBefore, { opacity: contextOpacity }]}>
-                {content.contextBefore}
-              </Animated.Text>
-            ) : null}
-            <View style={hasContext ? styles.explanationHighlight : null}>
-              <Text style={styles.explanationText}>{content.explanation}</Text>
+    <Animated.View
+      style={[
+        styles.card,
+        showBack ? styles.cardBack : styles.cardFront,
+        {
+          opacity: immersionAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0.55, 1],
+          }),
+          transform: [
+            { rotateY: rotate },
+            {
+              scale: immersionAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0.96, 1],
+              }),
+            },
+          ],
+        },
+      ]}
+    >
+      {showBack ? (
+        // The flip touchable lives INSIDE the ScrollView: a touchable parent
+        // would steal drag gestures from the ScrollView on Android, making
+        // the back unscrollable (drags would flip the card instead).
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          onScrollBeginDrag={revealContext}
+        >
+          <TouchableWithoutFeedback onPress={handleFlip} accessibilityRole="button">
+            <View style={styles.backContent}>
+              <Text style={styles.pointText}>{t.explanation}</Text>
+              <Text style={styles.sloganSmall}>{content.slogan}</Text>
+              {content.contextBefore ? (
+                <Animated.Text style={[styles.contextText, styles.contextBefore, { opacity: contextOpacity }]}>
+                  {content.contextBefore}
+                </Animated.Text>
+              ) : null}
+              <View style={hasContext ? styles.explanationHighlight : null}>
+                <Text style={styles.explanationText}>{content.explanation}</Text>
+              </View>
+              {content.contextAfter ? (
+                <Animated.Text style={[styles.contextText, styles.contextAfter, { opacity: contextOpacity }]}>
+                  {content.contextAfter}
+                </Animated.Text>
+              ) : null}
+              {hasContext && contextHintVisible ? (
+                <Text style={styles.contextHint}>{t.contextHint}</Text>
+              ) : null}
+              <AttributionFooter attributionKey={slogan.attributionKey} language={language} />
+              <Text style={styles.flipHint}>{t.backToSlogan}</Text>
             </View>
-            {content.contextAfter ? (
-              <Animated.Text style={[styles.contextText, styles.contextAfter, { opacity: contextOpacity }]}>
-                {content.contextAfter}
-              </Animated.Text>
-            ) : null}
-            {hasContext && contextHintVisible ? (
-              <Text style={styles.contextHint}>{t.contextHint}</Text>
-            ) : null}
-            <AttributionFooter attributionKey={slogan.attributionKey} language={language} />
-            <Text style={styles.flipHint}>{t.backToSlogan}</Text>
-          </ScrollView>
-        ) : (
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      ) : (
+        <TouchableWithoutFeedback onPress={handleFlip} accessibilityRole="button">
           <View style={styles.frontContent}>
             <Text style={styles.pointText}>
               {t.point} {slogan.point} · {pointLabel}
@@ -160,9 +167,9 @@ export function SloganCard({ slogan, language, total, intro = false }: Props) {
               <Text style={styles.flipHint}>{t.tapToFlip}</Text>
             </View>
           </View>
-        )}
-      </Animated.View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      )}
+    </Animated.View>
   );
 }
 
@@ -191,6 +198,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   scrollContent: {
+    flexGrow: 1,
+  },
+  backContent: {
     flexGrow: 1,
   },
   pointText: {
@@ -231,7 +241,7 @@ const styles = StyleSheet.create({
   },
   contextText: {
     fontSize: 15,
-    color: '#3d2b14',
+    color: '#2c1f0e',
     lineHeight: 23,
   },
   contextBefore: {
@@ -242,7 +252,7 @@ const styles = StyleSheet.create({
   },
   contextHint: {
     fontSize: 11,
-    color: '#b89a7a',
+    color: '#9c7a52',
     fontStyle: 'italic',
     textAlign: 'center',
     marginTop: 14,

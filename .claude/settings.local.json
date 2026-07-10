@@ -40,7 +40,10 @@
       "Bash(node -e \"require\\('/Users/matthijs/dev/lojong/scripts/commentary-context/generate.js'\\)\")",
       "Bash(git -C /Users/matthijs/dev/lojong diff --quiet src/content/slogans.ts)",
       "Bash(echo \"tsc: $?\")",
-      "Bash(date *)"
+      "Bash(date *)",
+      "Bash(rm -rf apk-check3)",
+      "Bash(mkdir apk-check3 *)",
+      "Bash(unzip -o -q /Users/matthijs/dev/lojong/android/app/build/outputs/apk/release/app-release.apk -d apk-check3 assets/index.android.bundle)"
     ]
   }
 }
