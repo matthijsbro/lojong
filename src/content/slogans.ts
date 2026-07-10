@@ -3,7 +3,10 @@
 // Explanations:
 //   English explanations quote directly from Gyalse Tokme Zangpo's
 //   "Commentary on the Seven Points of Mind Training" (trans. Adam Pearcey).
-//   German explanations are in-app translations based on that English commentary.
+//   contextBefore/contextAfter hold the surrounding text of each slogan's
+//   commentary section, so the quote can be read in its original context.
+//   German explanations and context are in-app translations based on that
+//   English commentary.
 // All published by Lotsawa House under CC BY-NC 4.0.
 //
 // To edit content: modify the entries below.
@@ -13,6 +16,10 @@
 export type SloganLocale = {
   slogan: string;
   explanation: string;
+  // Commentary text surrounding the explanation quote, shown de-emphasized
+  // on the back of the card so the quote can be read in context.
+  contextBefore?: string;
+  contextAfter?: string;
 };
 
 export type Slogan = {
@@ -31,11 +38,15 @@ export const slogans: Slogan[] = [
       slogan: 'First, train in the preliminaries.',
       explanation:
         'This consists of three contemplations: i) on the difficulty of finding the freedoms and advantages; ii) on death and impermanence; and iii) on the trials of saṃsāra.',
+      contextAfter:
+        'For the first, we contemplate the following: to obtain this support for practising the Dharma, a human body with its freedoms and advantages, we must have accumulated the cause, which is abundant virtue. Among sentient beings, very few practice pure virtuous action, and this means that the resultant freedoms and advantages are difficult to gain. If we consider other beings, such as animals, we can appreciate just how rare it is to find the freedoms and advantages. Therefore, now that we have found these freedoms and advantages, we must not allow them to go to waste, but use them to practise the one pure Dharma.\n\nMeditate on how life is uncertain and there are many circumstances which can lead to death, so that we cannot be certain we will even survive the day. We must therefore put all our energy into the sacred Dharma right away.\n\nConsider how it is taught that virtuous and unwholesome actions result in pleasure and pain, and how we must therefore avoid all unwholesome actions and practise virtue as much as possible.\n\nTraining in bodhicitta has two parts: i) training in ultimate bodhicitta and ii) training in relative bodhicitta.\n\nThis consists of three sets of practices: the preparation, the main part and the conclusion.\n\nAs the preparation, take refuge and generate bodhicitta, then pray to the deity and the guru and offer the seven branches. Sit up straight and breathe in and out twenty-one times, without any confusion, omission or addition. This will help to make you a suitable vessel for meditative concentration.',
     },
     de: {
       slogan: 'Übe als erstes die Vorbereitenden Übungen.',
       explanation:
         'Dies besteht aus drei Betrachtungen: i) über die Schwierigkeit, die Freiheiten und Vorzüge zu finden; ii) über Tod und Vergänglichkeit; und iii) über die Leiden des Saṃsāra.',
+      contextAfter:
+        'Für die erste betrachten wir Folgendes: Um diese Grundlage für die Praxis des Dharma zu erlangen — einen menschlichen Körper mit seinen Freiheiten und Vorzügen —, müssen wir die Ursache angesammelt haben, nämlich reichliche Tugend. Unter den fühlenden Wesen praktizieren nur sehr wenige reine tugendhafte Handlungen, und das bedeutet, dass die daraus hervorgehenden Freiheiten und Vorzüge schwer zu erlangen sind. Wenn wir andere Wesen betrachten, etwa Tiere, können wir ermessen, wie selten es ist, die Freiheiten und Vorzüge zu finden. Da wir diese Freiheiten und Vorzüge nun gefunden haben, dürfen wir sie daher nicht ungenutzt verstreichen lassen, sondern müssen sie nutzen, um das eine reine Dharma zu praktizieren.\n\nMeditiere darüber, wie ungewiss das Leben ist und wie viele Umstände zum Tod führen können, sodass wir nicht einmal sicher sein können, den heutigen Tag zu überleben. Wir müssen daher unsere ganze Kraft sofort in das heilige Dharma legen.\n\nBetrachte, wie gelehrt wird, dass tugendhafte und unheilsame Handlungen zu Freude und Schmerz führen, und wie wir daher alle unheilsamen Handlungen vermeiden und so viel wie möglich Tugend üben müssen.\n\nDas Training in Bodhicitta hat zwei Teile: i) das Training in letztendlichem Bodhicitta und ii) das Training in relativem Bodhicitta.\n\nDieses besteht aus drei Gruppen von Übungen: der Vorbereitung, dem Hauptteil und dem Abschluss.\n\nAls Vorbereitung nimm Zuflucht und erwecke Bodhicitta, dann bete zur Gottheit und zum Guru und bringe die sieben Zweige dar. Sitze aufrecht und atme einundzwanzigmal ein und aus, ohne Verwirrung, Auslassung oder Hinzufügung. Dies hilft dir, ein geeignetes Gefäß für meditative Konzentration zu werden.',
     },
     attributionKey: 'commentary',
   },
@@ -46,11 +57,15 @@ export const slogans: Slogan[] = [
       slogan: 'Consider all things and events as dreamlike.',
       explanation:
         'As this indicates, the whole environment and the beings within it, which we perceive as objects, are dreamlike. That is to say, they appear as they do because our own minds are deluded and not as a result of even the slightest factor aside from mind.',
+      contextAfter:
+        'We must therefore put a stop to our projections.',
     },
     de: {
       slogan: 'Betrachte alle Dinge und Begebenheiten als traumgleich.',
       explanation:
         'Wie dies andeutet, sind die ganze Umgebung und die Wesen darin, die wir als Objekte wahrnehmen, traumgleich. Das heißt: Sie erscheinen so, weil unsere eigenen Geister verblendet sind und nicht aufgrund auch nur des geringsten Faktors außerhalb des Geistes.',
+      contextAfter:
+        'Wir müssen daher unseren Projektionen ein Ende setzen.',
     },
     attributionKey: 'commentary',
   },
@@ -60,12 +75,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Examine the nature of unborn awareness.',
       explanation:
-        'Mind itself is empty of the three stages of arising, remaining and ceasing. It has no fixed character at all and cannot therefore be apprehended in any way.',
+        'Mind itself is empty of the three stages of arising, remaining and ceasing. It has no colour, no shape, and so on. It does not abide outside or within the body. It has no fixed character at all and cannot therefore be apprehended in any way.',
+      contextAfter:
+        'Rest in an experience beyond thought.',
     },
     de: {
       slogan: 'Untersuche die Natur der ungeborenen Bewusstheit.',
       explanation:
-        'Der Geist selbst ist leer von den drei Phasen des Entstehens, Verweilens und Vergehens. Er hat überhaupt keinen festen Charakter und kann daher in keiner Weise erfasst werden.',
+        'Der Geist selbst ist leer von den drei Phasen des Entstehens, Verweilens und Vergehens. Er hat keine Farbe, keine Form und so weiter. Er verweilt weder außerhalb noch innerhalb des Körpers. Er hat überhaupt keinen festen Charakter und kann daher in keiner Weise erfasst werden.',
+      contextAfter:
+        'Ruhe in einer Erfahrung jenseits des Denkens.',
     },
     attributionKey: 'commentary',
   },
@@ -90,12 +109,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Rest in the ālaya, the essence.',
       explanation:
-        'We must settle with lucid clarity in an experience that is beyond thought. We must not mentally fixate in any way on what has no fixed character at all.',
+        'We must not mentally fixate in any way on what has no fixed character at all.',
+      contextBefore:
+        'Avoiding all the projection and absorption associated with the other seven types of consciousness, we must settle with lucid clarity in an experience that is beyond thought.',
     },
     de: {
       slogan: 'Verweile in ālaya, der Essenz.',
       explanation:
-        'Wir müssen uns mit leuchtender Klarheit in einer Erfahrung niederlassen, die jenseits des Denkens ist. Wir dürfen uns geistig in keiner Weise auf etwas fixieren, das überhaupt keinen festen Charakter hat.',
+        'Wir dürfen uns geistig in keiner Weise auf etwas fixieren, das überhaupt keinen festen Charakter hat.',
+      contextBefore:
+        'Indem wir alle Projektion und Absorption vermeiden, die mit den anderen sieben Arten des Bewusstseins verbunden sind, müssen wir uns mit leuchtender Klarheit in einer Erfahrung niederlassen, die jenseits des Denkens ist.',
     },
     attributionKey: 'commentary',
   },
@@ -105,12 +128,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Between sessions, be a conjurer of illusions.',
       explanation:
-        'We allow the experience of the meditation session to continue into the post-meditation. Whatever appears is just like an illusion and has no true reality.',
+        'In other words, we allow the experience of the meditation session to continue into the post-meditation.',
+      contextAfter:
+        'We carry out all ordinary daily activities in the knowledge that whatever appears—ourselves and others, the environment and beings—is just like an illusion and has no true reality.\n\nThis has two parts: meditation and post-meditation.',
     },
     de: {
       slogan: 'Zwischen den Sitzungen sei ein Beschwörer der Illusionen.',
       explanation:
-        'Wir lassen die Erfahrung der Meditationssitzung in die Zeit nach der Meditation hineinreichen. Was auch immer erscheint, ist wie eine Illusion und hat keine wahre Wirklichkeit.',
+        'Mit anderen Worten: Wir lassen die Erfahrung der Meditationssitzung in die Zeit nach der Meditation hineinreichen.',
+      contextAfter:
+        'Wir gehen allen gewöhnlichen täglichen Aktivitäten in dem Wissen nach, dass alles, was erscheint — wir selbst und andere, die Umgebung und die Wesen —, wie eine Illusion ist und keine wahre Wirklichkeit hat.\n\nDies hat zwei Teile: Meditation und die Zeit nach der Meditation.',
     },
     attributionKey: 'commentary',
   },
@@ -121,11 +148,19 @@ export const slogans: Slogan[] = [
       slogan: 'Train in the two—giving and taking—alternately.',
       explanation:
         'Take on and absorb all their suffering and give them your own body, possessions and virtuous deeds of the past, present and future. Consider that, as a result, they are happy and their virtue increases.',
+      contextBefore:
+        'This is extremely important. As Ācārya Śāntideva said:\n\nWhoever wishes to afford protection\nQuickly to both himself and others\nShould practise that most sacred mystery:\nThe exchanging of oneself for others.\n\nAnd:\n\nUnless I can give away my happiness\nIn exchange for others\' suffering.\nI shall not attain the awakening I seek,\nAnd even in saṃsāra I\'ll find no joy.\n\nAnd:\n\nIn order to allay harms done to me, therefore,\nAnd in order to pacify the sufferings of others,\nI shall give myself up to others\nAnd cherish them as I do myself.\n\nWe begin by focusing clearly on our own mother from this life. From the time she carried us inside her womb, she cared for us unfailingly, so that we could encounter the Buddha\'s teachings and put them into practice. Her kindness is therefore exceedingly great. Not only in this life, but throughout beginningless time in saṃsāra, she has looked upon us with eyes of love, thought of us with affection, shielded us from harm, brought us benefit and ensured our well-being. Thus, her kindness is very great indeed. Considering that the one who did all this for us is now undergoing various miseries in saṃsāra, cultivate intense compassion. Think: "Now I shall benefit her in return! I shall eliminate all that harms her!"\n\nWhat is it that harms her? It is suffering and its origin. Suffering harms her directly, while its origin harms her indirectly. So consider that you take both upon yourself. Take on all the suffering and its origin that exists in her being so that it arises in your own heart. Cultivate a strong wish for this to happen.\n\nWhat is it that would benefit your mother? Happiness and virtue. So, without any selfish concerns, give away all your own happiness and virtue to your mother. Consider that as a result she immediately amasses all the favourable circumstances required for Dharma practice and is capable of attaining awakening. Generate an intense longing for this to occur.\n\nMeditate in the same way while considering your father and others, before ultimately extending the practice to all sentient beings. After all, these sentient beings have been your mother and father throughout the course of beginningless time. They have benefitted you immeasurably and been incredibly kind. Yet all those who showed you such kindness are now being tormented by various sufferings in saṃsāra. Meditate, therefore, on how wonderful it would be if they could be freed from their misery.',
+      contextAfter:
+        'Generate intense longing that this may happen.',
     },
     de: {
       slogan: 'Übe die beiden - Geben und Nehmen- abwechselnd.',
       explanation:
         'Nimm all ihr Leiden in dich auf und gib ihnen deinen eigenen Körper, deine Besitztümer und tugendhaften Handlungen der Vergangenheit, Gegenwart und Zukunft. Betrachte, dass sie dadurch glücklich werden und ihre Tugend zunimmt.',
+      contextBefore:
+        'Dies ist äußerst wichtig. Wie Ācārya Śāntideva sagte:\n\nWer sich selbst und anderen\nrasch Schutz gewähren will,\nder übe jenes heiligste Geheimnis:\ndas Vertauschen von sich selbst mit anderen.\n\nUnd:\n\nWenn ich mein Glück nicht fortgeben kann\nim Tausch gegen das Leiden anderer,\nwerde ich das Erwachen, das ich suche, nicht erlangen,\nund selbst im Saṃsāra werde ich keine Freude finden.\n\nUnd:\n\nUm daher das Leid zu lindern, das mir zugefügt wird,\nund um die Leiden anderer zu befrieden,\ngebe ich mich selbst den anderen hin\nund halte sie so wert wie mich selbst.\n\nWir beginnen damit, uns klar auf unsere eigene Mutter aus diesem Leben zu konzentrieren. Von der Zeit an, als sie uns in ihrem Leib trug, sorgte sie unablässig für uns, sodass wir den Lehren des Buddha begegnen und sie in die Praxis umsetzen konnten. Ihre Güte ist daher überaus groß. Nicht nur in diesem Leben, sondern durch anfangslose Zeit im Saṃsāra hat sie uns mit Augen der Liebe betrachtet, mit Zuneigung an uns gedacht, uns vor Schaden beschützt, uns Nutzen gebracht und für unser Wohlergehen gesorgt. So ist ihre Güte in der Tat sehr groß. Bedenke, dass diejenige, die all dies für uns getan hat, nun verschiedene Leiden im Saṃsāra durchlebt, und kultiviere intensives Mitgefühl. Denke: „Nun werde ich ihr im Gegenzug nützen! Ich werde alles beseitigen, was ihr schadet!"\n\nWas ist es, das ihr schadet? Es sind das Leiden und sein Ursprung. Das Leiden schadet ihr unmittelbar, sein Ursprung mittelbar. Betrachte also, dass du beides auf dich nimmst. Nimm alles Leiden und seinen Ursprung, die in ihrem Wesen existieren, auf dich, sodass sie in deinem eigenen Herzen entstehen. Kultiviere den starken Wunsch, dass dies geschehen möge.\n\nWas ist es, das deiner Mutter nützen würde? Glück und Tugend. Gib also ohne jede selbstbezogene Sorge all dein eigenes Glück und deine Tugend an deine Mutter fort. Betrachte, dass sie dadurch sogleich alle günstigen Umstände ansammelt, die für die Dharma-Praxis erforderlich sind, und fähig ist, das Erwachen zu erlangen. Erwecke ein intensives Sehnen danach, dass dies eintreten möge.\n\nMeditiere auf dieselbe Weise, während du deinen Vater und andere betrachtest, bevor du die Praxis schließlich auf alle fühlenden Wesen ausdehnst. Schließlich sind diese fühlenden Wesen im Verlauf anfangsloser Zeit unsere Mutter und unser Vater gewesen. Sie haben uns unermesslich genützt und waren unglaublich gütig. Doch alle, die uns solche Güte erwiesen haben, werden nun von verschiedenen Leiden im Saṃsāra gequält. Meditiere daher darüber, wie wunderbar es wäre, wenn sie von ihrem Elend befreit werden könnten.',
+      contextAfter:
+        'Erwecke ein intensives Sehnen danach, dass dies geschehen möge.',
     },
     attributionKey: 'commentary',
   },
@@ -150,12 +185,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Three objects, three poisons and three sources of virtue.',
       explanation:
-        'On the basis of the three types of object—pleasant, unpleasant and neutral—we experience the three emotions of attachment, aversion and dull indifference. As a result, they gain the threefold virtue of being without attachment, aversion and dull indifference.',
+        'On the basis of the three types of object—pleasant, unpleasant and neutral—we experience the three emotions of attachment, aversion and dull indifference. There are many beings who experience these three poisons based on the three types of object, so here we consider that we take on all their three poisons. As a result, they gain the threefold virtue of being without attachment, aversion and dull indifference.',
     },
     de: {
       slogan: 'Drei Objekte, drei Gifte und drei Quellen der Tugend.',
       explanation:
-        'Auf der Grundlage der drei Arten von Objekten — angenehm, unangenehm und neutral — erleben wir die drei Emotionen Anhaftung, Abneigung und dumpfe Gleichgültigkeit. Dadurch gewinnen sie die dreifache Tugend, frei von Anhaftung, Abneigung und dumpfer Gleichgültigkeit zu sein.',
+        'Auf der Grundlage der drei Arten von Objekten — angenehm, unangenehm und neutral — erleben wir die drei Emotionen Anhaftung, Abneigung und dumpfe Gleichgültigkeit. Es gibt viele Wesen, die diese drei Gifte auf der Grundlage der drei Arten von Objekten erleben; daher betrachten wir hier, dass wir alle ihre drei Gifte auf uns nehmen. Dadurch gewinnen sie die dreifache Tugend, frei von Anhaftung, Abneigung und dumpfer Gleichgültigkeit zu sein.',
     },
     attributionKey: 'commentary',
   },
@@ -165,12 +200,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'In all activities, train by applying slogans.',
       explanation:
-        'We should recite, "May all the negative actions and suffering of beings ripen on me! May all my happiness and virtue ripen on other beings!" And with this, we should feel intense resolve.',
+        'This means that we should recite, "May all the negative actions and suffering of beings ripen on me! May all my happiness and virtue ripen on other beings!" And with this, we should feel intense resolve.',
     },
     de: {
       slogan: 'Übe bei allen Aktivitäten die Anwendung von Leitsätzen.',
       explanation:
-        'Wir sollten rezitieren: "Mögen alle negativen Handlungen und das Leiden der Wesen auf mir reifen! Mögen all mein Glück und meine Tugend auf anderen Wesen reifen!" Und damit sollten wir starke Entschlossenheit empfinden.',
+        'Das bedeutet, dass wir rezitieren sollten: „Mögen alle negativen Handlungen und das Leiden der Wesen auf mir reifen! Mögen all mein Glück und meine Tugend auf anderen Wesen reifen!" Und damit sollten wir starke Entschlossenheit empfinden.',
     },
     attributionKey: 'commentary',
   },
@@ -180,12 +215,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Begin the process of taking with yourself.',
       explanation:
-        'By first taking on our own future suffering in the present, we will become capable of taking on even the misery of others.',
+        'This means that by first taking on our own future suffering in the present, we will become capable of taking on even the misery of others.',
     },
     de: {
       slogan: 'Beginne mit der Übung des Nehmens bei Dir selbst.',
       explanation:
-        'Indem wir zuerst unser eigenes zukünftiges Leiden in der Gegenwart auf uns nehmen, werden wir fähig, sogar das Elend anderer auf uns zu nehmen.',
+        'Das bedeutet: Indem wir zuerst unser eigenes zukünftiges Leiden in der Gegenwart auf uns nehmen, werden wir fähig, sogar das Elend anderer auf uns zu nehmen.',
     },
     attributionKey: 'commentary',
   },
@@ -196,11 +231,19 @@ export const slogans: Slogan[] = [
       slogan: 'When all the world is filled with evil, transform adversity into the path of enlightenment.',
       explanation:
         'When many such forms of suffering arise, they can be transformed into the path of enlightenment through both intention and action.',
+      contextBefore:
+        'As a result of unwholesome actions, the environment\'s resources become depleted, beings become unruly and so on.',
+      contextAfter:
+        'Intention itself has two aspects: transforming adversity into the path of enlightenment through relative bodhicitta and through ultimate bodhicitta.\n\nIn the past when we experienced suffering we did not recognize self-grasping as the enemy, and, failing to recognize the great kindness of sentient beings, we blamed them.',
     },
     de: {
       slogan: 'Wenn die ganze Welt mit Leid erfüllt ist, transformiere Widrigkeiten in den Weg zu Erleuchtung.',
       explanation:
         'Wenn viele solche Formen des Leidens entstehen, können sie sowohl durch die Absicht als auch durch die Handlung in den Weg zur Erleuchtung verwandelt werden.',
+      contextBefore:
+        'Infolge unheilsamer Handlungen erschöpfen sich die Ressourcen der Umwelt, die Wesen werden zügellos und so weiter.',
+      contextAfter:
+        'Die Absicht selbst hat zwei Aspekte: Widrigkeiten durch relatives Bodhicitta und durch letztendliches Bodhicitta in den Weg zur Erleuchtung zu transformieren.\n\nWenn wir in der Vergangenheit Leiden erlebten, erkannten wir das Greifen nach dem Selbst nicht als den Feind, und da wir die große Güte der fühlenden Wesen nicht erkannten, gaben wir ihnen die Schuld.',
     },
     attributionKey: 'commentary',
   },
@@ -210,12 +253,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Drive all blames into one.',
       explanation:
-        'Whatever suffering we experience is the fault of our own grasping at a self; others are not to blame.',
+        'Whatever suffering we experience is the fault of our own grasping at a self; others are not to blame:',
+      contextAfter:
+        'If all the harm within the world\nAnd all the fears and sufferings\nDerive only from clinging to a self,\nWhat need have I for such a demon?\n\nThroughout beginningless time we have clung to a self where there is none. And, in order to care for this self, we have accumulated the karma of harming others and so on. This is how the sufferings of saṃsāra, such as those of the lower realms, arise. Introduction to the Bodhisattva\'s Way of Life says:\n\nO mind, you have spent countless ages\nPursuing your own interests,\nAnd yet this great exertion\nHas brought you only suffering.\n\nSince it is self-grasping that brings about suffering, we must view this self-grasping as the enemy. The mind that clings to a self where there is none has engendered all the suffering that we have experienced in saṃsāra throughout beginningless time until now. It is this that causes all our attitudes of jealousy towards superiors, contempt towards inferiors and rivalry towards equals. It is this that prevents us from becoming liberated from saṃsāra and that brings about all the suffering of harm from human and non-human interaction. As Introduction to the Bodhisattva\'s Way of Life says:\n\nThis is the one who, hundreds of times\nIn cyclic existence, has done me harm.\nNow, remembering these grievances,\nI shall crush your selfish attitude.\n\nWhenever self-grasping occurs, examination will show that there is no self at all. By questioning why we cling to such a self, we can abandon self-grasping just as it arises. Strive then to prevent this grasping of self-cherishing from occurring again in future. As Introduction to the Bodhisattva\'s Way of Life says:\n\nThe time when you could harm me\nHas passed and is here no more.\nI see you now! Where will you hide?\nI\'ll crush you in all your arrogance.\n\nThus, since whatever harms we face are the fault of this demon of self-grasping, we must do whatever we can to tame it. As Shawopa said: "Today, in this short life, subjugate this demon, I beg you."\n\nSomeone whose intentions and actions are directed towards securing their own well-being warrants the name of \'layperson\'; while someone whose intentions and actions are directed towards the benefit of others is worthy of the name of a Dharma practitioner. Let us therefore avoid and adopt according to Geshe Ben\'s tradition. For it was Geshe Ben who said, "Now I shall hold the spear of the antidote at the gateway of the mind. If it is vigilant, I shall be vigilant too. If it is relaxed, I shall relax as well."\n\nViewing self-grasping as the enemy and avoiding it is what Shawopa called "the Dharma of exorcising the demon."',
     },
     de: {
       slogan: 'Suche alle Schuld in einem.',
       explanation:
         'Welches Leiden wir auch erfahren, es ist die Schuld unseres eigenen Greifens nach einem Selbst; andere sind nicht daran schuld.',
+      contextAfter:
+        'Wenn alles Leid in der Welt\nund alle Ängste und Leiden\nallein aus dem Festhalten an einem Selbst entstehen —\nwozu brauche ich dann solch einen Dämon?\n\nDurch anfangslose Zeit hindurch haben wir an einem Selbst festgehalten, wo keines ist. Und um für dieses Selbst zu sorgen, haben wir das Karma angesammelt, anderen zu schaden, und so weiter. So entstehen die Leiden des Saṃsāra, etwa jene der niederen Bereiche. In der Einführung in den Lebensweg des Bodhisattva heißt es:\n\nO Geist, du hast zahllose Zeitalter damit verbracht,\ndeinen eigenen Interessen nachzujagen,\nund doch hat dir diese große Anstrengung\nnichts als Leiden gebracht.\n\nDa es das Greifen nach dem Selbst ist, das Leiden hervorbringt, müssen wir dieses Greifen nach dem Selbst als den Feind betrachten. Der Geist, der an einem Selbst festhält, wo keines ist, hat alles Leiden hervorgebracht, das wir im Saṃsāra durch anfangslose Zeit bis heute erfahren haben. Er ist es, der all unsere Haltungen der Eifersucht gegenüber Höhergestellten, der Verachtung gegenüber Niedrigergestellten und der Rivalität gegenüber Gleichgestellten verursacht. Er ist es, der uns daran hindert, vom Saṃsāra befreit zu werden, und der alles Leiden aus schädlichen Begegnungen mit Menschen und Nicht-Menschen hervorbringt. Wie es in der Einführung in den Lebensweg des Bodhisattva heißt:\n\nDies ist derjenige, der mir hunderte Male\nim Kreislauf des Daseins Schaden zugefügt hat.\nNun, da ich mich dieser Kränkungen entsinne,\nwerde ich deine selbstsüchtige Haltung zermalmen.\n\nWann immer das Greifen nach dem Selbst auftritt, zeigt die Untersuchung, dass es überhaupt kein Selbst gibt. Indem wir hinterfragen, warum wir an einem solchen Selbst festhalten, können wir das Greifen nach dem Selbst aufgeben, sobald es entsteht. Bemühe dich dann, zu verhindern, dass dieses Greifen der Selbstbezogenheit in Zukunft wieder auftritt. Wie es in der Einführung in den Lebensweg des Bodhisattva heißt:\n\nDie Zeit, in der du mir schaden konntest,\nist vorüber und kommt nicht wieder.\nIch sehe dich jetzt! Wohin willst du fliehen?\nIch werde all deinen Hochmut zermalmen.\n\nDa also alles Leid, dem wir begegnen, die Schuld dieses Dämons des Greifens nach dem Selbst ist, müssen wir alles tun, um ihn zu zähmen. Wie Shawopa sagte: „Heute, in diesem kurzen Leben, unterwirf diesen Dämon, ich bitte dich."\n\nJemand, dessen Absichten und Handlungen darauf gerichtet sind, das eigene Wohlergehen zu sichern, verdient den Namen ‚weltliche Person\'; während jemand, dessen Absichten und Handlungen auf den Nutzen anderer gerichtet sind, den Namen eines Dharma-Praktizierenden verdient. Lasst uns daher gemäß der Tradition von Geshe Ben vermeiden und annehmen. Denn Geshe Ben war es, der sagte: „Nun werde ich den Speer des Gegenmittels am Tor des Geistes halten. Ist er wachsam, werde auch ich wachsam sein. Ist er entspannt, werde auch ich mich entspannen."\n\nDas Greifen nach dem Selbst als den Feind zu betrachten und es zu vermeiden, ist das, was Shawopa „das Dharma des Austreibens des Dämons" nannte.',
     },
     attributionKey: 'commentary',
   },
@@ -225,12 +272,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Meditate on the great kindness of all.',
       explanation:
-        'Generally speaking, all beings have been our kind parents in the course of beginningless time. We must therefore cultivate intense love and compassion for sentient beings.',
+        'Generally speaking, all beings have been our kind parents in the course of beginningless time. They were thus very kind to us in the past. In addition, the attainment of unsurpassable enlightenment also depends on sentient beings. As Introduction to the Bodhisattva\'s Way of Life says:\n\nGiven that a buddha\'s qualities are gained\nIn dependence on ordinary beings and buddhas alike,\nWhat sense is there in honouring only buddhas\nWhile not respecting these ordinary beings?\n\nFor someone training to accomplish buddhahood, buddhas and sentient beings are equal in the extent of their kindness. We must therefore cultivate intense love and compassion for sentient beings; we must take on their negativity and suffering, and give them our happiness and virtue.',
+      contextAfter:
+        'Should we encounter harmful people or non-human beings in particular, let us consider how these harmdoers have been our mother repeatedly throughout beginningless time. At those times, they did not shy away from unwholesome actions, suffering and gossip in order to secure our well-being. This brought them various forms of suffering in saṃsāra. Now, through the power of delusion, they do not recognize us, dear relatives from the past. Indeed, inspired by our own bad karma, they commit the negative act of harming us, which will only lead them to further suffering in the future. Consider, therefore, how they have long endured suffering for our sake and how they will continue to do so in the future, and cultivate intense compassion for them. Think: "In the past, I only did them harm. Now, I shall dispel all their hurt and bring about their benefit!" And meditate intensively on tonglen—giving and taking.\n\nDo whatever you can to benefit visible beings, such as humans or dogs, directly. Even if you cannot do this, at least make the wish that they might be free from suffering, gain happiness and swiftly attain enlightenment. Make this heartfelt aspiration and even recite it aloud. Generate the intention that whatever virtuous acts you perform from now on will be for their sake.\n\nIf the harmdoer is a god or a spirit, think: Throughout beginningless time, I have consumed your flesh and blood, so now in return I offer you my own flesh, blood and so on. Mentally dissect your body in the presence of the harmdoer and surrender it by thinking and even saying aloud, "Eat my flesh and bones! Drink my blood!" Consider that the harmdoer\'s hunger and thirst are pacified through the consumption of your flesh. Unadulterated bliss fills their body and mind, and they master twofold bodhicitta. Imagine that you offer your body to all the gods and spirits that consume flesh and blood in just the same way and that they all become satisfied, happy and virtuous.\n\nThus, since all faults arise from self-cherishing, recognize it as the enemy. And since all benefit and happiness comes from sentient beings, view them as close allies and do whatever you can to help them. As Langri Thangpa said: "No matter which profound Dharma texts I consult, I find the message is the same: all faults are one\'s own and all qualities belong to brother and sister sentient beings. Given this crucial point, the only conclusion is that we must give all profit and victory to others and take all loss and defeat upon ourselves."',
     },
     de: {
       slogan: 'Meditiere auf die große Güte aller.',
       explanation:
-        'Allgemein gesprochen sind alle Wesen im Verlauf anfangsloser Zeit unsere gütigen Eltern gewesen. Deshalb müssen wir intensive Liebe und Mitgefühl für fühlende Wesen kultivieren.',
+        'Allgemein gesprochen sind alle Wesen im Verlauf anfangsloser Zeit unsere gütigen Eltern gewesen. Sie waren also in der Vergangenheit sehr gütig zu uns. Darüber hinaus hängt auch das Erlangen unübertrefflicher Erleuchtung von den fühlenden Wesen ab. Wie es in der Einführung in den Lebensweg des Bodhisattva heißt:\n\nDa die Qualitäten eines Buddha\nin Abhängigkeit von gewöhnlichen Wesen und Buddhas gleichermaßen erlangt werden,\nwelchen Sinn hat es dann, nur die Buddhas zu ehren,\ndiese gewöhnlichen Wesen aber nicht zu achten?\n\nFür jemanden, der übt, um Buddhaschaft zu verwirklichen, sind Buddhas und fühlende Wesen im Ausmaß ihrer Güte gleich. Wir müssen daher intensive Liebe und Mitgefühl für fühlende Wesen kultivieren; wir müssen ihre Negativität und ihr Leiden auf uns nehmen und ihnen unser Glück und unsere Tugend geben.',
+      contextAfter:
+        'Sollten wir insbesondere schädlichen Menschen oder nicht-menschlichen Wesen begegnen, so lasst uns betrachten, wie diese Schadenstifter durch anfangslose Zeit hindurch wiederholt unsere Mutter gewesen sind. Damals schreckten sie nicht vor unheilsamen Handlungen, Leiden und übler Nachrede zurück, um unser Wohlergehen zu sichern. Dies brachte ihnen verschiedene Formen des Leidens im Saṃsāra ein. Nun, durch die Kraft der Verblendung, erkennen sie uns nicht — die lieben Verwandten aus der Vergangenheit. Ja, angestiftet durch unser eigenes schlechtes Karma, begehen sie die negative Handlung, uns zu schaden, die sie in Zukunft nur zu weiterem Leiden führen wird. Betrachte daher, wie lange sie um unseretwillen Leiden ertragen haben und wie sie es auch in Zukunft tun werden, und kultiviere intensives Mitgefühl für sie. Denke: „In der Vergangenheit habe ich ihnen nur geschadet. Nun werde ich all ihr Leid vertreiben und ihren Nutzen bewirken!" Und meditiere intensiv auf Tonglen — Geben und Nehmen.\n\nTu, was immer du kannst, um sichtbaren Wesen wie Menschen oder Hunden unmittelbar zu nützen. Selbst wenn du das nicht kannst, so wünsche zumindest, dass sie frei von Leiden sein, Glück erlangen und rasch die Erleuchtung erreichen mögen. Bringe diesen von Herzen kommenden Wunsch hervor und sprich ihn sogar laut aus. Erwecke die Absicht, dass alle tugendhaften Handlungen, die du von nun an vollbringst, ihnen zugutekommen sollen.\n\nIst der Schadenstifter ein Gott oder ein Geist, so denke: Durch anfangslose Zeit hindurch habe ich dein Fleisch und Blut verzehrt; nun biete ich dir im Gegenzug mein eigenes Fleisch, Blut und so weiter an. Zerteile deinen Körper im Geiste in Gegenwart des Schadenstifters und gib ihn hin, indem du denkst und sogar laut sagst: „Iss mein Fleisch und meine Knochen! Trink mein Blut!" Betrachte, dass Hunger und Durst des Schadenstifters durch den Verzehr deines Fleisches gestillt werden. Ungetrübte Glückseligkeit erfüllt seinen Körper und Geist, und er meistert das zweifache Bodhicitta. Stelle dir vor, dass du deinen Körper auf dieselbe Weise allen Göttern und Geistern darbringst, die Fleisch und Blut verzehren, und dass sie alle zufrieden, glücklich und tugendhaft werden.\n\nDa also alle Fehler aus der Selbstbezogenheit entstehen, erkenne sie als den Feind. Und da aller Nutzen und alles Glück von den fühlenden Wesen kommt, betrachte sie als enge Verbündete und tu, was immer du kannst, um ihnen zu helfen. Wie Langri Thangpa sagte: „Welche tiefgründigen Dharma-Texte ich auch zurate ziehe, ich finde stets dieselbe Botschaft: Alle Fehler sind die eigenen, und alle Qualitäten gehören den fühlenden Wesen, unseren Brüdern und Schwestern. Angesichts dieses entscheidenden Punktes bleibt nur der Schluss, dass wir allen Gewinn und Sieg den anderen geben und alle Verluste und Niederlagen auf uns nehmen müssen."',
     },
     attributionKey: 'commentary',
   },
@@ -241,11 +292,15 @@ export const slogans: Slogan[] = [
       slogan: 'Meditating on delusory perceptions as the four kāyas is the unsurpassable śūnyatā protection.',
       explanation:
         'Whenever we experience mental afflictions or suffering caused by harm from the outer environment or beings within it, these afflictions and sufferings are delusory perceptions of our own mind. They thus lack even the slightest true existence.',
+      contextAfter:
+        'Such relative appearances are comparable to a dream in which we are burnt by fire or drowned in water. It would be an error to mistake what is unreal for reality. All phenomena ultimately lack true reality, so look into the essence of any mental affliction or experience of suffering. Since it does not arise from anywhere in the beginning, it is the unborn dharmakāya. What is unarisen does not cease, so it is the unceasing sambhogakāya. Since what neither arises nor ceases does not remain in the interim, it is the non-abiding nirmāṇakāya. And since these are indivisible in essence, it is the svabhāvikakāya. Viewing delusory perceptions as the four buddha-bodies in this way is known as the instruction on recognizing the four kāyas.\n\nWhatever harms us also proves to be very kind, since it inspires our training in the two types of bodhicitta. The harmdoer highlights how we are without an antidote and how we fail to notice the onset of the mental afflictions, so they are like an emanation of the teacher or buddha. Should you undergo intense suffering as a result of a serious illness like leprosy, think: "Were it not for this suffering I would be caught up in preparations for this life. But this has caused me to remember the Dharma when I had failed to do so. It must therefore be the activity of the guru and the Three Jewels."\n\nIn short, we must arrive at the heartfelt conviction that just as bodhicitta arises in dependence on the guru, twofold bodhicitta can also develop based on harmdoers and suffering, and these are therefore equivalent.',
     },
     de: {
       slogan: 'Auf die trügerischen Wahrnehmungen als die vier kāyas zu meditieren ist der unübertreffliche śūnyatā Schutz.',
       explanation:
         'Wann immer wir geistige Affliktionen oder Leiden erfahren, die durch Schaden von der äußeren Umgebung oder den Wesen darin verursacht werden, sind diese Affliktionen und Leiden trügerische Wahrnehmungen unseres eigenen Geistes. Daher fehlt ihnen selbst die geringste wahre Existenz.',
+      contextAfter:
+        'Solche relativen Erscheinungen sind vergleichbar mit einem Traum, in dem wir von Feuer verbrannt werden oder im Wasser ertrinken. Es wäre ein Irrtum, das Unwirkliche für die Wirklichkeit zu halten. Alle Phänomene entbehren letztlich wahrer Wirklichkeit; schaue daher in die Essenz jeder geistigen Affliktion oder Erfahrung von Leiden. Da sie am Anfang aus nichts entsteht, ist sie der ungeborene Dharmakāya. Was nicht entstanden ist, vergeht nicht — daher ist sie der unaufhörliche Sambhogakāya. Da das, was weder entsteht noch vergeht, auch nicht dazwischen verweilt, ist sie der nicht-verweilende Nirmāṇakāya. Und da diese in ihrer Essenz unteilbar sind, ist sie der Svabhāvikakāya. Trügerische Wahrnehmungen auf diese Weise als die vier Buddha-Körper zu betrachten, ist bekannt als die Unterweisung im Erkennen der vier Kāyas.\n\nWas uns schadet, erweist sich auch als sehr gütig, denn es regt unser Training in den beiden Arten von Bodhicitta an. Der Schadenstifter macht deutlich, dass wir ohne Gegenmittel sind und das Aufkommen der geistigen Affliktionen nicht bemerken; so ist er wie eine Ausstrahlung des Lehrers oder Buddha. Solltest du infolge einer schweren Krankheit wie Lepra intensives Leiden durchmachen, denke: „Gäbe es dieses Leiden nicht, wäre ich in den Vorbereitungen für dieses Leben gefangen. Doch dies hat mich dazu gebracht, mich des Dharma zu entsinnen, als ich es versäumt hatte. Es muss daher das Wirken des Gurus und der Drei Juwelen sein."\n\nKurz gesagt: Wir müssen zu der von Herzen kommenden Überzeugung gelangen, dass — so wie Bodhicitta in Abhängigkeit vom Guru entsteht — das zweifache Bodhicitta sich auch auf der Grundlage von Schadenstiftern und Leiden entwickeln kann, und dass diese daher gleichwertig sind.',
     },
     attributionKey: 'commentary',
   },
@@ -256,11 +311,15 @@ export const slogans: Slogan[] = [
       slogan: 'The fourfold practice is the best of methods.',
       explanation:
         'The fourfold practice is the best of methods: 1. The Practice of Accumulating Merit. 2. The Practice of Purifying Negative Actions. 3. The Practice of Offering to Harmful Influences. 4. The Practice of Offering to the Dharma Protectors.',
+      contextAfter:
+        'When suffering befalls you and you think how joyful you would be were the suffering to disappear, contemplate the following: "Not wanting to suffer but wishing to be happy is a sign that one must accumulate the causes of happiness." So we must make offerings to the guru and Three Jewels, venerate the saṅgha and offer tormas to the elemental spirits. In short, we must put our energy into gathering the accumulations physically, verbally and mentally. We should take refuge, generate bodhicitta, make a maṇḍala offering to the guru and Three Jewels and pray to them fervently, without any hope or fear, saying: "If it is better for me to be sick, bless me with sickness. If it is better for me to be healed, bless me with recovery. If it is better for me to die, bless me with death."\n\nIf we do not wish to suffer, this is a sign that we must abandon the cause of suffering, which is negative actions. To feel regret for the harmful actions we have committed in the past is the power of repentance; to vow never to repeat them even at the cost of one\'s life is the power of restraint; to take refuge and generate bodhicitta is the power of support; to meditate on emptiness, recite special dhāraṇīs and mantras and so on is the power of antidotal action. Thus we should confess our misdeeds properly by means of these four powers.\n\nOffer tormas and make heartfelt prayers, saying, "Since you support my training in bodhicitta, you are very kind. Please continue: cause all the suffering of sentient beings to ripen on me!" If you are not able to do this, offer tormas, cultivate loving kindness and compassion, and command them by saying, "Through whatever I do to assist you now and in the longer term, do not obstruct my Dharma practice!"\n\nOffer tormas to the Dharma protectors and request them to pacify any circumstances that might hinder Dharma practice and to create favourable circumstances instead.',
     },
     de: {
       slogan: 'Die vierfache Praxis ist die beste Methode.',
       explanation:
         'Die vierfache Praxis ist die beste Methode: 1. die Praxis des Ansammelns von Verdienst. 2. die Praxis der Reinigung negativer Handlungen. 3. die Praxis des Darbringens an schädliche Einflüsse. 4. die Praxis des Darbringens an die Dharma-Beschützer.',
+      contextAfter:
+        'Wenn dich Leiden trifft und du denkst, wie froh du wärst, wenn das Leiden verschwände, dann betrachte Folgendes: „Nicht leiden zu wollen, aber glücklich sein zu wollen, ist ein Zeichen dafür, dass man die Ursachen des Glücks ansammeln muss." Wir müssen also dem Guru und den Drei Juwelen Opfergaben darbringen, den Saṅgha verehren und den Elementargeistern Tormas darbringen. Kurz: Wir müssen unsere Kraft darauf richten, die Ansammlungen körperlich, sprachlich und geistig zu vollziehen. Wir sollten Zuflucht nehmen, Bodhicitta erwecken, dem Guru und den Drei Juwelen ein Maṇḍala darbringen und inständig zu ihnen beten, ohne Hoffnung oder Furcht, und sagen: „Wenn es besser für mich ist, krank zu sein, segne mich mit Krankheit. Wenn es besser für mich ist, geheilt zu werden, segne mich mit Genesung. Wenn es besser für mich ist, zu sterben, segne mich mit dem Tod."\n\nWenn wir nicht leiden wollen, ist dies ein Zeichen dafür, dass wir die Ursache des Leidens aufgeben müssen, nämlich negative Handlungen. Reue für die schädlichen Handlungen zu empfinden, die wir in der Vergangenheit begangen haben, ist die Kraft der Reue; zu geloben, sie selbst um den Preis des eigenen Lebens nie zu wiederholen, ist die Kraft der Zurückhaltung; Zuflucht zu nehmen und Bodhicitta zu erwecken, ist die Kraft der Stütze; auf Leerheit zu meditieren, besondere Dhāraṇīs und Mantras zu rezitieren und so weiter, ist die Kraft des gegenwirkenden Handelns. So sollten wir unsere Verfehlungen mittels dieser vier Kräfte in rechter Weise bekennen.\n\nBringe Tormas dar und sprich von Herzen kommende Gebete: „Da ihr mein Training in Bodhicitta unterstützt, seid ihr sehr gütig. Fahrt fort: Lasst alles Leiden der fühlenden Wesen auf mir reifen!" Wenn du dazu nicht in der Lage bist, bringe Tormas dar, kultiviere liebende Güte und Mitgefühl und weise sie an, indem du sagst: „Was immer ich jetzt und künftig tue, um euch beizustehen — behindert meine Dharma-Praxis nicht!"\n\nBringe den Dharma-Schützern Tormas dar und bitte sie, alle Umstände zu befrieden, die die Dharma-Praxis behindern könnten, und stattdessen günstige Umstände zu schaffen.',
     },
     attributionKey: 'commentary',
   },
@@ -271,11 +330,19 @@ export const slogans: Slogan[] = [
       slogan: 'Whatever you encounter, apply the practice.',
       explanation:
         'Should you see someone in distress, immediately take their suffering upon yourself. And whenever you or another experience a strong mental affliction cultivate the heartfelt wish to take on the mental afflictions of others.',
+      contextBefore:
+        'Should you experience intense suffering as a result of sudden illness, harmful influences, encountering an enemy, or the like, consider how there are innumerable cases of such suffering in the world and feel compassion for all those affected. Draw all this suffering into your own or consider how this harm assists your training in bodhicitta. Reflect on how it is comparable to the guru\'s kindness.',
+      contextAfter:
+        'All these methods for bringing adversity onto the path put a stop to both hope and fear. Yet even if we ultimately arrive at a path that is without hope and fear, to train with a view of friends and enemies right now is like straightening a crooked tree, as Langri Thangpa would say.',
     },
     de: {
       slogan: 'Was auch immer Dir begegnet, wende die Praxis an.',
       explanation:
         'Wenn du jemanden in Not siehst, nimm sein Leiden sofort auf dich. Und wann immer du oder jemand anderes eine starke geistige Affliktion erlebt, kultiviere den herzlichen Wunsch, die geistigen Affliktionen anderer auf dich zu nehmen.',
+      contextBefore:
+        'Solltest du infolge plötzlicher Krankheit, schädlicher Einflüsse, der Begegnung mit einem Feind oder dergleichen intensives Leiden erfahren, betrachte, wie es unzählige Fälle solchen Leidens in der Welt gibt, und empfinde Mitgefühl für alle Betroffenen. Ziehe all dieses Leiden in dein eigenes hinein, oder betrachte, wie dieses Leid deinem Training in Bodhicitta hilft. Bedenke, wie es der Güte des Gurus vergleichbar ist.',
+      contextAfter:
+        'All diese Methoden, Widrigkeiten auf den Weg zu bringen, setzen sowohl Hoffnung als auch Furcht ein Ende. Doch selbst wenn wir letztlich zu einem Weg ohne Hoffnung und Furcht gelangen — jetzt mit einer Sicht von Freunden und Feinden zu üben, ist wie das Geradebiegen eines krummen Baumes, wie Langri Thangpa zu sagen pflegte.',
     },
     attributionKey: 'commentary',
   },
@@ -285,12 +352,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'The essence of the instruction, briefly stated, is to apply yourself to the five strengths.',
       explanation:
-        'The five strengths are as follows: 1. The strength of impetus. 2. The strength of familiarization. 3. The strength of wholesome seeds. 4. The strength of revulsion. 5. The strength of aspiration.',
+        'The five strengths are as follows:',
+      contextAfter:
+        '1. The strength of impetus is to create a powerful impetus in the mind, by thinking again and again, "From now on, for this month, this year, throughout my life, and until I attain enlightenment, I shall never part from the two kinds of bodhicitta!"\n\n2. The strength of familiarization is to train repeatedly in the two types of\nbodhicitta.\n\n3. The strength of wholesome seeds is to accumulate merit as much as possible so that bodhicitta may arise and increase.\n\n4. The strength of revulsion is to reflect, whenever thoughts of self-cherishing occur, on how this has been the cause of various sufferings throughout beginningless time and how even in this life it is responsible for suffering, negative actions and Dharma\'s failure to develop as one would wish. And with this, to cast away thoughts of self-cherishing.\n\n5. The strength of aspiration is to make an aspiration after every virtuous deed, such as, "From now until I attain enlightenment, may I never part from the training in twofold bodhicitta! May I transform any adversity that arises and make it a support for this practice!" Make offerings to the guru and Three Jewels and to the Dharma protectors. Offer torma and pray that this may come to pass.\n\nThese five strengths are said to constitute a practice that brings everything together into a single hūṃ.',
     },
     de: {
       slogan: 'Die Essenz der Unterweisungen ist, kurz gesagt, die Anwendung der fünf Kräfte.',
       explanation:
-        'Die fünf Kräfte sind die folgenden: 1. die Kraft des Antriebs. 2. die Kraft der Vertrautheit. 3. die Kraft heilsamer Samen. 4. die Kraft des Widerwillens. 5. die Kraft der Aspiration.',
+        'Die fünf Kräfte sind die folgenden:',
+      contextAfter:
+        '1. Die Kraft des Antriebs besteht darin, einen kraftvollen Antrieb im Geist zu erzeugen, indem man wieder und wieder denkt: „Von nun an — für diesen Monat, dieses Jahr, mein ganzes Leben lang und bis ich die Erleuchtung erlange — werde ich mich nie von den beiden Arten von Bodhicitta trennen!"\n\n2. Die Kraft der Vertrautheit besteht darin, wiederholt in den beiden Arten von Bodhicitta zu üben.\n\n3. Die Kraft heilsamer Samen besteht darin, so viel Verdienst wie möglich anzusammeln, damit Bodhicitta entstehen und wachsen kann.\n\n4. Die Kraft des Widerwillens besteht darin, wann immer Gedanken der Selbstbezogenheit auftreten, darüber nachzudenken, wie diese durch anfangslose Zeit hindurch die Ursache verschiedener Leiden gewesen ist und wie sie selbst in diesem Leben für Leiden, negative Handlungen und das Ausbleiben der erhofften Entwicklung des Dharma verantwortlich ist — und damit die Gedanken der Selbstbezogenheit von sich zu werfen.\n\n5. Die Kraft der Aspiration besteht darin, nach jeder tugendhaften Tat einen Wunsch zu äußern, wie etwa: „Von jetzt an, bis ich die Erleuchtung erlange, möge ich mich nie vom Training im zweifachen Bodhicitta trennen! Möge ich jede Widrigkeit, die entsteht, transformieren und zu einer Stütze dieser Praxis machen!" Bringe dem Guru und den Drei Juwelen sowie den Dharma-Schützern Opfergaben dar. Bringe Torma dar und bete, dass dies in Erfüllung gehen möge.\n\nVon diesen fünf Kräften heißt es, sie bildeten eine Praxis, die alles in einem einzigen Hūṃ zusammenführt.',
     },
     attributionKey: 'commentary',
   },
@@ -300,12 +371,20 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'The mahāyāna advice for transference involves the same five strengths. Conduct is important.',
       explanation:
-        'The particular conduct is to lie on one\'s right side, with the right hand supporting the right cheek. Then, with love and compassion as a preliminary, train in giving and taking as you breathe in and out.',
+        'The particular conduct is to lie on one\'s right side, with the right hand supporting the right cheek. With the little finger of that hand, close the right nostril and breathe through the left. Then, with love and compassion as a preliminary, train in giving and taking as you breathe in and out.',
+      contextBefore:
+        'When someone who practises this teaching contracts an illness that is certain to prove fatal, the practice of wholesome seeds is to offer all one\'s possessions to the greatest possible source of merit, such as the teacher or the Three Jewels. This should be done without any clinging or attachment.\n\nThen the strength of aspiration is to offer the seven branches to the guru and Three Jewels and to make fervent prayers of aspiration such as, "Grant your blessings so that during the bardo and in all my future lives, I may continue to train in twofold bodhicitta! Grant your blessings so that I may encounter a guru who teaches this instruction!"\n\nThe strength of revulsion is to think: "Thoughts of self-cherishing have forced me to suffer in the past, and unless I can be free of them in the future they will continue to prevent my happiness. Even though I have cherished this body of mine, still it suffers. If I examine, there is nothing in either body or mind that is graspable as self." With this understanding, one abandons self-grasping.\n\nThe strength of impetus is to cultivate the strong intention again and again that one will train in twofold bodhicitta during the bardo.\n\nThen the strength of familiarization is to recollect the ways one has trained in twofold bodhicitta in the past.',
+      contextAfter:
+        'After this, consider that everything within saṃsāra and nirvāṇa including birth and death is only a mental projection while mind itself is not truly existent in any way. Then rest in this state of understanding, without clinging to anything at all. Thus, one passes away while combining and meditating upon the two types of bodhicitta. It is said that although there are a great many instructions for the moment of death, none is more wonderful than this.',
     },
     de: {
       slogan: 'Der Mahāyāna Rat für die Übertragung umfasst dieselben fünf Kräfte. Verhalten ist wichtig.',
       explanation:
-        'Das besondere Verhalten besteht darin, auf der rechten Seite zu liegen, wobei die rechte Hand die rechte Wange stützt. Dann übe, mit Liebe und Mitgefühl als Vorbereitung, beim Ein- und Ausatmen Geben und Nehmen.',
+        'Das besondere Verhalten besteht darin, auf der rechten Seite zu liegen, wobei die rechte Hand die rechte Wange stützt. Schließe mit dem kleinen Finger dieser Hand das rechte Nasenloch und atme durch das linke. Dann übe, mit Liebe und Mitgefühl als Vorbereitung, beim Ein- und Ausatmen Geben und Nehmen.',
+      contextBefore:
+        'Wenn jemand, der diese Lehre praktiziert, eine Krankheit bekommt, die mit Sicherheit tödlich verlaufen wird, besteht die Praxis der heilsamen Samen darin, all seinen Besitz der größtmöglichen Quelle von Verdienst darzubringen, etwa dem Lehrer oder den Drei Juwelen. Dies sollte ohne jedes Festhalten und ohne Anhaftung geschehen.\n\nDann besteht die Kraft der Aspiration darin, dem Guru und den Drei Juwelen die sieben Zweige darzubringen und inständige Wunschgebete zu sprechen, wie etwa: „Gewährt euren Segen, dass ich im Bardo und in all meinen künftigen Leben weiter im zweifachen Bodhicitta üben möge! Gewährt euren Segen, dass ich einem Guru begegnen möge, der diese Unterweisung lehrt!"\n\nDie Kraft des Widerwillens besteht darin, zu denken: „Gedanken der Selbstbezogenheit haben mich in der Vergangenheit zum Leiden gezwungen, und wenn ich in Zukunft nicht frei von ihnen sein kann, werden sie weiterhin mein Glück verhindern. Obwohl ich diesen meinen Körper wertgehalten habe, leidet er dennoch. Wenn ich untersuche, gibt es weder im Körper noch im Geist irgendetwas, das als Selbst greifbar wäre." Mit diesem Verständnis gibt man das Greifen nach dem Selbst auf.\n\nDie Kraft des Antriebs besteht darin, wieder und wieder die feste Absicht zu kultivieren, im Bardo im zweifachen Bodhicitta zu üben.\n\nDann besteht die Kraft der Vertrautheit darin, sich zu vergegenwärtigen, wie man in der Vergangenheit im zweifachen Bodhicitta geübt hat.',
+      contextAfter:
+        'Betrachte danach, dass alles innerhalb von Saṃsāra und Nirvāṇa, einschließlich Geburt und Tod, nur eine geistige Projektion ist, während der Geist selbst in keiner Weise wahrhaft existiert. Ruhe dann in diesem Zustand des Verstehens, ohne an irgendetwas festzuhalten. So stirbt man, während man die beiden Arten von Bodhicitta vereint und über sie meditiert. Es heißt, dass es zwar sehr viele Unterweisungen für den Moment des Todes gibt, doch keine wunderbarer ist als diese.',
     },
     attributionKey: 'commentary',
   },
@@ -316,11 +395,15 @@ export const slogans: Slogan[] = [
       slogan: 'All teachings share a single purpose.',
       explanation:
         'The purpose of all the teachings of the greater and lesser vehicles is to tame self-grasping.',
+      contextAfter:
+        'This means that Dharma practice is meaningless—no matter how much one does—unless it functions as an antidote to self-grasping. If the Dharma does function as an antidote to self-grasping that is a sign that mind training has developed in one\'s being. This is the real indication of progress in the Dharma, so it is likened to the bar on the balancing scales that weigh practitioners.',
     },
     de: {
       slogan: 'Alle Belehrungen haben das gleiche Ziel.',
       explanation:
         'Der Zweck aller Lehren der größeren und kleineren Fahrzeuge ist es, das Greifen nach dem Selbst zu zähmen.',
+      contextAfter:
+        'Das bedeutet, dass Dharma-Praxis bedeutungslos ist — ganz gleich, wie viel man tut —, solange sie nicht als Gegenmittel gegen das Greifen nach dem Selbst wirkt. Wenn das Dharma als Gegenmittel gegen das Greifen nach dem Selbst wirkt, ist das ein Zeichen dafür, dass sich das Geistestraining im eigenen Wesen entwickelt hat. Dies ist das wahre Anzeichen für Fortschritt im Dharma; daher wird es mit dem Balken der Waage verglichen, auf der Praktizierende gewogen werden.',
     },
     attributionKey: 'commentary',
   },
@@ -331,11 +414,19 @@ export const slogans: Slogan[] = [
       slogan: 'Of the two witnesses, rely upon the principal one.',
       explanation:
         'The principal witness, therefore, is an unembarassed look at one\'s own mind. To examine oneself thoroughly with an honest mind and have no cause to feel ashamed is a sign of having trained the mind.',
+      contextBefore:
+        'Others might say, "This brother is an example of the saying that one in whom the Dharma has arisen is a fine practitioner." Not meeting others\' disapproval is indeed a form of testimony, but do not take it to be the most important. Ordinary people in this world cannot read minds, so they might be satisfied with glimpsing a fraction of outer conduct.',
+      contextAfter:
+        'So generate the antidotes and make an effort not to discredit yourself.',
     },
     de: {
       slogan: 'Bei zwei Zeugen verlass Dich auf den Hauptzeugen.',
       explanation:
         'Der Hauptzeuge ist daher ein unbeschämter Blick auf den eigenen Geist. Sich mit einem ehrlichen Geist gründlich zu prüfen und keinen Grund zur Scham zu haben, ist ein Zeichen dafür, den Geist trainiert zu haben.',
+      contextBefore:
+        'Andere mögen sagen: „Dieser Bruder ist ein Beispiel für das Sprichwort, dass jemand, in dem das Dharma entstanden ist, ein guter Praktizierender ist." Nicht auf die Missbilligung anderer zu stoßen, ist in der Tat eine Form von Zeugnis, doch halte es nicht für das wichtigste. Gewöhnliche Menschen in dieser Welt können keine Gedanken lesen; sie geben sich vielleicht damit zufrieden, einen Bruchteil des äußeren Verhaltens zu erblicken.',
+      contextAfter:
+        'Bringe also die Gegenmittel hervor und bemühe dich, dich nicht selbst zu entehren.',
     },
     attributionKey: 'commentary',
   },
@@ -345,12 +436,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Always maintain only a joyful attitude.',
       explanation:
-        'Whatever negative circumstances arise, cultivate joy. And train yourself so that you have no hesitation in taking on the adversity of others as well.',
+        'So whatever negative circumstances arise, cultivate joy. And train yourself so that you have no hesitation in taking on the adversity of others as well.',
+      contextBefore:
+        'Through the force of training the mind well, we can be confident that we will be able to integrate any adversity we might face into the path of mind training. This is a measure of having trained the mind.',
     },
     de: {
       slogan: 'Bewahre immer eine freudvolle Haltung.',
       explanation:
-        'Welche negativen Umstände auch entstehen, kultiviere Freude. Und trainiere dich so, dass du keine Zögerlichkeit hast, auch die Widrigkeiten anderer auf dich zu nehmen.',
+        'Welche negativen Umstände also auch entstehen, kultiviere Freude. Und trainiere dich so, dass du keine Zögerlichkeit hast, auch die Widrigkeiten anderer auf dich zu nehmen.',
+      contextBefore:
+        'Durch die Kraft eines guten Geistestrainings können wir zuversichtlich sein, dass wir jede Widrigkeit, der wir begegnen, in den Weg des Geistestrainings einbinden können. Dies ist ein Maß dafür, den Geist trainiert zu haben.',
     },
     attributionKey: 'commentary',
   },
@@ -360,12 +455,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'If this can be done even when distracted, you are proficient.',
       explanation:
-        'A skilled rider will not fall from a horse even when distracted. Similarly, whenever adversity arises, transform the adversity into a support for mind training.',
+        'A skilled rider will not fall from a horse even when distracted.',
+      contextAfter:
+        'Similarly, whenever adversity arises, such as sudden harm from people, if we do not feel anger but transform the adversity into a support for mind training, this is a measure of having trained the mind. Make an effort, therefore, and train to reach this level.\n\nThese various measures of mastery are all signs of having trained the mind, but this does not imply that there is no need for further training. Continue to make an effort and train the mind even after these signs arise.',
     },
     de: {
       slogan: 'Wenn dies auch bei Ablenkung gehalten werden kann, bist Du erfahren.',
       explanation:
-        'Ein geschickter Reiter wird selbst bei Ablenkung nicht vom Pferd fallen. Ebenso sollst du, wann immer Widrigkeit entsteht, die Widrigkeit in eine Unterstützung für das Geistestraining verwandeln.',
+        'Ein geschickter Reiter wird selbst bei Ablenkung nicht vom Pferd fallen.',
+      contextAfter:
+        'Ebenso: Wenn wir, wann immer Widrigkeit entsteht — etwa plötzliches Leid durch andere Menschen —, keinen Zorn empfinden, sondern die Widrigkeit in eine Stütze für das Geistestraining verwandeln, ist dies ein Maß dafür, den Geist trainiert zu haben. Bemühe dich daher und übe, um diese Stufe zu erreichen.\n\nDiese verschiedenen Maße der Meisterschaft sind alle Zeichen dafür, den Geist trainiert zu haben; doch das bedeutet nicht, dass kein weiteres Training mehr nötig wäre. Bemühe dich weiterhin und trainiere den Geist auch dann noch, wenn diese Zeichen aufgetreten sind.',
     },
     attributionKey: 'commentary',
   },
@@ -376,11 +475,15 @@ export const slogans: Slogan[] = [
       slogan: 'Train constantly in three basic principles.',
       explanation:
         'The three basic principles are 1) not to transgress the mind training commitments, 2) not to be reckless, and 3) not to fall into partiality.',
+      contextAfter:
+        '1. Avoid telling yourself that you are a practitioner of mind training who can ignore lesser precepts. Instead, with the intention of training the mind, guard all the precepts you have taken, from the vows of individual liberation through to the commitments of the Vajrayāna, and do not allow them to decline. 2. Avoid all forms of reckless behaviour intended to demonstrate to others that you have no self-cherishing, such as chopping down powerful trees or befriending lepers. Take care not to conflict with the example of the masters of the Kadam tradition founded upon the teachings of Geshe Dromtönpa at Radreng Monastery. 3. Avoid all forms of partiality, such as tolerating abuse from human beings but not from non-human beings, respecting the powerful while disrespecting the weak, and loving one\'s friends but hating enemies. Instead apply the training universally.',
     },
     de: {
       slogan: 'Übe stets die drei grundlegenden Prinzipien.',
       explanation:
         'Die drei grundlegenden Prinzipien sind 1) die Verpflichtungen des Geistestrainings nicht zu übertreten, 2) nicht leichtsinnig zu sein und 3) nicht in Parteilichkeit zu verfallen.',
+      contextAfter:
+        '1. Vermeide es, dir zu sagen, du seiest ein Praktizierender des Geistestrainings, der geringere Gebote missachten kann. Bewahre stattdessen, mit der Absicht, den Geist zu trainieren, alle Gelübde, die du genommen hast — von den Gelübden der individuellen Befreiung bis zu den Verpflichtungen des Vajrayāna — und lass sie nicht verfallen. 2. Vermeide alle Formen rücksichtslosen Verhaltens, mit denen du anderen zeigen willst, dass du keine Selbstbezogenheit hast, wie etwa das Fällen mächtiger Bäume oder den Umgang mit Leprakranken. Achte darauf, nicht im Widerspruch zum Beispiel der Meister der Kadam-Tradition zu stehen, die auf den Lehren von Geshe Dromtönpa im Kloster Radreng gegründet wurde. 3. Vermeide alle Formen der Parteilichkeit, wie etwa Beschimpfungen von Menschen zu ertragen, nicht aber von nicht-menschlichen Wesen; die Mächtigen zu achten, die Schwachen aber zu missachten; und die eigenen Freunde zu lieben, Feinde aber zu hassen. Wende das Training stattdessen allumfassend an.',
     },
     attributionKey: 'commentary',
   },
@@ -391,11 +494,15 @@ export const slogans: Slogan[] = [
       slogan: 'Change your attitude, but remain natural.',
       explanation:
         'Transform your attitude from one of self-cherishing to one of cherishing others, while ensuring that your actions of body and speech are in harmony with those of our Dharma companions.',
+      contextAfter:
+        'It is said that all mind training practices should involve "making great progress but with few outward indications." Mature your mind, therefore, in a way that is imperceptible to others.',
     },
     de: {
       slogan: 'Ändere Deine Haltung, aber bleibe natürlich.',
       explanation:
         'Verwandle deine Haltung von Selbstbezogenheit in das Wertschätzen anderer, und sorge zugleich dafür, dass deine Handlungen von Körper und Sprache mit denen unserer Dharma-Gefährten im Einklang sind.',
+      contextAfter:
+        'Es heißt, dass alle Praktiken des Geistestrainings „großen Fortschritt bei wenigen äußeren Anzeichen" mit sich bringen sollten. Lass deinen Geist daher auf eine Weise reifen, die für andere nicht wahrnehmbar ist.',
     },
     attributionKey: 'commentary',
   },
@@ -421,11 +528,15 @@ export const slogans: Slogan[] = [
       slogan: 'Don’t ponder others’ flaws.',
       explanation:
         'Whenever you see faults in sentient beings in general or especially in those who have entered the door of the Dharma, attribute this to your own impure perception.',
+      contextAfter:
+        'Think that there is no certainty that the person has such a flaw and put an end to your critical patterns of thought.',
     },
     de: {
       slogan: 'Beschäftige Dich nicht mit den Makeln anderer.',
       explanation:
         'Wann immer du Fehler in fühlenden Wesen im Allgemeinen oder besonders in jenen siehst, die durch das Tor des Dharma eingetreten sind, führe dies auf deine eigene unreine Wahrnehmung zurück.',
+      contextAfter:
+        'Denke, dass es keineswegs sicher ist, dass die Person diesen Fehler hat, und setze deinen kritischen Denkmustern ein Ende.',
     },
     attributionKey: 'commentary',
   },
@@ -571,11 +682,15 @@ export const slogans: Slogan[] = [
       slogan: 'Don’t misperform the rites.',
       explanation:
         'Mind training that involves a partial attitude and which is understood as a beneficial method for dealing with demons and harmful influences is no different from shamanic ritual. To qualify as Dharma it must function as an antidote to mental afflictions and ordinary thoughts.',
+      contextBefore:
+        'To take on others\' defeat out of a wish for one\'s own ultimate happiness or to train the mind in order to pacify demons, harmful influences and sickness is just like practising a mundane rite in order to avert misfortune. We must avoid such selfish concerns.',
     },
     de: {
       slogan: 'Führe die Riten nicht falsch aus.',
       explanation:
         'Geistestraining, das eine partielle Haltung einschließt und als nützliche Methode gegen Dämonen und schädliche Einflüsse verstanden wird, ist nicht anders als schamanisches Ritual. Um als Dharma zu gelten, muss es als Gegenmittel gegen geistige Affliktionen und gewöhnliche Gedanken wirken.',
+      contextBefore:
+        'Die Niederlage anderer auf sich zu nehmen aus dem Wunsch nach dem eigenen letztlichen Glück, oder den Geist zu trainieren, um Dämonen, schädliche Einflüsse und Krankheit zu befrieden, ist nichts anderes, als einen weltlichen Ritus auszuführen, um Unglück abzuwenden. Solche selbstbezogenen Anliegen müssen wir vermeiden.',
     },
     attributionKey: 'commentary',
   },
@@ -585,12 +700,20 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Don’t reduce gods to demons.',
       explanation:
-        'If the practice of mind training leads to an increase in pride and arrogance, the Dharma has become non-Dharma. Mind training must discipline one\'s character.',
+        'Like that, if the practice of mind training leads to an increase in pride and arrogance, the Dharma has become non-Dharma. Mind training must discipline one\'s character.',
+      contextBefore:
+        'Worldly people, when their own gods are displeased and cause them harm, say that the god has been reduced to a demon.',
+      contextAfter:
+        'If one\'s character only becomes puffed up with pride, the Dharma has failed to hit home. This is like performing a ransom ritual at the western door when a demon is causing trouble at the eastern door. The medicine needs to be applied directly to the site of the illness. Let us abandon self-cherishing and act as the most humble servant to all.',
     },
     de: {
       slogan: 'Reduziere Götter nicht auf Dämonen.',
       explanation:
-        'Wenn die Praxis des Geistestrainings zu einer Zunahme von Stolz und Arroganz führt, ist das Dharma zu Nicht-Dharma geworden. Geistestraining muss den eigenen Charakter disziplinieren.',
+        'Ebenso gilt: Wenn die Praxis des Geistestrainings zu einer Zunahme von Stolz und Arroganz führt, ist das Dharma zu Nicht-Dharma geworden. Geistestraining muss den eigenen Charakter disziplinieren.',
+      contextBefore:
+        'Weltliche Menschen sagen, wenn ihre eigenen Götter unzufrieden sind und ihnen schaden, der Gott sei zu einem Dämon geworden.',
+      contextAfter:
+        'Wenn der eigene Charakter sich nur vor Stolz aufbläht, hat das Dharma sein Ziel verfehlt. Das ist, als führte man ein Loskaufritual an der Westtür aus, während ein Dämon an der Osttür Unruhe stiftet. Die Medizin muss unmittelbar am Ort der Krankheit angewendet werden. Lasst uns die Selbstbezogenheit aufgeben und allen als demütigster Diener dienen.',
     },
     attributionKey: 'commentary',
   },
@@ -601,11 +724,15 @@ export const slogans: Slogan[] = [
       slogan: 'Don’t seek others’ misery as crutches of your own happiness.',
       explanation:
         'Avoid wishing that others suffer as a means to your own happiness.',
+      contextAfter:
+        'Do not think, for example, "If my close relative or friend were to die, I would get their food, wealth, books and so on," "If my patron were to fall sick and die, I would have the chance to accumulate merit," "If my meditator colleague were to die, I would have the chance to accumulate merit by myself," and "If my enemy were to die, I would no longer be harmed and would have the chance to thrive."\n\nWe must train in methods that ensure mind training does not diminish but strengthens and improves.',
     },
     de: {
       slogan: 'Suche nicht das Elend anderer als Krücke für Dein eigenes Glück.',
       explanation:
         'Vermeide den Wunsch, dass andere leiden, als Mittel zu deinem eigenen Glück.',
+      contextAfter:
+        'Denke zum Beispiel nicht: „Wenn mein naher Verwandter oder Freund stürbe, bekäme ich seine Nahrung, seinen Reichtum, seine Bücher und so weiter", „Wenn mein Gönner krank würde und stürbe, hätte ich die Gelegenheit, Verdienst anzusammeln", „Wenn mein Meditationsgefährte stürbe, hätte ich die Gelegenheit, allein Verdienst anzusammeln", und „Wenn mein Feind stürbe, würde mir kein Schaden mehr zugefügt und ich hätte die Gelegenheit zu gedeihen."\n\nWir müssen in Methoden üben, die sicherstellen, dass das Geistestraining nicht schwindet, sondern sich stärkt und verbessert.',
     },
     attributionKey: 'commentary',
   },
@@ -630,12 +757,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Counter all adversity with a single remedy.',
       explanation:
-        'If we feel compassion for them, we can aspire to take all their problems on ourselves and meditate on giving and taking (tonglen).',
+        'As we feel compassion for them, we can aspire to take all their problems on ourselves and meditate on giving and taking (tonglen).',
+      contextBefore:
+        'If through practising mind training we experience illness, fall prey to demons and harmful influences, become subject to slander or find that our mental afflictions increase, so that we no longer wish to train the mind we can consider how many people in the world experience similar difficulties.',
     },
     de: {
       slogan: 'Begegne allen Widrigkeiten mit einem einzigen Gegenmittel.',
       explanation:
-        'Wenn wir Mitgefühl für sie empfinden, können wir danach streben, all ihre Probleme auf uns zu nehmen und auf Geben und Nehmen (Tonglen) zu meditieren.',
+        'Indem wir Mitgefühl für sie empfinden, können wir danach streben, all ihre Probleme auf uns zu nehmen und auf Geben und Nehmen (Tonglen) zu meditieren.',
+      contextBefore:
+        'Wenn wir durch die Praxis des Geistestrainings Krankheit erfahren, Dämonen und schädlichen Einflüssen anheimfallen, Verleumdung ausgesetzt sind oder feststellen, dass unsere geistigen Affliktionen zunehmen, sodass wir den Geist nicht mehr trainieren möchten, können wir betrachten, wie viele Menschen auf der Welt ähnliche Schwierigkeiten erleben.',
     },
     attributionKey: 'commentary',
   },
@@ -645,12 +776,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Two tasks: one at the beginning and one at the end.',
       explanation:
-        'In the morning create the right impetus by thinking, "Today I shall not part from twofold bodhicitta!" In the evening when preparing to sleep review the day\'s activities.',
+        'In the morning create the right impetus by thinking, "Today I shall not part from twofold bodhicitta!" Then maintain mindfulness and awareness accordingly during the day. In the evening when preparing to sleep review the day\'s activities.',
+      contextAfter:
+        'If you acted in a way that is contrary to bodhicitta, spell out your faults, confess, and resolve not to repeat the faults in future. If your actions were in accord with bodhicitta, rejoice and aspire to continue in a similar vein.',
     },
     de: {
       slogan: 'Zwei Aufgaben: Eine am Anfang und eine am Ende.',
       explanation:
-        'Erschaffe am Morgen den richtigen Antrieb, indem du denkst: "Heute werde ich mich nicht von der zweifachen Bodhicitta trennen!" Prüfe am Abend, wenn du dich zum Schlafen bereit machst, die Handlungen des Tages.',
+        'Erschaffe am Morgen den richtigen Antrieb, indem du denkst: „Heute werde ich mich nicht von der zweifachen Bodhicitta trennen!" Bewahre dann tagsüber entsprechend Achtsamkeit und Gewahrsein. Prüfe am Abend, wenn du dich zum Schlafen bereit machst, die Handlungen des Tages.',
+      contextAfter:
+        'Wenn du auf eine Weise gehandelt hast, die Bodhicitta widerspricht, benenne deine Fehler, bekenne sie und fasse den Entschluss, sie in Zukunft nicht zu wiederholen. Standen deine Handlungen im Einklang mit Bodhicitta, freue dich und fasse den Wunsch, auf ähnliche Weise fortzufahren.',
     },
     attributionKey: 'commentary',
   },
@@ -660,12 +795,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Whichever of the two occurs, be patient.',
       explanation:
-        'Should you accumulate followers and a wealth of possessions, do not let them become a cause of arrogance. Should you become so destitute that you are lower than everything but water, recognize that this too is illusory.',
+        'Should you accumulate followers and a wealth of possessions, do not let them become a cause of arrogance. Instead recognize their illusoriness, and aspire that they become a means of benefitting others. Should you become so destitute that you are (as the saying goes) lower than everything but water, recognize that this too is illusory.',
+      contextAfter:
+        'Take all the hardships of others upon yourself and do not be discouraged.',
     },
     de: {
       slogan: 'Egal, was von den beiden erscheint, sei geduldig.',
       explanation:
-        'Solltest du Anhänger und Reichtum an Besitztümern ansammeln, lass dies nicht zu einer Ursache von Arroganz werden. Solltest du so verarmt sein, dass du niedriger bist als alles außer Wasser, erkenne, dass auch dies illusorisch ist.',
+        'Solltest du Anhänger und Reichtum an Besitztümern ansammeln, lass dies nicht zu einer Ursache von Arroganz werden. Erkenne stattdessen ihre Illusionshaftigkeit und strebe danach, dass sie zu einem Mittel werden, anderen zu nützen. Solltest du so verarmt sein, dass du (wie es im Sprichwort heißt) niedriger bist als alles außer Wasser, erkenne, dass auch dies illusorisch ist.',
+      contextAfter:
+        'Nimm alle Mühen anderer auf dich und lass dich nicht entmutigen.',
     },
     attributionKey: 'commentary',
   },
@@ -691,11 +830,15 @@ export const slogans: Slogan[] = [
       slogan: 'Train in the three difficulties.',
       explanation:
         'When mental afflictions arise, it is difficult to notice them in the beginning, difficult to avert them in the middle and difficult to interrupt their continuity in the end.',
+      contextAfter:
+        'Recognize them, therefore, when they first arise; strengthen the antidote so as to abandon them in the middle; and make every effort to ensure that they do not arise again at the end.',
     },
     de: {
       slogan: 'Übe Dich in den drei Schwierigkeiten.',
       explanation:
         'Wenn geistige Affliktionen entstehen, ist es schwierig, sie am Anfang zu bemerken, schwierig, sie in der Mitte abzuwenden, und schwierig, ihre Kontinuität am Ende zu unterbrechen.',
+      contextAfter:
+        'Erkenne sie daher, wenn sie zum ersten Mal auftreten; stärke das Gegenmittel, um sie in der Mitte aufzugeben; und bemühe dich nach Kräften, dass sie am Ende nicht wieder entstehen.',
     },
     attributionKey: 'commentary',
   },
@@ -706,11 +849,15 @@ export const slogans: Slogan[] = [
       slogan: 'Acquire the three main provisions.',
       explanation:
         'The most important provisions for Dharma practice are meeting a good teacher, practising authentically with a workable mind, and gathering the conditions conducive to Dharma practice.',
+      contextAfter:
+        'When these three are complete, rejoice and make the aspiration that others may similarly gain all three. Should the three be incomplete, consider that many others in the world also lack these prerequisites and are unable to practise Dharma authentically as a result. Feel compassion for them. Cultivate the heartfelt aspiration that their lack of these provisions may ripen on you and that they may come to possess them all.',
     },
     de: {
       slogan: 'Erstrebe die drei Vorbedingungen.',
       explanation:
         'Die wichtigsten Voraussetzungen für die Dharma-Praxis sind, einem guten Lehrer zu begegnen, authentisch mit einem brauchbaren Geist zu praktizieren und die Bedingungen zu sammeln, die der Dharma-Praxis förderlich sind.',
+      contextAfter:
+        'Wenn diese drei vollständig sind, freue dich und äußere den Wunsch, dass auch andere alle drei erlangen mögen. Sollten die drei unvollständig sein, betrachte, dass auch viele andere auf der Welt diese Voraussetzungen entbehren und deshalb das Dharma nicht authentisch praktizieren können. Empfinde Mitgefühl für sie. Kultiviere den von Herzen kommenden Wunsch, dass ihr Mangel an diesen Voraussetzungen auf dir reifen möge und sie alle drei besitzen mögen.',
     },
     attributionKey: 'commentary',
   },
@@ -721,11 +868,15 @@ export const slogans: Slogan[] = [
       slogan: 'Cultivate the three that must not decline.',
       explanation:
         'Since all the qualities of the great vehicle depend on devotion to the guru, this devotion must not decline. Mind training is the quintessence of Mahāyāna Dharma, so enthusiasm for its practice must not decline.',
+      contextAfter:
+        'And maintenance of the precepts of the greater and lesser vehicles, from the minor ones onward, must not decline.\n\nKeep the three inseparable.\n\nEnsure that your body, speech and mind never deviate from virtue.',
     },
     de: {
       slogan: 'Kultiviere die drei, die nicht abnehmen dürfen.',
       explanation:
         'Da alle Qualitäten des großen Fahrzeugs von Hingabe an den Guru abhängen, darf diese Hingabe nicht abnehmen. Geistestraining ist die Quintessenz des Mahāyāna-Dharma, daher darf die Begeisterung für seine Praxis nicht abnehmen.',
+      contextAfter:
+        'Und die Bewahrung der Gebote des größeren und des kleineren Fahrzeugs, von den geringsten an, darf nicht nachlassen.\n\nBewahre die drei Untrennbaren.\n\nSorge dafür, dass dein Körper, deine Rede und dein Geist nie von der Tugend abweichen.',
     },
     attributionKey: 'commentary',
   },
@@ -736,11 +887,15 @@ export const slogans: Slogan[] = [
       slogan: 'Keep the three from which you must not separate.',
       explanation:
         'Ensure that your body, speech and mind never deviate from virtue.',
+      contextBefore:
+        'Since all the qualities of the great vehicle depend on devotion to the guru, this devotion must not decline. Mind training is the quintessence of Mahāyāna Dharma, so enthusiasm for its practice must not decline. And maintenance of the precepts of the greater and lesser vehicles, from the minor ones onward, must not decline.\n\nKeep the three inseparable.',
     },
     de: {
       slogan: 'Halte die drei, die Du Dich nicht aufgeben darfst.',
       explanation:
         'Sorge dafür, dass dein Körper, deine Sprache und dein Geist niemals von der Tugend abweichen.',
+      contextBefore:
+        'Da alle Qualitäten des großen Fahrzeugs von der Hingabe an den Guru abhängen, darf diese Hingabe nicht nachlassen. Geistestraining ist die Quintessenz des Mahāyāna-Dharma; daher darf die Begeisterung für seine Praxis nicht nachlassen. Und die Bewahrung der Gebote des größeren und des kleineren Fahrzeugs, von den geringsten an, darf nicht nachlassen.\n\nBewahre die drei Untrennbaren.',
     },
     attributionKey: 'commentary',
   },
@@ -751,11 +906,15 @@ export const slogans: Slogan[] = [
       slogan: 'Apply the training impartially to all.',
       explanation:
         'Mind training must be applied to all sentient beings and insentient objects equally and without partiality.',
+      contextAfter:
+        'You must apply the techniques to everything that arises in the mind. This should not be mere lip service but deep competence.',
     },
     de: {
       slogan: 'Wende das Training auf alle gleichermaßen an.',
       explanation:
         'Geistestraining muss auf alle fühlenden Wesen und unbelebten Objekte gleichermaßen und ohne Parteilichkeit angewendet werden.',
+      contextAfter:
+        'Du musst die Techniken auf alles anwenden, was im Geist entsteht. Dies sollte kein bloßes Lippenbekenntnis sein, sondern tiefe Vertrautheit.',
     },
     attributionKey: 'commentary',
   },
@@ -766,11 +925,15 @@ export const slogans: Slogan[] = [
       slogan: 'It is vital that it be deep and all-pervasive.',
       explanation:
         'You must apply the techniques to everything that arises in the mind. This should not be mere lip service but deep competence.',
+      contextBefore:
+        'Mind training must be applied to all sentient beings and insentient objects equally and without partiality.',
     },
     de: {
       slogan: 'Es ist entscheidend, dass es tiefgründig und alldurchdringend ist.',
       explanation:
         'Du musst die Techniken auf alles anwenden, was im Geist entsteht. Das sollte nicht bloß Lippenbekenntnis sein, sondern tiefe Kompetenz.',
+      contextBefore:
+        'Das Geistestraining muss auf alle fühlenden Wesen und unbelebten Dinge gleichermaßen und ohne Parteilichkeit angewendet werden.',
     },
     attributionKey: 'commentary',
   },
@@ -811,11 +974,19 @@ export const slogans: Slogan[] = [
       slogan: 'This time, practise what’s most important.',
       explanation:
         'More important than the affairs of this life is the Dharma. More important than Dharma study and teaching is practice. More important than other forms of practice is training in bodhicitta.',
+      contextBefore:
+        'All the physical forms we have adopted throughout beginningless time have been to no avail. Now, in this lifetime we must accomplish what is most important.',
+      contextAfter:
+        'More important than training through scripture and reasoning is assiduous practice based on the guru\'s instructions. More important than other forms of conduct is remaining on one\'s seat and practising. More important than avoiding objects is to apply the antidote. These are the most important things to put into practice.',
     },
     de: {
       slogan: 'Praktiziere dieses Mal das, was am wichtigsten ist.',
       explanation:
         'Wichtiger als die Angelegenheiten dieses Lebens ist das Dharma. Wichtiger als Dharma-Studium und Lehren ist Praxis. Wichtiger als andere Formen der Praxis ist das Training in Bodhicitta.',
+      contextBefore:
+        'Alle körperlichen Gestalten, die wir durch anfangslose Zeit hindurch angenommen haben, waren vergebens. Jetzt, in diesem Leben, müssen wir das Wichtigste vollbringen.',
+      contextAfter:
+        'Wichtiger als das Üben durch Schrift und Logik ist beharrliche Praxis auf der Grundlage der Unterweisungen des Gurus. Wichtiger als andere Formen des Verhaltens ist es, auf seinem Sitz zu bleiben und zu praktizieren. Wichtiger als das Meiden von Objekten ist es, das Gegenmittel anzuwenden. Dies sind die wichtigsten Dinge, die es in die Praxis umzusetzen gilt.',
     },
     attributionKey: 'commentary',
   },
@@ -825,12 +996,16 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Don’t misunderstand.',
       explanation:
-        'There are six forms of misunderstanding to be avoided: misplaced patience, misplaced intention, misplaced relish, misplaced compassion, misplaced pursuit, and misplaced joy.',
+        'There are six forms of misunderstanding to be avoided:',
+      contextAfter:
+        '1. Misplaced patience is to bear any difficulties related to outdoing one\'s enemies and protecting one\'s friends but not the sufferings related to Dharma practice. 2. Misplaced intention is to feel no interest in pure Dharma practice but to take an interest in the glories and riches of this life. 3. Misplaced relish is to fail to savour the taste of the Dharma through study, reflection and meditation but to savour the taste of worldly pleasures. 4. Misplaced compassion is to fail to cultivate compassion for wrongdoers but to cultivate it for those who endure hardship for the sake of the Dharma. 5. Misplaced pursuit is to fail to encourage one\'s dependents to pursue the Dharma but to encourage them to pursue the means of increasing the glories and riches of this life.\n\n6. Misplaced joy is to fail to cultivate joy for the happiness and virtues of saṃsāra and nirvāṇa but to rejoice when rivals suffer.\n\nAvoid these six mistaken forms of practice and take to heart the six unmistaken forms.',
     },
     de: {
       slogan: 'Verstehe nicht falsch.',
       explanation:
-        'Es gibt sechs Formen des Missverstehens, die vermieden werden müssen: fehlgeleitete Geduld, fehlgeleitete Absicht, fehlgeleiteter Genuss, fehlgeleitetes Mitgefühl, fehlgeleitetes Streben und fehlgeleitete Freude.',
+        'Es gibt sechs Formen des Missverstehens, die vermieden werden müssen:',
+      contextAfter:
+        '1. Fehlgeleitete Geduld bedeutet, alle Schwierigkeiten zu ertragen, die damit verbunden sind, die eigenen Feinde zu übertreffen und die eigenen Freunde zu schützen — nicht aber die Mühen, die mit der Dharma-Praxis verbunden sind. 2. Fehlgeleitete Absicht bedeutet, kein Interesse an reiner Dharma-Praxis zu haben, wohl aber an den Herrlichkeiten und Reichtümern dieses Lebens. 3. Fehlgeleiteter Genuss bedeutet, den Geschmack des Dharma durch Studium, Nachdenken und Meditation nicht auszukosten, wohl aber den Geschmack weltlicher Vergnügungen. 4. Fehlgeleitetes Mitgefühl bedeutet, kein Mitgefühl für Übeltäter zu kultivieren, wohl aber für jene, die um des Dharma willen Entbehrungen auf sich nehmen. 5. Fehlgeleitetes Streben bedeutet, die von einem Abhängigen nicht zu ermutigen, dem Dharma nachzustreben, sondern sie zu ermutigen, den Mitteln zur Mehrung der Herrlichkeiten und Reichtümer dieses Lebens nachzujagen.\n\n6. Fehlgeleitete Freude bedeutet, sich nicht an Glück und Tugenden von Saṃsāra und Nirvāṇa zu erfreuen, sondern sich zu freuen, wenn Rivalen leiden.\n\nVermeide diese sechs fehlgeleiteten Formen der Praxis und nimm dir die sechs nicht fehlgeleiteten Formen zu Herzen.',
     },
     attributionKey: 'commentary',
   },
@@ -870,12 +1045,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Gain freedom through discernment and analysis.',
       explanation:
-        'Determine which of your mental afflictions is the strongest and make that the focus of intensive effort. If it does arise, apply an antidote to overcome it, and make every effort until it no longer arises.',
+        'Determine which of your mental afflictions is the strongest and make that the focus of intensive effort. Investigate whether or not that affliction arises whenever you come into contact with a potentially provocative object. If it does arise, apply an antidote to overcome it, and make every effort until it no longer arises.',
     },
     de: {
       slogan: 'Gewinne Freiheit durch Einsicht und Analyse.',
       explanation:
-        'Bestimme, welche deiner geistigen Affliktionen die stärkste ist, und mache sie zum Fokus intensiver Bemühung. Wenn sie tatsächlich entsteht, wende ein Gegenmittel an, um sie zu überwinden, und bemühe dich, bis sie nicht mehr entsteht.',
+        'Bestimme, welche deiner geistigen Affliktionen die stärkste ist, und mache sie zum Fokus intensiver Bemühung. Untersuche, ob diese Affliktion entsteht, wann immer du mit einem potenziell provozierenden Objekt in Kontakt kommst. Wenn sie tatsächlich entsteht, wende ein Gegenmittel an, um sie zu überwinden, und bemühe dich, bis sie nicht mehr entsteht.',
     },
     attributionKey: 'commentary',
   },
@@ -886,11 +1061,15 @@ export const slogans: Slogan[] = [
       slogan: 'Don’t be boastful.',
       explanation:
         'Do not boast about how kind you are to others, how long you have strenuously practised the Dharma, or how learned and disciplined you are.',
+      contextAfter:
+        'There can be no boasting when you meditate on cherishing others more than yourself. As Radrengpa put it, "Don\'t have high hopes for human beings; supplicate the deities instead."',
     },
     de: {
       slogan: 'Sei nicht prahlerisch.',
       explanation:
         'Prahle nicht damit, wie gütig du zu anderen bist, wie lange du das Dharma angestrengt praktiziert hast oder wie gelehrt und diszipliniert du bist.',
+      contextAfter:
+        'Es kann kein Prahlen geben, wenn du darüber meditierst, andere mehr wertzuhalten als dich selbst. Wie Radrengpa es ausdrückte: „Setze keine großen Hoffnungen in Menschen; bete stattdessen zu den Gottheiten."',
     },
     attributionKey: 'commentary',
   },
@@ -900,12 +1079,12 @@ export const slogans: Slogan[] = [
     en: {
       slogan: 'Don’t be irritable.',
       explanation:
-        'Do not retaliate even if others humiliate you in front of many people and do not be annoyed. Ensure that Dharma functions properly as an antidote to self-grasping.',
+        'Do not retaliate even if others humiliate you in front of many people and do not be annoyed. If we practitioners do not make the Dharma an antidote to self-grasping our patience can become more fragile than a baby\'s skin and we can feel even more irritable than the demon Tsang Tsen. This does not qualify as Dharma, so ensure that Dharma functions properly as an antidote to self-grasping.',
     },
     de: {
       slogan: 'Sei nicht reizbar.',
       explanation:
-        'Übe keine Vergeltung, selbst wenn andere dich vor vielen Menschen demütigen, und sei nicht verärgert. Sorge dafür, dass das Dharma richtig als Gegenmittel gegen das Greifen nach dem Selbst wirkt.',
+        'Übe keine Vergeltung, selbst wenn andere dich vor vielen Menschen demütigen, und sei nicht verärgert. Wenn wir Praktizierenden das Dharma nicht zum Gegenmittel gegen das Greifen nach dem Selbst machen, kann unsere Geduld zerbrechlicher werden als die Haut eines Säuglings, und wir können uns noch reizbarer fühlen als der Dämon Tsang Tsen. Das verdient nicht den Namen Dharma; sorge also dafür, dass das Dharma richtig als Gegenmittel gegen das Greifen nach dem Selbst wirkt.',
     },
     attributionKey: 'commentary',
   },
@@ -931,11 +1110,15 @@ export const slogans: Slogan[] = [
       slogan: 'Don’t seek acknowledgement.',
       explanation:
         'Do not expect words of thanks or fame and renown for benefitting others or practising the Dharma.',
+      contextAfter:
+        'Train well like this throughout your entire life, cultivating twofold bodhicitta in meditation sessions and the periods in between. Then you will gain the confidence of mastery.\n\nThe essence of the nectar-like instructions\nfor transforming into the path of awakening\nthe five prevalent signs of degeneration\nwas passed down from the one from Golden Isle.\n\nAt this time when the five signs of degeneration—in time, beings, lifespan, mental afflictions, and view—are widespread, there are few circumstances conducive to happiness and many that provoke suffering, including harm from humans and non-humans. Being entangled in negative circumstances such as these can become a support for mind training. Then, no matter how many negative circumstances one might face, the practice of mind training will ensure that virtue only increases.\n\nThis pithy advice from the teacher of Suvarnadvīpa is like a nectar that turns poison into medicine. It is superior to any other instruction. With knowledge of how to train the mind in this way, the body of the mind training practitioner becomes \'the city that is the source of happiness\', because it brings about all one\'s own and others\' joys in saṃsāra and nirvāṇa. By applying this to all undertakings and training the mind well, your mind will merge with the Dharma, and it will not be long before you attain the perfect goal for both yourself and others.',
     },
     de: {
       slogan: 'Suche nicht nach Anerkennung.',
       explanation:
         'Erwarte weder Worte des Dankes noch Ruhm und Ansehen dafür, anderen zu nützen oder das Dharma zu praktizieren.',
+      contextAfter:
+        'Übe auf diese Weise gut während deines ganzen Lebens und kultiviere das zweifache Bodhicitta in den Meditationssitzungen und den Zeiten dazwischen. Dann wirst du die Zuversicht der Meisterschaft erlangen.\n\nDie Essenz der nektargleichen Unterweisungen,\num die fünf vorherrschenden Zeichen des Verfalls\nin den Weg des Erwachens zu verwandeln,\nwurde überliefert von dem von der Goldenen Insel.\n\nIn dieser Zeit, in der die fünf Zeichen des Verfalls — der Zeit, der Wesen, der Lebensspanne, der geistigen Affliktionen und der Sicht — weit verbreitet sind, gibt es wenige Umstände, die dem Glück förderlich sind, und viele, die Leiden hervorrufen, einschließlich des Schadens durch Menschen und Nicht-Menschen. In solche negativen Umstände verstrickt zu sein, kann zu einer Stütze für das Geistestraining werden. Dann wird die Praxis des Geistestrainings dafür sorgen, dass die Tugend nur zunimmt, ganz gleich, wie vielen negativen Umständen man begegnet.\n\nDieser prägnante Rat des Lehrers von Suvarnadvīpa ist wie ein Nektar, der Gift in Medizin verwandelt. Er ist jeder anderen Unterweisung überlegen. Mit dem Wissen, den Geist auf diese Weise zu trainieren, wird der Körper des Praktizierenden des Geistestrainings zur ‚Stadt, die die Quelle des Glücks ist\', denn er bringt alle eigenen und fremden Freuden in Saṃsāra und Nirvāṇa hervor. Indem du dies auf alle Unternehmungen anwendest und den Geist gut trainierst, wird dein Geist mit dem Dharma verschmelzen, und es wird nicht lange dauern, bis du das vollkommene Ziel für dich selbst und andere erreichst.',
     },
     attributionKey: 'commentary',
   },

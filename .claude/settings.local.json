@@ -17,7 +17,29 @@
       "Bash(brew install:*)",
       "Bash(pdftoppm -v)",
       "Bash(pdftotext \"/Users/matthijs/dev/lojong/pdf-content/Commentary on the Seven Points.pdf\" -)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(pdftotext -layout \"/Users/matthijs/dev/lojong/pdf-content/Commentary on the Seven Points.pdf\" commentary-en.txt)",
+      "Bash(pdftotext -layout \"/Users/matthijs/dev/lojong/pdf-content/Geistestraining in Sieben Punkten.pdf\" german.txt)",
+      "Bash(pdftotext \"/Users/matthijs/dev/lojong/pdf-content/Commentary on the Seven Points.pdf\" commentary-en-raw.txt)",
+      "Bash(grep -nE '^ {2,}[^ ]' commentary-en.txt)",
+      "Bash(awk -F: '{n=$0; sub\\(/^[0-9]+:/,\"\",n\\); match\\(n,/^ */\\); print RLENGTH}')",
+      "Bash(grep -nE '^ {2,8}[^ ]' commentary-en.txt)",
+      "Bash(grep -vE '^\\\\s*$')",
+      "Bash(node extract.js)",
+      "Bash(node -e ' *)",
+      "Bash(grep -nE -- '-$' commentary-en.txt)",
+      "Bash(node generate.js)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"tsc exit: $?\")",
+      "Bash(npx jest *)",
+      "Bash(perl -pi -e 's/\\(?<![\\\\w.]\\)scheduled\\(?![\\\\w:]\\)/mockScheduled/g; s/\\(?<![\\\\w.]\\)idCounter\\(?!\\\\w\\)/mockIdCounter/g' src/notifications/__tests__/scheduler.test.ts)",
+      "Bash(perl -pi -e \"s/'mockScheduled'/'scheduled'/g; s/toBe\\\\\\('remockScheduled'\\\\\\)/toBe\\('rescheduled'\\)/g\" src/notifications/__tests__/scheduler.test.ts)",
+      "Bash(git -C /Users/matthijs/dev/lojong status --short)",
+      "Bash(git -C /Users/matthijs/dev/lojong diff --stat)",
+      "Bash(perl -pi -e \"s|'require\\\\\\('path'\\\\\\).join\\\\\\(__dirname, '\\\\.\\\\./\\\\.\\\\./src/content/slogans\\\\.ts'\\\\\\)'|require\\('path'\\).join\\(__dirname, '../../src/content/slogans.ts'\\)|g\" extract.js generate.js)",
+      "Bash(node -e \"require\\('/Users/matthijs/dev/lojong/scripts/commentary-context/generate.js'\\)\")",
+      "Bash(git -C /Users/matthijs/dev/lojong diff --quiet src/content/slogans.ts)",
+      "Bash(echo \"tsc: $?\")"
     ]
   }
 }

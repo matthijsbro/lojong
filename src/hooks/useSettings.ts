@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AppSettings, DEFAULT_SETTINGS, loadSettings, saveSettings } from '@/store/settings';
+import {
+  AppSettings,
+  DEFAULT_SETTINGS,
+  loadSettings,
+  patchSettings,
+  saveSettings,
+} from '@/store/settings';
 
 export function useSettings() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
@@ -18,10 +24,14 @@ export function useSettings() {
     return nextSettings;
   }, []);
 
+  // Merge against stored settings, not the captured state: a notification tap
+  // on cold start can trigger an update before the initial load resolves, and
+  // merging into default state would wipe the user's saved settings.
   const update = useCallback(async (patch: Partial<AppSettings>) => {
-    const nextSettings = { ...settings, ...patch };
-    return replace(nextSettings);
-  }, [replace, settings]);
+    const nextSettings = await patchSettings(patch);
+    setSettings(nextSettings);
+    return nextSettings;
+  }, []);
 
   return { settings, update, replace, loaded };
 }

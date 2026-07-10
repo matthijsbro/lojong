@@ -26,6 +26,9 @@ export function HomeScreen({
 }: Props) {
   const { settings, update, loaded } = useSettings();
   const [index, setIndex] = useState(0);
+  // Slogan opened from a notification tap: its card starts subdued and turns
+  // immersive when the user flips it. Cleared as soon as the user navigates.
+  const [introSloganId, setIntroSloganId] = useState<number | null>(null);
   const activeSlogans = useActiveSlogans(settings.order);
   const t = ui[settings.language];
 
@@ -69,6 +72,7 @@ export function HomeScreen({
     if (!loaded || notificationSloganId == null) return;
 
     showSloganById(notificationSloganId);
+    setIntroSloganId(notificationSloganId);
     onNotificationSloganHandled?.();
   }, [loaded, notificationSloganId, onNotificationSloganHandled, showSloganById]);
 
@@ -76,6 +80,7 @@ export function HomeScreen({
     (nextIndex: number) => {
       const clamped = Math.max(0, Math.min(activeSlogans.length - 1, nextIndex));
       setIndex(clamped);
+      setIntroSloganId(null);
       void persistCurrentSlogan(clamped);
     },
     [activeSlogans.length, persistCurrentSlogan],
@@ -117,6 +122,7 @@ export function HomeScreen({
           slogan={currentSlogan}
           language={settings.language}
           total={activeSlogans.length}
+          intro={introSloganId != null && currentSlogan.id === introSloganId}
         />
       </View>
 

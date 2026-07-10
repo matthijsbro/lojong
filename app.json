@@ -16,17 +16,20 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "org.lotsawahouse.lojong"
+      "bundleIdentifier": "nl.databrouwer.lojong"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#f5f0e8"
       },
-      "package": "org.lotsawahouse.lojong"
+      "package": "nl.databrouwer.lojong"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "updates": {
+      "enabled": false
     },
     "plugins": [
       [
@@ -38,6 +41,12 @@
         }
       ],
       "@react-native-community/datetimepicker"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c3df9f4b-1c33-427d-80da-cf7c7f88ab7b"
+      }
+    },
+    "owner": "mbrodata"
   }
 }

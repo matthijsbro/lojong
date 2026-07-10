@@ -9,8 +9,8 @@ import { SettingsScreen } from '@/screens/SettingsScreen';
 import { useSettings } from '@/hooks/useSettings';
 import {
   configureNotificationHandler,
+  dismissDisplayedReminders,
   ensureNotificationsScheduled,
-  scheduleNotifications,
 } from '@/notifications/scheduler';
 
 configureNotificationHandler();
@@ -29,10 +29,10 @@ export default function App() {
         return null;
       }
 
-      const nextSettings = await update({ lastReminderSloganId: sloganId });
-      if (nextSettings.notifMode !== 'off') {
-        await scheduleNotifications(nextSettings);
-      }
+      // Persist progress only; the settings-change effect below tops up the
+      // pending reminder stack. Scheduling directly here as well caused two
+      // concurrent cancel/reschedule passes and duplicated notifications.
+      await update({ lastReminderSloganId: sloganId });
 
       return sloganId;
     };
@@ -54,6 +54,7 @@ export default function App() {
 
       setNotificationSloganId(sloganId);
       setScreen('home');
+      await dismissDisplayedReminders();
       await Notifications.clearLastNotificationResponseAsync();
     };
 
@@ -81,6 +82,8 @@ export default function App() {
   useEffect(() => {
     const sub = AppState.addEventListener('change', (state) => {
       if (state === 'active' && loaded) {
+        // The user is in the app; any reminder still in the tray is stale.
+        void dismissDisplayedReminders();
         void ensureNotificationsScheduled(settings);
       }
     });

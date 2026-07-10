@@ -15,16 +15,24 @@ type Props = {
   slogan: Slogan;
   language: Language;
   total: number;
+  // Card arrived via a notification tap: start subdued/translucent and become
+  // fully present ("immersive") once the user engages by flipping it.
+  intro?: boolean;
 };
 
-export function SloganCard({ slogan, language, total }: Props) {
+export function SloganCard({ slogan, language, total, intro = false }: Props) {
   const [showBack, setShowBack] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
+  const immersionAnim = useRef(new Animated.Value(intro ? 0 : 1)).current;
+  const contextAnim = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
+  const contextRevealed = useRef(false);
+  const [contextHintVisible, setContextHintVisible] = useState(true);
 
   const t = ui[language];
   const content = slogan[language];
   const pointLabel = POINT_LABELS[slogan.point][language];
+  const hasContext = Boolean(content.contextBefore || content.contextAfter);
 
   // Animate 0 → 1 → 0: card rotates to 90° (edge-on), content swaps, rotates back to 0°.
   const rotate = flipAnim.interpolate({
@@ -35,6 +43,13 @@ export function SloganCard({ slogan, language, total }: Props) {
   const handleFlip = () => {
     if (isAnimating.current) return;
     isAnimating.current = true;
+
+    // Engaging with the card ends the subdued notification-intro state.
+    Animated.timing(immersionAnim, {
+      toValue: 1,
+      duration: 650,
+      useNativeDriver: true,
+    }).start();
 
     // First half: 0 → 0.5 (rotate to 90°)
     Animated.timing(flipAnim, {
@@ -56,20 +71,81 @@ export function SloganCard({ slogan, language, total }: Props) {
     });
   };
 
+  // Once the reader starts scrolling, bring the surrounding commentary to
+  // full strength so it can be read as continuous text.
+  const revealContext = () => {
+    if (contextRevealed.current) return;
+    contextRevealed.current = true;
+    setContextHintVisible(false);
+    Animated.timing(contextAnim, {
+      toValue: 1,
+      duration: 450,
+      useNativeDriver: true,
+    }).start();
+  };
+
   React.useEffect(() => {
     flipAnim.setValue(0);
     setShowBack(false);
     isAnimating.current = false;
-  }, [slogan.id, flipAnim]);
+    immersionAnim.setValue(intro ? 0 : 1);
+    contextAnim.setValue(0);
+    contextRevealed.current = false;
+    setContextHintVisible(true);
+  }, [slogan.id, flipAnim, immersionAnim, contextAnim, intro]);
+
+  const contextOpacity = contextAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.45, 1],
+  });
 
   return (
     <TouchableWithoutFeedback onPress={handleFlip} accessibilityRole="button">
-      <Animated.View style={[styles.card, showBack ? styles.cardBack : styles.cardFront, { transform: [{ rotateY: rotate }] }]}>
+      <Animated.View
+        style={[
+          styles.card,
+          showBack ? styles.cardBack : styles.cardFront,
+          {
+            opacity: immersionAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0.55, 1],
+            }),
+            transform: [
+              { rotateY: rotate },
+              {
+                scale: immersionAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0.96, 1],
+                }),
+              },
+            ],
+          },
+        ]}
+      >
         {showBack ? (
-          <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+            onScrollBeginDrag={revealContext}
+          >
             <Text style={styles.pointText}>{t.explanation}</Text>
             <Text style={styles.sloganSmall}>{content.slogan}</Text>
-            <Text style={styles.explanationText}>{content.explanation}</Text>
+            {content.contextBefore ? (
+              <Animated.Text style={[styles.contextText, styles.contextBefore, { opacity: contextOpacity }]}>
+                {content.contextBefore}
+              </Animated.Text>
+            ) : null}
+            <View style={hasContext ? styles.explanationHighlight : null}>
+              <Text style={styles.explanationText}>{content.explanation}</Text>
+            </View>
+            {content.contextAfter ? (
+              <Animated.Text style={[styles.contextText, styles.contextAfter, { opacity: contextOpacity }]}>
+                {content.contextAfter}
+              </Animated.Text>
+            ) : null}
+            {hasContext && contextHintVisible ? (
+              <Text style={styles.contextHint}>{t.contextHint}</Text>
+            ) : null}
             <AttributionFooter attributionKey={slogan.attributionKey} language={language} />
             <Text style={styles.flipHint}>{t.backToSlogan}</Text>
           </ScrollView>
@@ -116,7 +192,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: 'space-between',
   },
   pointText: {
     fontSize: 12,
@@ -145,8 +220,32 @@ const styles = StyleSheet.create({
   },
   explanationText: {
     fontSize: 15,
+    color: '#2c1f0e',
+    lineHeight: 23,
+  },
+  explanationHighlight: {
+    borderLeftWidth: 3,
+    borderLeftColor: '#c9a87c',
+    paddingLeft: 12,
+    marginVertical: 10,
+  },
+  contextText: {
+    fontSize: 15,
     color: '#3d2b14',
     lineHeight: 23,
+  },
+  contextBefore: {
+    marginBottom: 2,
+  },
+  contextAfter: {
+    marginTop: 2,
+  },
+  contextHint: {
+    fontSize: 11,
+    color: '#b89a7a',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: 14,
   },
   counter: {
     fontSize: 12,
