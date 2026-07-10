@@ -1,4 +1,4 @@
-package org.lotsawahouse.lojong
+package nl.databrouwer.lojong
 
 import android.app.Application
 import android.content.res.Configuration

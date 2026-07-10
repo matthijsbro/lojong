@@ -39,7 +39,8 @@
       "Bash(perl -pi -e \"s|'require\\\\\\('path'\\\\\\).join\\\\\\(__dirname, '\\\\.\\\\./\\\\.\\\\./src/content/slogans\\\\.ts'\\\\\\)'|require\\('path'\\).join\\(__dirname, '../../src/content/slogans.ts'\\)|g\" extract.js generate.js)",
       "Bash(node -e \"require\\('/Users/matthijs/dev/lojong/scripts/commentary-context/generate.js'\\)\")",
       "Bash(git -C /Users/matthijs/dev/lojong diff --quiet src/content/slogans.ts)",
-      "Bash(echo \"tsc: $?\")"
+      "Bash(echo \"tsc: $?\")",
+      "Bash(date *)"
     ]
   }
 }

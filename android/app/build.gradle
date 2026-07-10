@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'org.lotsawahouse.lojong'
+    namespace 'nl.databrouwer.lojong'
     defaultConfig {
-        applicationId 'org.lotsawahouse.lojong'
+        applicationId 'nl.databrouwer.lojong'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
