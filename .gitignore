@@ -28,3 +28,6 @@ coverage/
 # temporary files
 *.tmp
 *.temp
+
+# Android build artifacts
+*.aab
