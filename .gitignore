@@ -19,6 +19,10 @@ pnpm-debug.log*
 # macOS
 .DS_Store
 
+# JetBrains project caches
+.idea/caches/
+.idea/deviceManager.xml
+
 # tests / coverage
 coverage/
 
