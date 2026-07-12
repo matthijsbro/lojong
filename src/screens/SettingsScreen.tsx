@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -14,14 +14,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { useSettings } from '@/hooks/useSettings';
 import { ui, Language } from '@/i18n/ui';
-import { Order, NotifMode } from '@/store/settings';
+import { FontSize, MAX_REMINDERS_PER_DAY, NotifMode, Order, ThemeName } from '@/store/settings';
 import { attributions } from '@/content/attribution';
 import { scheduleNotifications, cancelAllNotifications } from '@/notifications/scheduler';
+import { THEMES, ThemeColors } from '@/theme/themes';
 
 type Props = {
   onBack: () => void;
   onOpenLicense: () => void;
 };
+
+// Suggested defaults when the user adds another daily reminder.
+const ADDITIONAL_TIME_SUGGESTIONS = ['08:00', '20:00', '12:30', '17:00'];
 
 export function SettingsScreen({ onBack, onOpenLicense }: Props) {
   const { settings, replace, loaded } = useSettings();
@@ -36,6 +40,8 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
   }, [loaded, settings]);
 
   const t = ui[draftSettings.language];
+  const colors = THEMES[draftSettings.theme];
+  const styles = useMemo(() => makeStyles(colors), [colors]);
 
   const parseTimeToDate = (time: string): Date => {
     const [hoursRaw, minutesRaw] = time.split(':').map(Number);
@@ -66,7 +72,27 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
   const handleLanguage = (lang: Language) => updateDraft({ language: lang });
   const handleOrder = (order: Order) => updateDraft({ order });
   const handleNotifMode = (mode: NotifMode) => updateDraft({ notifMode: mode });
-  const handleNotifTime = (time: string) => updateDraft({ notifTime: time });
+  const handleFontSize = (fontSize: FontSize) => updateDraft({ fontSize });
+  const handleTheme = (theme: ThemeName) => updateDraft({ theme });
+  const handleRandomCount = (notifRandomCount: number) => updateDraft({ notifRandomCount });
+
+  const handleNotifTimeAt = (index: number, time: string) => {
+    const notifTimes = [...draftSettings.notifTimes];
+    notifTimes[index] = time;
+    updateDraft({ notifTimes });
+  };
+
+  const addNotifTime = () => {
+    const next =
+      ADDITIONAL_TIME_SUGGESTIONS.find((time) => !draftSettings.notifTimes.includes(time)) ??
+      '12:00';
+    updateDraft({ notifTimes: [...draftSettings.notifTimes, next] });
+  };
+
+  const removeNotifTime = (index: number) => {
+    if (draftSettings.notifTimes.length <= 1) return;
+    updateDraft({ notifTimes: draftSettings.notifTimes.filter((_time, i) => i !== index) });
+  };
 
   const normalizeTime = (time: string): string | null => {
     const match = time.trim().match(/^(\d{1,2}):(\d{2})$/);
@@ -80,33 +106,36 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
   };
 
-  const handlePickTime = () => {
+  const handlePickTime = (index: number) => {
     if (Platform.OS === 'android') {
       DateTimePickerAndroid.open({
         mode: 'time',
         is24Hour: true,
-        value: parseTimeToDate(draftSettings.notifTime),
+        value: parseTimeToDate(draftSettings.notifTimes[index] ?? '08:00'),
         onChange: (_event, selectedDate) => {
           if (!selectedDate) return;
-          void handleNotifTime(formatTime(selectedDate));
+          handleNotifTimeAt(index, formatTime(selectedDate));
         },
       });
     }
   };
 
   const handleSaveAndClose = async () => {
-    const normalizedTime =
-      draftSettings.notifMode === 'fixed' ? normalizeTime(draftSettings.notifTime) : draftSettings.notifTime;
+    let notifTimes = draftSettings.notifTimes;
 
-    if (draftSettings.notifMode === 'fixed' && !normalizedTime) {
-      setSaveState('error');
-      Alert.alert(t.save, t.notifTimeInvalidMessage);
-      return;
+    if (draftSettings.notifMode === 'fixed') {
+      const normalized = draftSettings.notifTimes.map(normalizeTime);
+      if (normalized.some((time) => time == null)) {
+        setSaveState('error');
+        Alert.alert(t.save, t.notifTimeInvalidMessage);
+        return;
+      }
+      notifTimes = [...new Set(normalized as string[])].sort();
     }
 
     const nextSettings = {
       ...draftSettings,
-      notifTime: normalizedTime ?? draftSettings.notifTime,
+      notifTimes,
     };
 
     setSaveState('saving');
@@ -132,6 +161,26 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
     }
   };
 
+  const chipRow = <T extends string | number>(
+    options: [T, string][],
+    selected: T,
+    onSelect: (value: T) => void,
+  ) => (
+    <View style={styles.row}>
+      {options.map(([value, label]) => (
+        <TouchableOpacity
+          key={String(value)}
+          style={[styles.chip, selected === value && styles.chipActive]}
+          onPress={() => onSelect(value)}
+        >
+          <Text style={[styles.chipText, selected === value && styles.chipTextActive]}>
+            {label}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.scroll}>
@@ -150,93 +199,141 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
         {/* Language */}
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{t.language}</Text>
-          <View style={styles.row}>
-            {(['en', 'de'] as Language[]).map((lang) => (
-              <TouchableOpacity
-                key={lang}
-                style={[styles.chip, draftSettings.language === lang && styles.chipActive]}
-                onPress={() => handleLanguage(lang)}
-              >
-                <Text
-                  style={[styles.chipText, draftSettings.language === lang && styles.chipTextActive]}
-                >
-                  {lang.toUpperCase()}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          {chipRow(
+            (['en', 'de'] as Language[]).map((lang) => [lang, lang.toUpperCase()]),
+            draftSettings.language,
+            handleLanguage,
+          )}
         </View>
 
         {/* Display order */}
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{t.displayOrder}</Text>
+          {chipRow(
+            [
+              ['fixed', t.orderFixed],
+              ['random', t.orderRandom],
+            ] as [Order, string][],
+            draftSettings.order,
+            handleOrder,
+          )}
+        </View>
+
+        {/* Font size */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>{t.fontSizeLabel}</Text>
+          {chipRow(
+            [
+              ['small', t.fontSmall],
+              ['medium', t.fontMedium],
+              ['large', t.fontLarge],
+            ] as [FontSize, string][],
+            draftSettings.fontSize,
+            handleFontSize,
+          )}
+        </View>
+
+        {/* Color scheme */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>{t.colorScheme}</Text>
           <View style={styles.row}>
-            {([['fixed', t.orderFixed], ['random', t.orderRandom]] as [Order, string][]).map(
-              ([val, label]) => (
-                <TouchableOpacity
-                  key={val}
-                  style={[styles.chip, draftSettings.order === val && styles.chipActive]}
-                  onPress={() => handleOrder(val)}
-                >
+            {(
+              [
+                ['warm', t.themeWarm],
+                ['sage', t.themeSage],
+                ['dark', t.themeDark],
+              ] as [ThemeName, string][]
+            ).map(([value, label]) => (
+              <TouchableOpacity
+                key={value}
+                style={[styles.chip, draftSettings.theme === value && styles.chipActive]}
+                onPress={() => handleTheme(value)}
+              >
+                <View style={styles.themeChipContent}>
+                  <View
+                    style={[styles.themeSwatch, { backgroundColor: THEMES[value].background }]}
+                  />
                   <Text
-                    style={[styles.chipText, draftSettings.order === val && styles.chipTextActive]}
+                    style={[styles.chipText, draftSettings.theme === value && styles.chipTextActive]}
                   >
                     {label}
                   </Text>
-                </TouchableOpacity>
-              ),
-            )}
+                </View>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
 
         {/* Notifications */}
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{t.notifications}</Text>
-          <View style={styles.row}>
-            {([
+          {chipRow(
+            [
               ['off', t.notifOff],
               ['fixed', t.notifFixed],
               ['random', t.notifRandom],
-            ] as [NotifMode, string][]).map(([val, label]) => (
-              <TouchableOpacity
-                key={val}
-                style={[styles.chip, draftSettings.notifMode === val && styles.chipActive]}
-                onPress={() => handleNotifMode(val)}
-              >
-                <Text
-                  style={[
-                    styles.chipText,
-                    draftSettings.notifMode === val && styles.chipTextActive,
-                  ]}
-                >
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+            ] as [NotifMode, string][],
+            draftSettings.notifMode,
+            handleNotifMode,
+          )}
 
           {draftSettings.notifMode === 'fixed' && (
-            <View style={styles.timeRow}>
-              <Text style={styles.fieldLabel}>{t.notifTime}</Text>
-              {Platform.OS === 'android' ? (
-                <TouchableOpacity style={styles.timePickerButton} onPress={handlePickTime}>
-                  <Text style={styles.timePickerValue}>{draftSettings.notifTime}</Text>
-                  <Text style={styles.timePickerHint}>{t.notifChooseTime}</Text>
+            <View style={styles.timesColumn}>
+              <Text style={styles.fieldLabel}>
+                {draftSettings.notifTimes.length > 1 ? t.notifTimes : t.notifTime}
+              </Text>
+              {draftSettings.notifTimes.map((time, index) => (
+                <View key={index} style={styles.timeRow}>
+                  {Platform.OS === 'android' ? (
+                    <TouchableOpacity
+                      style={styles.timePickerButton}
+                      onPress={() => handlePickTime(index)}
+                    >
+                      <Text style={styles.timePickerValue}>{time}</Text>
+                      <Text style={styles.timePickerHint}>{t.notifChooseTime}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TextInput
+                      style={styles.timeInput}
+                      value={time}
+                      onChangeText={(value) => handleNotifTimeAt(index, value)}
+                      placeholder="08:00"
+                      placeholderTextColor={colors.faint}
+                      keyboardType="numbers-and-punctuation"
+                      maxLength={5}
+                    />
+                  )}
+                  {draftSettings.notifTimes.length > 1 && (
+                    <TouchableOpacity
+                      onPress={() => removeNotifTime(index)}
+                      style={styles.removeTimeButton}
+                      accessibilityLabel={t.notifRemoveTime}
+                    >
+                      <Text style={styles.removeTimeText}>&#x2715;</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              ))}
+              {draftSettings.notifTimes.length < MAX_REMINDERS_PER_DAY && (
+                <TouchableOpacity onPress={addNotifTime} style={styles.addTimeButton}>
+                  <Text style={styles.addTimeText}>+ {t.notifAddTime}</Text>
                 </TouchableOpacity>
-              ) : (
-                <TextInput
-                  style={styles.timeInput}
-                  value={draftSettings.notifTime}
-                  onChangeText={handleNotifTime}
-                  placeholder="08:00"
-                  keyboardType="numbers-and-punctuation"
-                  maxLength={5}
-                />
               )}
             </View>
           )}
           {draftSettings.notifMode === 'random' && (
-            <Text style={styles.hint}>{t.notifRandomDesc}</Text>
+            <View style={styles.timesColumn}>
+              <Text style={styles.fieldLabel}>{t.notifPerDay}</Text>
+              {chipRow(
+                Array.from({ length: MAX_REMINDERS_PER_DAY }, (_v, i): [number, string] => [
+                  i + 1,
+                  String(i + 1),
+                ]),
+                draftSettings.notifRandomCount,
+                handleRandomCount,
+              )}
+              <Text style={styles.hint}>{t.notifRandomDesc}</Text>
+            </View>
           )}
         </View>
 
@@ -321,181 +418,213 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: '#f5f0e8',
-  },
-  scroll: {
-    padding: 20,
-    gap: 8,
-  },
-  topBar: {
-    marginBottom: 4,
-  },
-  backButton: {
-    paddingVertical: 6,
-  },
-  backText: {
-    fontSize: 16,
-    color: '#8b5e3c',
-    fontWeight: '600',
-  },
-  sectionHeader: {
-    marginBottom: 12,
-  },
-  screenTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#2c1f0e',
-  },
-  section: {
-    backgroundColor: '#fdf8f0',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    gap: 10,
-  },
-  sectionLabel: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#8b5e3c',
-    textTransform: 'uppercase',
-    letterSpacing: 0.8,
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    paddingVertical: 7,
-    paddingHorizontal: 14,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#c4b49a',
-    backgroundColor: '#fdf8f0',
-  },
-  chipActive: {
-    backgroundColor: '#8b5e3c',
-    borderColor: '#8b5e3c',
-  },
-  chipText: {
-    fontSize: 13,
-    color: '#4a3520',
-  },
-  chipTextActive: {
-    color: '#fff',
-    fontWeight: '600',
-  },
-  timeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    marginTop: 4,
-  },
-  fieldLabel: {
-    fontSize: 13,
-    color: '#4a3520',
-  },
-  timeInput: {
-    borderWidth: 1,
-    borderColor: '#c4b49a',
-    borderRadius: 8,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    fontSize: 15,
-    color: '#2c1f0e',
-    width: 80,
-    backgroundColor: '#fff',
-  },
-  timePickerButton: {
-    borderWidth: 1,
-    borderColor: '#c4b49a',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
-    minWidth: 130,
-  },
-  timePickerValue: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#2c1f0e',
-  },
-  timePickerHint: {
-    fontSize: 11,
-    color: '#8b5e3c',
-    marginTop: 2,
-  },
-  hint: {
-    fontSize: 12,
-    color: '#8b5e3c',
-    lineHeight: 18,
-  },
-  saveButton: {
-    backgroundColor: '#8b5e3c',
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  saveButtonDisabled: {
-    opacity: 0.7,
-  },
-  saveButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  feedbackBanner: {
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    marginBottom: 12,
-  },
-  feedbackBannerSuccess: {
-    backgroundColor: '#d8ead3',
-  },
-  feedbackBannerWarning: {
-    backgroundColor: '#f4e0b8',
-  },
-  feedbackBannerError: {
-    backgroundColor: '#f1d1cc',
-  },
-  feedbackText: {
-    fontSize: 13,
-    color: '#4a3520',
-    lineHeight: 19,
-  },
-  aboutText: {
-    fontSize: 13,
-    color: '#4a3520',
-    lineHeight: 20,
-  },
-  sourceEntry: {
-    paddingTop: 10,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#d4c4b0',
-    gap: 2,
-  },
-  sourceTitle: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#2c1f0e',
-  },
-  sourceMeta: {
-    fontSize: 12,
-    color: '#6b5040',
-  },
-  sourceLink: {
-    fontSize: 12,
-    color: '#8b5e3c',
-    textDecorationLine: 'underline',
-    marginTop: 2,
-  },
-  sourceIssn: {
-    fontSize: 11,
-    color: '#a0856a',
-  },
-});
+const makeStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    safe: {
+      flex: 1,
+      backgroundColor: c.background,
+    },
+    scroll: {
+      padding: 20,
+      gap: 8,
+    },
+    topBar: {
+      marginBottom: 4,
+    },
+    backButton: {
+      paddingVertical: 6,
+    },
+    backText: {
+      fontSize: 16,
+      color: c.accent,
+      fontWeight: '600',
+    },
+    sectionHeader: {
+      marginBottom: 12,
+    },
+    screenTitle: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: c.textPrimary,
+    },
+    section: {
+      backgroundColor: c.surface,
+      borderRadius: 12,
+      padding: 16,
+      marginBottom: 12,
+      gap: 10,
+    },
+    sectionLabel: {
+      fontSize: 13,
+      fontWeight: '700',
+      color: c.accent,
+      textTransform: 'uppercase',
+      letterSpacing: 0.8,
+    },
+    row: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 8,
+    },
+    chip: {
+      paddingVertical: 7,
+      paddingHorizontal: 14,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: c.border,
+      backgroundColor: c.surface,
+    },
+    chipActive: {
+      backgroundColor: c.accent,
+      borderColor: c.accent,
+    },
+    chipText: {
+      fontSize: 13,
+      color: c.textSecondary,
+    },
+    chipTextActive: {
+      color: c.onAccent,
+      fontWeight: '600',
+    },
+    themeChipContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+    },
+    themeSwatch: {
+      width: 14,
+      height: 14,
+      borderRadius: 7,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: c.textMuted,
+    },
+    timesColumn: {
+      gap: 8,
+      marginTop: 4,
+    },
+    timeRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+    },
+    fieldLabel: {
+      fontSize: 13,
+      color: c.textSecondary,
+    },
+    timeInput: {
+      borderWidth: 1,
+      borderColor: c.border,
+      borderRadius: 8,
+      paddingVertical: 6,
+      paddingHorizontal: 12,
+      fontSize: 15,
+      color: c.textPrimary,
+      width: 80,
+      backgroundColor: c.inputBackground,
+    },
+    timePickerButton: {
+      borderWidth: 1,
+      borderColor: c.border,
+      borderRadius: 8,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      backgroundColor: c.inputBackground,
+      minWidth: 130,
+    },
+    timePickerValue: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: c.textPrimary,
+    },
+    timePickerHint: {
+      fontSize: 11,
+      color: c.accent,
+      marginTop: 2,
+    },
+    removeTimeButton: {
+      padding: 8,
+    },
+    removeTimeText: {
+      fontSize: 16,
+      color: c.accent,
+    },
+    addTimeButton: {
+      alignSelf: 'flex-start',
+      paddingVertical: 6,
+    },
+    addTimeText: {
+      fontSize: 13,
+      color: c.accent,
+      fontWeight: '600',
+    },
+    hint: {
+      fontSize: 12,
+      color: c.hintStrong,
+      lineHeight: 18,
+    },
+    saveButton: {
+      backgroundColor: c.accent,
+      borderRadius: 10,
+      paddingVertical: 14,
+      alignItems: 'center',
+      marginBottom: 12,
+    },
+    saveButtonDisabled: {
+      opacity: 0.7,
+    },
+    saveButtonText: {
+      color: c.onAccent,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    feedbackBanner: {
+      borderRadius: 10,
+      paddingVertical: 12,
+      paddingHorizontal: 14,
+      marginBottom: 12,
+    },
+    feedbackBannerSuccess: {
+      backgroundColor: c.successBg,
+    },
+    feedbackBannerWarning: {
+      backgroundColor: c.warningBg,
+    },
+    feedbackBannerError: {
+      backgroundColor: c.errorBg,
+    },
+    feedbackText: {
+      fontSize: 13,
+      color: c.textPrimary,
+      lineHeight: 19,
+    },
+    aboutText: {
+      fontSize: 13,
+      color: c.textSecondary,
+      lineHeight: 20,
+    },
+    sourceEntry: {
+      paddingTop: 10,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: c.borderSoft,
+      gap: 2,
+    },
+    sourceTitle: {
+      fontSize: 13,
+      fontWeight: '600',
+      color: c.textPrimary,
+    },
+    sourceMeta: {
+      fontSize: 12,
+      color: c.textMuted,
+    },
+    sourceLink: {
+      fontSize: 12,
+      color: c.accent,
+      textDecorationLine: 'underline',
+      marginTop: 2,
+    },
+    sourceIssn: {
+      fontSize: 11,
+      color: c.faint,
+    },
+  });

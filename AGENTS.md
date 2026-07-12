@@ -2,7 +2,7 @@
 
 ## Project Purpose
 
-A React Native (Expo) flashcard app for Lojong Buddhist mind-training slogans. The app shows one slogan per card; tapping flips it to reveal an explanation. Users can receive daily reminders (fixed or random time) and configure display order and language (English/German).
+A React Native (Expo) flashcard app for Lojong Buddhist mind-training slogans. The app shows one slogan per card; tapping flips it to reveal an explanation. Users can receive daily reminders (one or several per day, at fixed or random times; on by default) and configure display order, language (English/German), font size and color scheme. An overview screen lists all slogans, and a commentary screen presents the full original commentary text with per-slogan delimiters.
 
 **Important:** All content is sourced from Lotsawa House under CC BY-NC 4.0. The app is non-commercial. Attribution must remain visible in the app.
 
@@ -32,26 +32,35 @@ src/
     LanguageToggle.tsx    ← EN/DE switch in header
   screens/
     HomeScreen.tsx    ← Main card view
-    SettingsScreen.tsx ← Notifications, order, language, About
+    SettingsScreen.tsx ← Notifications, order, language, font size, color scheme, About
+    OverviewScreen.tsx ← All slogans grouped by point; tap jumps to that card
+    CommentaryScreen.tsx ← Full commentary text with per-slogan delimiters
   hooks/
-    useSettings.ts       ← Read/write persisted app settings (includes lastSloganId)
+    useSettings.ts       ← Read/write persisted app settings; one shared snapshot across all instances
     useActiveSlogans.ts  ← Returns the ordered/shuffled slogan list
   notifications/
-    scheduler.ts      ← Schedules up to 30 daily notifications with sloganId payload
+    scheduler.ts      ← Keeps a ~60-reminder stack pending (per-day slots) with sloganId payload
   i18n/
     ui.ts             ← UI label strings in EN and DE
   store/
-    settings.ts       ← AsyncStorage key names + read/write helpers
+    settings.ts       ← AsyncStorage key names + read/write helpers + legacy migration
+  theme/
+    themes.ts         ← Color schemes (warm/sage/dark) and font-size scales
 ```
 
 ---
 
 ## Notification System
 
+Reminders are **on by default** (`notifMode: 'fixed'` at 08:00) for fresh installs; a stored 'off' choice is respected.
+
+### Reminders Per Day
+Users can configure several reminders per day (max `MAX_REMINDERS_PER_DAY = 4`): a list of fixed times (`notifTimes`), or a count of random times (`notifRandomCount`, each drawn from an equal window of 6:00–22:00). The scheduler keeps a stack of up to 60 pending notifications (below iOS's 64 cap), so the scheduled horizon shrinks as reminders per day grow (60 days at 1/day, 15 days at 4/day). Each pending reminder stores `{sloganId, fireAt, slot, fingerprint}`; `ensureNotificationsScheduled` self-heals the stack (dedupes by day+slot, rebuilds on stale fingerprint, tops up continuing the slogan sequence with modulo wrap).
+
 ### Fixed-Order Reminders
-When `notifMode: 'fixed'` and `order: 'fixed'`, the app:
+When `order: 'fixed'`, the app:
 1. Saves the current slogan's `id` in `lastSloganId` whenever the user navigates
-2. When scheduling reminders, generates the next 30 slogans starting from `lastSloganId + 1` in sequence
+2. When scheduling reminders, generates the next slogans starting after `lastReminderSloganId` in sequence, one per reminder
 3. Each notification's body shows the slogan text and carries the corresponding `sloganId` in the payload
 
 ### Random-Order Reminders

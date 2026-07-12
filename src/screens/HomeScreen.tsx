@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -12,17 +12,26 @@ import { LanguageToggle } from '@/components/LanguageToggle';
 import { useSettings } from '@/hooks/useSettings';
 import { useActiveSlogans } from '@/hooks/useActiveSlogans';
 import { ui } from '@/i18n/ui';
+import { FONT_SCALES, THEMES, ThemeColors } from '@/theme/themes';
 
 type Props = {
   onOpenSettings: () => void;
-  notificationSloganId?: number | null;
-  onNotificationSloganHandled?: () => void;
+  onOpenOverview: () => void;
+  onOpenCommentary: (sloganId: number) => void;
+  // Slogan to jump to (from a notification tap or the overview screen).
+  focusSloganId?: number | null;
+  // Whether the focused card should start in the subdued notification-intro state.
+  focusIntro?: boolean;
+  onFocusHandled?: () => void;
 };
 
 export function HomeScreen({
   onOpenSettings,
-  notificationSloganId = null,
-  onNotificationSloganHandled,
+  onOpenOverview,
+  onOpenCommentary,
+  focusSloganId = null,
+  focusIntro = false,
+  onFocusHandled,
 }: Props) {
   const { settings, update, loaded } = useSettings();
   const [index, setIndex] = useState(0);
@@ -31,6 +40,8 @@ export function HomeScreen({
   const [introSloganId, setIntroSloganId] = useState<number | null>(null);
   const activeSlogans = useActiveSlogans(settings.order);
   const t = ui[settings.language];
+  const colors = THEMES[settings.theme];
+  const styles = useMemo(() => makeStyles(colors), [colors]);
 
   const persistCurrentSlogan = useCallback(
     async (nextIndex: number) => {
@@ -69,12 +80,12 @@ export function HomeScreen({
   }, [activeSlogans, loaded, settings.lastSloganId, settings.lastSloganIndex]);
 
   React.useEffect(() => {
-    if (!loaded || notificationSloganId == null) return;
+    if (!loaded || focusSloganId == null) return;
 
-    showSloganById(notificationSloganId);
-    setIntroSloganId(notificationSloganId);
-    onNotificationSloganHandled?.();
-  }, [loaded, notificationSloganId, onNotificationSloganHandled, showSloganById]);
+    showSloganById(focusSloganId);
+    setIntroSloganId(focusIntro ? focusSloganId : null);
+    onFocusHandled?.();
+  }, [loaded, focusSloganId, focusIntro, onFocusHandled, showSloganById]);
 
   const goTo = useCallback(
     (nextIndex: number) => {
@@ -89,7 +100,7 @@ export function HomeScreen({
   if (!loaded) {
     return (
       <SafeAreaView style={styles.safe}>
-        <ActivityIndicator style={{ flex: 1 }} color="#8b5e3c" />
+        <ActivityIndicator style={{ flex: 1 }} color={colors.accent} />
       </SafeAreaView>
     );
   }
@@ -103,16 +114,24 @@ export function HomeScreen({
         <View style={styles.headerActions}>
           <LanguageToggle
             language={settings.language}
+            colors={colors}
             onToggle={() =>
               update({ language: settings.language === 'en' ? 'de' : 'en' })
             }
           />
           <TouchableOpacity
+            onPress={onOpenOverview}
+            style={styles.iconButton}
+            accessibilityLabel={t.overviewOpenLabel}
+          >
+            <Text style={styles.iconText}>&#x2630;</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={onOpenSettings}
-            style={styles.settingsButton}
+            style={styles.iconButton}
             accessibilityLabel={t.settings}
           >
-            <Text style={styles.settingsIcon}>&#x2699;</Text>
+            <Text style={styles.iconText}>&#x2699;</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -122,6 +141,9 @@ export function HomeScreen({
           slogan={currentSlogan}
           language={settings.language}
           total={activeSlogans.length}
+          colors={colors}
+          fontScale={FONT_SCALES[settings.fontSize]}
+          onOpenCommentary={() => onOpenCommentary(currentSlogan.id)}
           intro={introSloganId != null && currentSlogan.id === introSloganId}
         />
       </View>
@@ -151,60 +173,61 @@ export function HomeScreen({
   );
 }
 
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: '#f5f0e8',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#4a3520',
-    letterSpacing: 1,
-  },
-  headerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  settingsButton: {
-    padding: 4,
-  },
-  settingsIcon: {
-    fontSize: 20,
-    color: '#8b5e3c',
-  },
-  cardArea: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-  },
-  nav: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingBottom: 24,
-    paddingTop: 12,
-  },
-  navButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    backgroundColor: '#8b5e3c',
-  },
-  navButtonDisabled: {
-    backgroundColor: '#d4c4b0',
-  },
-  navButtonText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: 14,
-  },
-});
+const makeStyles = (c: ThemeColors) =>
+  StyleSheet.create({
+    safe: {
+      flex: 1,
+      backgroundColor: c.background,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      paddingVertical: 12,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: '700',
+      color: c.textSecondary,
+      letterSpacing: 1,
+    },
+    headerActions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+    },
+    iconButton: {
+      padding: 4,
+    },
+    iconText: {
+      fontSize: 20,
+      color: c.accent,
+    },
+    cardArea: {
+      flex: 1,
+      paddingHorizontal: 20,
+      paddingVertical: 12,
+    },
+    nav: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      paddingBottom: 24,
+      paddingTop: 12,
+    },
+    navButton: {
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 8,
+      backgroundColor: c.accent,
+    },
+    navButtonDisabled: {
+      backgroundColor: c.disabled,
+    },
+    navButtonText: {
+      color: c.onAccent,
+      fontWeight: '600',
+      fontSize: 14,
+    },
+  });

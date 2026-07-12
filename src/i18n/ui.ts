@@ -15,6 +15,15 @@ export type UiStrings = {
   previous: string;
   point: string; // "Point 3" / "Punkt 3"
   of: string;    // "3 of 59"
+  readFullCommentary: string;
+
+  // Overview screen
+  overviewTitle: string;
+  overviewOpenLabel: string;
+
+  // Commentary screen
+  commentaryTitle: string;
+  sloganWord: string; // "Slogan 12" / "Leitsatz 12"
 
   // Settings screen
   language: string;
@@ -26,8 +35,20 @@ export type UiStrings = {
   notifFixed: string;
   notifRandom: string;
   notifTime: string;
+  notifTimes: string;
   notifChooseTime: string;
+  notifAddTime: string;
+  notifRemoveTime: string;
+  notifPerDay: string;
   notifRandomDesc: string;
+  fontSizeLabel: string;
+  fontSmall: string;
+  fontMedium: string;
+  fontLarge: string;
+  colorScheme: string;
+  themeWarm: string;
+  themeSage: string;
+  themeDark: string;
   notifPermissionTitle: string;
   notifPermissionMessage: string;
   save: string;
@@ -67,6 +88,13 @@ export const ui: Record<Language, UiStrings> = {
     previous: 'Previous',
     point: 'Point',
     of: 'of',
+    readFullCommentary: 'Read the full commentary',
+
+    overviewTitle: 'All slogans',
+    overviewOpenLabel: 'Slogan overview',
+
+    commentaryTitle: 'The full commentary',
+    sloganWord: 'Slogan',
 
     language: 'Language',
     displayOrder: 'Display order',
@@ -77,8 +105,20 @@ export const ui: Record<Language, UiStrings> = {
     notifFixed: 'Fixed time',
     notifRandom: 'Random time',
     notifTime: 'Reminder time',
+    notifTimes: 'Reminder times',
     notifChooseTime: 'Choose time',
-    notifRandomDesc: 'A reminder will appear at a random time between 6:00 and 22:00 each day.',
+    notifAddTime: 'Add another time',
+    notifRemoveTime: 'Remove this time',
+    notifPerDay: 'Reminders per day',
+    notifRandomDesc: 'Reminders appear at random times between 6:00 and 22:00 each day.',
+    fontSizeLabel: 'Font size',
+    fontSmall: 'Smaller',
+    fontMedium: 'Medium',
+    fontLarge: 'Larger',
+    colorScheme: 'Color scheme',
+    themeWarm: 'Warm',
+    themeSage: 'Sage',
+    themeDark: 'Dark',
     notifPermissionTitle: 'Notifications are off',
     notifPermissionMessage: 'Allow notifications in Android settings to receive daily reminders.',
     save: 'Save',
@@ -117,6 +157,13 @@ export const ui: Record<Language, UiStrings> = {
     previous: 'Zurück',
     point: 'Punkt',
     of: 'von',
+    readFullCommentary: 'Den vollständigen Kommentar lesen',
+
+    overviewTitle: 'Alle Leitsätze',
+    overviewOpenLabel: 'Übersicht der Leitsätze',
+
+    commentaryTitle: 'Der vollständige Kommentar',
+    sloganWord: 'Leitsatz',
 
     language: 'Sprache',
     displayOrder: 'Anzeigereihenfolge',
@@ -127,8 +174,20 @@ export const ui: Record<Language, UiStrings> = {
     notifFixed: 'Feste Uhrzeit',
     notifRandom: 'Zufällige Uhrzeit',
     notifTime: 'Erinnerungszeit',
+    notifTimes: 'Erinnerungszeiten',
     notifChooseTime: 'Uhrzeit wählen',
-    notifRandomDesc: 'Eine Erinnerung erscheint täglich zu einer zufälligen Zeit zwischen 6:00 und 22:00 Uhr.',
+    notifAddTime: 'Weitere Uhrzeit hinzufügen',
+    notifRemoveTime: 'Diese Uhrzeit entfernen',
+    notifPerDay: 'Erinnerungen pro Tag',
+    notifRandomDesc: 'Erinnerungen erscheinen täglich zu zufälligen Zeiten zwischen 6:00 und 22:00 Uhr.',
+    fontSizeLabel: 'Schriftgröße',
+    fontSmall: 'Kleiner',
+    fontMedium: 'Mittel',
+    fontLarge: 'Größer',
+    colorScheme: 'Farbschema',
+    themeWarm: 'Warm',
+    themeSage: 'Salbei',
+    themeDark: 'Dunkel',
     notifPermissionTitle: 'Benachrichtigungen sind aus',
     notifPermissionMessage: 'Aktiviere Benachrichtigungen in den Android-Einstellungen, um tägliche Erinnerungen zu erhalten.',
     save: 'Speichern',

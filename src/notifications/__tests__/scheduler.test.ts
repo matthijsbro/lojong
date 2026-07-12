@@ -42,7 +42,7 @@ import {
 const baseSettings: AppSettings = {
   ...DEFAULT_SETTINGS,
   notifMode: 'fixed',
-  notifTime: '08:00',
+  notifTimes: ['08:00'],
   lastReminderSloganId: 1,
 };
 
@@ -77,6 +77,39 @@ describe('scheduleNotifications', () => {
     const result = await scheduleNotifications({ ...baseSettings, notifMode: 'off' });
     expect(result).toBe('disabled');
     expect(mockScheduled).toHaveLength(0);
+  });
+
+  it('schedules multiple fixed times per day over a shorter horizon', async () => {
+    await scheduleNotifications({ ...baseSettings, notifTimes: ['08:00', '20:00'] });
+
+    // 60-notification budget over 2 reminders/day = 30 days.
+    expect(mockScheduled).toHaveLength(60);
+    const days = new Set(mockScheduled.map(dayKey));
+    expect(days.size).toBeGreaterThanOrEqual(30);
+    expect(days.size).toBeLessThanOrEqual(31); // day 0 may hold only the evening slot
+
+    // Each reminder advances the slogan sequence.
+    const sorted = [...mockScheduled].sort(
+      (a, b) => (a.content.data.fireAt as number) - (b.content.data.fireAt as number),
+    );
+    const ids = sorted.map((r) => r.content.data.sloganId as number);
+    const firstIndex = slogans.findIndex((s) => s.id === ids[0]);
+    expect(ids[1]).toBe(slogans[(firstIndex + 1) % slogans.length].id);
+  });
+
+  it('schedules the requested number of random reminders per day', async () => {
+    await scheduleNotifications({ ...baseSettings, notifMode: 'random', notifRandomCount: 3 });
+
+    // 60-notification budget over 3 reminders/day = 20 days.
+    expect(mockScheduled).toHaveLength(60);
+    const perDay = new Map<string, number>();
+    for (const r of mockScheduled) {
+      perDay.set(dayKey(r), (perDay.get(dayKey(r)) ?? 0) + 1);
+    }
+    expect(perDay.size).toBe(20);
+    for (const count of perDay.values()) {
+      expect(count).toBe(3);
+    }
   });
 });
 

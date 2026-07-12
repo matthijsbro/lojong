@@ -1,26 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import {
   Animated,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { Slogan, POINT_LABELS } from '@/content/slogans';
 import { Language, ui } from '@/i18n/ui';
+import { ThemeColors, scaled } from '@/theme/themes';
 import { AttributionFooter } from './AttributionFooter';
 
 type Props = {
   slogan: Slogan;
   language: Language;
   total: number;
+  colors: ThemeColors;
+  fontScale: number;
+  onOpenCommentary: () => void;
   // Card arrived via a notification tap: start subdued/translucent and become
   // fully present ("immersive") once the user engages by flipping it.
   intro?: boolean;
 };
 
-export function SloganCard({ slogan, language, total, intro = false }: Props) {
+export function SloganCard({
+  slogan,
+  language,
+  total,
+  colors,
+  fontScale,
+  onOpenCommentary,
+  intro = false,
+}: Props) {
   const [showBack, setShowBack] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const immersionAnim = useRef(new Animated.Value(intro ? 0 : 1)).current;
@@ -33,6 +46,7 @@ export function SloganCard({ slogan, language, total, intro = false }: Props) {
   const content = slogan[language];
   const pointLabel = POINT_LABELS[slogan.point][language];
   const hasContext = Boolean(content.contextBefore || content.contextAfter);
+  const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   // Animate 0 → 1 → 0: card rotates to 90° (edge-on), content swaps, rotates back to 0°.
   const rotate = flipAnim.interpolate({
@@ -150,7 +164,18 @@ export function SloganCard({ slogan, language, total, intro = false }: Props) {
               {hasContext && contextHintVisible ? (
                 <Text style={styles.contextHint}>{t.contextHint}</Text>
               ) : null}
-              <AttributionFooter attributionKey={slogan.attributionKey} language={language} />
+              <TouchableOpacity
+                onPress={onOpenCommentary}
+                style={styles.commentaryLink}
+                accessibilityRole="button"
+              >
+                <Text style={styles.commentaryLinkText}>{t.readFullCommentary} &#x2192;</Text>
+              </TouchableOpacity>
+              <AttributionFooter
+                attributionKey={slogan.attributionKey}
+                language={language}
+                colors={colors}
+              />
               <Text style={styles.flipHint}>{t.backToSlogan}</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -173,99 +198,111 @@ export function SloganCard({ slogan, language, total, intro = false }: Props) {
   );
 }
 
-const CARD_BG = '#fdf8f0';
-const CARD_BACK_BG = '#f5efe2';
-
-const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    padding: 28,
-    borderRadius: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 12,
-    elevation: 6,
-  },
-  cardFront: {
-    backgroundColor: CARD_BG,
-  },
-  cardBack: {
-    backgroundColor: CARD_BACK_BG,
-  },
-  frontContent: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  scrollContent: {
-    flexGrow: 1,
-  },
-  backContent: {
-    flexGrow: 1,
-  },
-  pointText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#8b5e3c',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    marginBottom: 20,
-  },
-  sloganText: {
-    flex: 1,
-    fontSize: 22,
-    fontWeight: '500',
-    color: '#2c1f0e',
-    lineHeight: 32,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    paddingVertical: 20,
-  },
-  sloganSmall: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#4a3520',
-    marginBottom: 12,
-    fontStyle: 'italic',
-  },
-  explanationText: {
-    fontSize: 15,
-    color: '#2c1f0e',
-    lineHeight: 23,
-  },
-  explanationHighlight: {
-    borderLeftWidth: 3,
-    borderLeftColor: '#c9a87c',
-    paddingLeft: 12,
-    marginVertical: 10,
-  },
-  contextText: {
-    fontSize: 15,
-    color: '#2c1f0e',
-    lineHeight: 23,
-  },
-  contextBefore: {
-    marginBottom: 2,
-  },
-  contextAfter: {
-    marginTop: 2,
-  },
-  contextHint: {
-    fontSize: 11,
-    color: '#9c7a52',
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginTop: 14,
-  },
-  counter: {
-    fontSize: 12,
-    color: '#a0856a',
-    textAlign: 'center',
-  },
-  flipHint: {
-    fontSize: 11,
-    color: '#b89a7a',
-    textAlign: 'center',
-    marginTop: 8,
-  },
-});
+const makeStyles = (c: ThemeColors, f: number) =>
+  StyleSheet.create({
+    card: {
+      flex: 1,
+      padding: 28,
+      borderRadius: 16,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.12,
+      shadowRadius: 12,
+      elevation: 6,
+    },
+    cardFront: {
+      backgroundColor: c.surface,
+    },
+    cardBack: {
+      backgroundColor: c.surfaceAlt,
+    },
+    frontContent: {
+      flex: 1,
+      justifyContent: 'space-between',
+    },
+    scrollContent: {
+      flexGrow: 1,
+    },
+    backContent: {
+      flexGrow: 1,
+    },
+    pointText: {
+      fontSize: scaled(12, f),
+      fontWeight: '600',
+      color: c.accent,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      marginBottom: 20,
+    },
+    sloganText: {
+      flex: 1,
+      fontSize: scaled(22, f),
+      fontWeight: '500',
+      color: c.textPrimary,
+      lineHeight: scaled(32, f),
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      paddingVertical: 20,
+    },
+    sloganSmall: {
+      fontSize: scaled(15, f),
+      fontWeight: '600',
+      color: c.textSecondary,
+      marginBottom: 12,
+      fontStyle: 'italic',
+    },
+    explanationText: {
+      fontSize: scaled(15, f),
+      color: c.textPrimary,
+      lineHeight: scaled(23, f),
+    },
+    explanationHighlight: {
+      borderLeftWidth: 3,
+      borderLeftColor: c.highlight,
+      paddingLeft: 12,
+      marginVertical: 10,
+    },
+    contextText: {
+      fontSize: scaled(15, f),
+      color: c.textPrimary,
+      lineHeight: scaled(23, f),
+    },
+    contextBefore: {
+      marginBottom: 2,
+    },
+    contextAfter: {
+      marginTop: 2,
+    },
+    contextHint: {
+      fontSize: scaled(11, f),
+      color: c.hintStrong,
+      fontStyle: 'italic',
+      textAlign: 'center',
+      marginTop: 14,
+    },
+    commentaryLink: {
+      marginTop: 18,
+      alignSelf: 'center',
+      paddingVertical: 6,
+      paddingHorizontal: 12,
+      borderRadius: 16,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    commentaryLinkText: {
+      fontSize: scaled(13, f),
+      color: c.accent,
+      fontWeight: '600',
+    },
+    counter: {
+      fontSize: scaled(12, f),
+      color: c.faint,
+      textAlign: 'center',
+    },
+    flipHint: {
+      fontSize: scaled(11, f),
+      color: c.hint,
+      textAlign: 'center',
+      marginTop: 8,
+    },
+  });

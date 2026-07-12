@@ -6,7 +6,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { LicenseScreen } from '@/screens/LicenseScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
+import { OverviewScreen } from '@/screens/OverviewScreen';
+import { CommentaryScreen } from '@/screens/CommentaryScreen';
 import { useSettings } from '@/hooks/useSettings';
+import { THEMES } from '@/theme/themes';
 import {
   configureNotificationHandler,
   dismissDisplayedReminders,
@@ -15,11 +18,16 @@ import {
 
 configureNotificationHandler();
 
-export type Screen = 'home' | 'settings' | 'license';
+export type Screen = 'home' | 'settings' | 'license' | 'overview' | 'commentary';
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home');
-  const [notificationSloganId, setNotificationSloganId] = useState<number | null>(null);
+  // Slogan the home screen should jump to, plus whether it should get the
+  // subdued notification-intro treatment (true for notification taps, false
+  // when picked from the overview).
+  const [focusSloganId, setFocusSloganId] = useState<number | null>(null);
+  const [focusIntro, setFocusIntro] = useState(false);
+  const [commentarySloganId, setCommentarySloganId] = useState<number | null>(null);
   const { settings, loaded, update } = useSettings();
 
   useEffect(() => {
@@ -52,7 +60,8 @@ export default function App() {
         return;
       }
 
-      setNotificationSloganId(sloganId);
+      setFocusSloganId(sloganId);
+      setFocusIntro(true);
       setScreen('home');
       await dismissDisplayedReminders();
       await Notifications.clearLastNotificationResponseAsync();
@@ -91,25 +100,55 @@ export default function App() {
     return () => sub.remove();
   }, [loaded, settings]);
 
+  const colors = THEMES[settings.theme];
+
   let content: React.ReactNode;
 
   if (screen === 'settings') {
     content = <SettingsScreen onBack={() => setScreen('home')} onOpenLicense={() => setScreen('license')} />;
   } else if (screen === 'license') {
     content = <LicenseScreen language={settings.language} onBack={() => setScreen('settings')} />;
+  } else if (screen === 'overview') {
+    content = (
+      <OverviewScreen
+        onBack={() => setScreen('home')}
+        onSelectSlogan={(sloganId) => {
+          setFocusSloganId(sloganId);
+          setFocusIntro(false);
+          setScreen('home');
+        }}
+      />
+    );
+  } else if (screen === 'commentary') {
+    content = (
+      <CommentaryScreen
+        initialSloganId={commentarySloganId}
+        onBack={() => setScreen('home')}
+      />
+    );
   } else {
     content = (
       <HomeScreen
         onOpenSettings={() => setScreen('settings')}
-        notificationSloganId={notificationSloganId}
-        onNotificationSloganHandled={() => setNotificationSloganId(null)}
+        onOpenOverview={() => setScreen('overview')}
+        onOpenCommentary={(sloganId) => {
+          setCommentarySloganId(sloganId);
+          setScreen('commentary');
+        }}
+        focusSloganId={focusSloganId}
+        focusIntro={focusIntro}
+        onFocusHandled={() => setFocusSloganId(null)}
       />
     );
   }
 
   return (
     <SafeAreaProvider>
-      <StatusBar style="dark" backgroundColor="#f5f0e8" translucent={false} />
+      <StatusBar
+        style={colors.statusBarStyle}
+        backgroundColor={colors.background}
+        translucent={false}
+      />
       {content}
     </SafeAreaProvider>
   );
