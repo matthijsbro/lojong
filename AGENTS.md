@@ -173,6 +173,15 @@ Before releasing a build, verify:
 
 ---
 
+## Releasing
+
+1. Bump the user-visible version: `npm run version:bump <major.minor.patch>` (e.g. `1.2.0`). This updates `package.json`, `app.json` (the source of truth for EAS builds), and — if present locally — the prebuild-generated `android/app/build.gradle`. Never edit these by hand, they must stay in sync.
+2. Commit the bump.
+3. Build: `npm run build:android`. The Android `versionCode` is managed remotely by EAS (`eas.json`: `appVersionSource: "remote"` + `autoIncrement`) and bumped automatically per production build — do not set it manually.
+4. Download the `.aab` from EAS and upload it to the Google Play Console.
+
+---
+
 ## Testing
 
 - Unit tests for content shape: verify every slogan has non-empty EN and DE fields, and that every `attributionKey` resolves

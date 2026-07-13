@@ -43,7 +43,13 @@
       "Bash(date *)",
       "Bash(rm -rf apk-check3)",
       "Bash(mkdir apk-check3 *)",
-      "Bash(unzip -o -q /Users/matthijs/dev/lojong/android/app/build/outputs/apk/release/app-release.apk -d apk-check3 assets/index.android.bundle)"
+      "Bash(unzip -o -q /Users/matthijs/dev/lojong/android/app/build/outputs/apk/release/app-release.apk -d apk-check3 assets/index.android.bundle)",
+      "Bash(npm run *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(git -C /Users/matthijs/dev/lojong diff package.json app.json android/app/build.gradle)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
