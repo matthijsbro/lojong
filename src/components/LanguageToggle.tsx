@@ -1,16 +1,22 @@
 import React, { useMemo } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Language } from '@/i18n/ui';
-import { ThemeColors, THEMES } from '@/theme/themes';
+import { ThemeColors, THEMES, scaled } from '@/theme/themes';
 
 type Props = {
   language: Language;
   onToggle: () => void;
   colors?: ThemeColors;
+  fontScale?: number;
 };
 
-export function LanguageToggle({ language, onToggle, colors = THEMES.warm }: Props) {
-  const styles = useMemo(() => makeStyles(colors), [colors]);
+export function LanguageToggle({
+  language,
+  onToggle,
+  colors = THEMES.warm,
+  fontScale = 1,
+}: Props) {
+  const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   return (
     <TouchableOpacity
@@ -24,7 +30,7 @@ export function LanguageToggle({ language, onToggle, colors = THEMES.warm }: Pro
   );
 }
 
-const makeStyles = (c: ThemeColors) =>
+const makeStyles = (c: ThemeColors, f: number) =>
   StyleSheet.create({
     button: {
       paddingHorizontal: 12,
@@ -34,7 +40,7 @@ const makeStyles = (c: ThemeColors) =>
       borderColor: c.accent,
     },
     label: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       fontWeight: '600',
       color: c.accent,
       letterSpacing: 0.5,

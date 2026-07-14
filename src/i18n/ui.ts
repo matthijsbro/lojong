@@ -45,10 +45,12 @@ export type UiStrings = {
   fontSmall: string;
   fontMedium: string;
   fontLarge: string;
+  fontXLarge: string;
   colorScheme: string;
   themeWarm: string;
   themeSage: string;
   themeDark: string;
+  themeContrast: string;
   notifPermissionTitle: string;
   notifPermissionMessage: string;
   save: string;
@@ -115,10 +117,12 @@ export const ui: Record<Language, UiStrings> = {
     fontSmall: 'Smaller',
     fontMedium: 'Medium',
     fontLarge: 'Larger',
+    fontXLarge: 'Extra large',
     colorScheme: 'Color scheme',
     themeWarm: 'Warm',
     themeSage: 'Sage',
     themeDark: 'Dark',
+    themeContrast: 'High contrast',
     notifPermissionTitle: 'Notifications are off',
     notifPermissionMessage: 'Allow notifications in Android settings to receive daily reminders.',
     save: 'Save',
@@ -184,10 +188,12 @@ export const ui: Record<Language, UiStrings> = {
     fontSmall: 'Kleiner',
     fontMedium: 'Mittel',
     fontLarge: 'Größer',
+    fontXLarge: 'Extra groß',
     colorScheme: 'Farbschema',
     themeWarm: 'Warm',
     themeSage: 'Salbei',
     themeDark: 'Dunkel',
+    themeContrast: 'Hoher Kontrast',
     notifPermissionTitle: 'Benachrichtigungen sind aus',
     notifPermissionMessage: 'Aktiviere Benachrichtigungen in den Android-Einstellungen, um tägliche Erinnerungen zu erhalten.',
     save: 'Speichern',

@@ -3,8 +3,8 @@ import { Language } from '@/i18n/ui';
 
 export type NotifMode = 'off' | 'fixed' | 'random';
 export type Order = 'fixed' | 'random';
-export type FontSize = 'small' | 'medium' | 'large';
-export type ThemeName = 'warm' | 'sage' | 'dark';
+export type FontSize = 'small' | 'medium' | 'large' | 'xlarge';
+export type ThemeName = 'warm' | 'sage' | 'dark' | 'contrast';
 
 // Bounded so the scheduler can always keep several days of reminders
 // pending without hitting iOS's 64-pending-notification cap.

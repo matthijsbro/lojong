@@ -28,12 +28,12 @@ src/
     attribution.ts    ← License/attribution metadata for each source text
   components/
     SloganCard.tsx    ← Flippable card (front = slogan, back = explanation)
+    SloganDeck.tsx    ← Accordion overlay: full slogan list the card folds into / unfolds from
     AttributionFooter.tsx ← Tappable attribution shown on card back
     LanguageToggle.tsx    ← EN/DE switch in header
   screens/
-    HomeScreen.tsx    ← Main card view
-    SettingsScreen.tsx ← Notifications, order, language, font size, color scheme, About
-    OverviewScreen.tsx ← All slogans grouped by point; tap jumps to that card
+    HomeScreen.tsx    ← Main card view; bottom-center chevron folds the card into the SloganDeck overlay
+    SettingsScreen.tsx ← Notifications, order, language, font size, color scheme, About; Save in a sticky footer
     CommentaryScreen.tsx ← Full commentary text with per-slogan delimiters
   hooks/
     useSettings.ts       ← Read/write persisted app settings; one shared snapshot across all instances
@@ -45,7 +45,7 @@ src/
   store/
     settings.ts       ← AsyncStorage key names + read/write helpers + legacy migration
   theme/
-    themes.ts         ← Color schemes (warm/sage/dark) and font-size scales
+    themes.ts         ← Color schemes (warm/sage/dark/contrast) and font-size scales (small–xlarge)
 ```
 
 ---

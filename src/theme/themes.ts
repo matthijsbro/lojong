@@ -70,36 +70,62 @@ export const THEMES: Record<ThemeName, ThemeColors> = {
     warningBg: '#f0e3bd',
     errorBg: '#f1d1cc',
   },
-  // A darker scheme for reading in the evening.
+  // Pure black-and-white scheme for reading in the evening.
   dark: {
     statusBarStyle: 'light',
-    background: '#1f1a13',
-    surface: '#2b241b',
-    surfaceAlt: '#272019',
-    inputBackground: '#3a3124',
-    textPrimary: '#f0e7d8',
-    textSecondary: '#d8cbb4',
-    textMuted: '#b4a58c',
-    faint: '#8d7f6a',
-    accent: '#c9a87c',
-    onAccent: '#2c1f0e',
-    border: '#55483a',
-    borderSoft: '#453a2e',
-    highlight: '#c9a87c',
-    hint: '#8d7f6a',
-    hintStrong: '#a5947a',
-    disabled: '#453a2e',
-    successBg: '#31452b',
-    warningBg: '#54431f',
-    errorBg: '#542a24',
+    background: '#000000',
+    surface: '#141414',
+    surfaceAlt: '#0d0d0d',
+    inputBackground: '#1f1f1f',
+    textPrimary: '#ffffff',
+    textSecondary: '#e6e6e6',
+    textMuted: '#bdbdbd',
+    faint: '#8c8c8c',
+    accent: '#ffffff',
+    onAccent: '#000000',
+    border: '#4d4d4d',
+    borderSoft: '#333333',
+    highlight: '#ffffff',
+    hint: '#8c8c8c',
+    hintStrong: '#b3b3b3',
+    disabled: '#333333',
+    successBg: '#262626',
+    warningBg: '#262626',
+    errorBg: '#262626',
+  },
+  // Pure white-and-black scheme for maximum legibility.
+  contrast: {
+    statusBarStyle: 'dark',
+    background: '#ffffff',
+    surface: '#ffffff',
+    surfaceAlt: '#ffffff',
+    inputBackground: '#ffffff',
+    textPrimary: '#000000',
+    textSecondary: '#000000',
+    textMuted: '#1a1a1a',
+    faint: '#404040',
+    accent: '#000000',
+    onAccent: '#ffffff',
+    border: '#000000',
+    borderSoft: '#666666',
+    highlight: '#000000',
+    hint: '#404040',
+    hintStrong: '#1a1a1a',
+    disabled: '#bfbfbf',
+    successBg: '#e6e6e6',
+    warningBg: '#e6e6e6',
+    errorBg: '#e6e6e6',
   },
 };
 
-// Font sizes across the reading surfaces are multiplied by this factor.
+// Font sizes across all screens are multiplied by this factor.
+// 'xlarge' targets tablets, where the default sizes leave text too small
+// and the layout with too much empty space.
 export const FONT_SCALES: Record<FontSize, number> = {
   small: 0.9,
   medium: 1,
   large: 1.25,
+  xlarge: 1.6,
 };
 
 export function scaled(size: number, scale: number): number {

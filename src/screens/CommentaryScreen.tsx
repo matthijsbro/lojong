@@ -99,7 +99,7 @@ const makeStyles = (c: ThemeColors, f: number) =>
       paddingVertical: 6,
     },
     backText: {
-      fontSize: 16,
+      fontSize: scaled(16, f),
       color: c.accent,
       fontWeight: '600',
     },

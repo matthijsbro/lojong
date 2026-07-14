@@ -17,7 +17,7 @@ import { ui, Language } from '@/i18n/ui';
 import { FontSize, MAX_REMINDERS_PER_DAY, NotifMode, Order, ThemeName } from '@/store/settings';
 import { attributions } from '@/content/attribution';
 import { scheduleNotifications, cancelAllNotifications } from '@/notifications/scheduler';
-import { THEMES, ThemeColors } from '@/theme/themes';
+import { FONT_SCALES, THEMES, ThemeColors, scaled } from '@/theme/themes';
 
 type Props = {
   onBack: () => void;
@@ -41,7 +41,8 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
 
   const t = ui[draftSettings.language];
   const colors = THEMES[draftSettings.theme];
-  const styles = useMemo(() => makeStyles(colors), [colors]);
+  const fontScale = FONT_SCALES[draftSettings.fontSize];
+  const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   const parseTimeToDate = (time: string): Date => {
     const [hoursRaw, minutesRaw] = time.split(':').map(Number);
@@ -227,6 +228,7 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
               ['small', t.fontSmall],
               ['medium', t.fontMedium],
               ['large', t.fontLarge],
+              ['xlarge', t.fontXLarge],
             ] as [FontSize, string][],
             draftSettings.fontSize,
             handleFontSize,
@@ -242,6 +244,7 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
                 ['warm', t.themeWarm],
                 ['sage', t.themeSage],
                 ['dark', t.themeDark],
+                ['contrast', t.themeContrast],
               ] as [ThemeName, string][]
             ).map(([value, label]) => (
               <TouchableOpacity
@@ -337,36 +340,6 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
           )}
         </View>
 
-        {/* Save button */}
-        <TouchableOpacity
-          style={[styles.saveButton, saveState === 'saving' && styles.saveButtonDisabled]}
-          onPress={handleSaveAndClose}
-          disabled={saveState === 'saving'}
-        >
-          <Text style={styles.saveButtonText}>
-            {saveState === 'saving' ? t.saving : saveState === 'success' ? t.saved : t.save}
-          </Text>
-        </TouchableOpacity>
-
-        {saveState !== 'idle' && saveState !== 'saving' && (
-          <View
-            style={[
-              styles.feedbackBanner,
-              saveState === 'success' && styles.feedbackBannerSuccess,
-              saveState === 'warning' && styles.feedbackBannerWarning,
-              saveState === 'error' && styles.feedbackBannerError,
-            ]}
-          >
-            <Text style={styles.feedbackText}>
-              {saveState === 'success'
-                ? t.settingsSavedMessage
-                : saveState === 'warning'
-                  ? t.settingsSavedNotifBlockedMessage
-                  : t.settingsSaveErrorMessage}
-            </Text>
-          </View>
-        )}
-
         {/* About / Attribution */}
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{t.aboutTitle}</Text>
@@ -414,11 +387,42 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
         </View>
 
       </ScrollView>
+
+      {/* Save footer: stays visible while the settings above scroll. */}
+      <View style={styles.footer}>
+        {saveState !== 'idle' && saveState !== 'saving' && (
+          <View
+            style={[
+              styles.feedbackBanner,
+              saveState === 'success' && styles.feedbackBannerSuccess,
+              saveState === 'warning' && styles.feedbackBannerWarning,
+              saveState === 'error' && styles.feedbackBannerError,
+            ]}
+          >
+            <Text style={styles.feedbackText}>
+              {saveState === 'success'
+                ? t.settingsSavedMessage
+                : saveState === 'warning'
+                  ? t.settingsSavedNotifBlockedMessage
+                  : t.settingsSaveErrorMessage}
+            </Text>
+          </View>
+        )}
+        <TouchableOpacity
+          style={[styles.saveButton, saveState === 'saving' && styles.saveButtonDisabled]}
+          onPress={handleSaveAndClose}
+          disabled={saveState === 'saving'}
+        >
+          <Text style={styles.saveButtonText}>
+            {saveState === 'saving' ? t.saving : saveState === 'success' ? t.saved : t.save}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
-const makeStyles = (c: ThemeColors) =>
+const makeStyles = (c: ThemeColors, f: number) =>
   StyleSheet.create({
     safe: {
       flex: 1,
@@ -435,7 +439,7 @@ const makeStyles = (c: ThemeColors) =>
       paddingVertical: 6,
     },
     backText: {
-      fontSize: 16,
+      fontSize: scaled(16, f),
       color: c.accent,
       fontWeight: '600',
     },
@@ -443,7 +447,7 @@ const makeStyles = (c: ThemeColors) =>
       marginBottom: 12,
     },
     screenTitle: {
-      fontSize: 24,
+      fontSize: scaled(24, f),
       fontWeight: '700',
       color: c.textPrimary,
     },
@@ -455,7 +459,7 @@ const makeStyles = (c: ThemeColors) =>
       gap: 10,
     },
     sectionLabel: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       fontWeight: '700',
       color: c.accent,
       textTransform: 'uppercase',
@@ -469,7 +473,7 @@ const makeStyles = (c: ThemeColors) =>
     chip: {
       paddingVertical: 7,
       paddingHorizontal: 14,
-      borderRadius: 20,
+      borderRadius: scaled(20, f),
       borderWidth: 1,
       borderColor: c.border,
       backgroundColor: c.surface,
@@ -479,7 +483,7 @@ const makeStyles = (c: ThemeColors) =>
       borderColor: c.accent,
     },
     chipText: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       color: c.textSecondary,
     },
     chipTextActive: {
@@ -492,9 +496,9 @@ const makeStyles = (c: ThemeColors) =>
       gap: 6,
     },
     themeSwatch: {
-      width: 14,
-      height: 14,
-      borderRadius: 7,
+      width: scaled(14, f),
+      height: scaled(14, f),
+      borderRadius: scaled(7, f),
       borderWidth: StyleSheet.hairlineWidth,
       borderColor: c.textMuted,
     },
@@ -508,7 +512,7 @@ const makeStyles = (c: ThemeColors) =>
       gap: 12,
     },
     fieldLabel: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       color: c.textSecondary,
     },
     timeInput: {
@@ -517,9 +521,9 @@ const makeStyles = (c: ThemeColors) =>
       borderRadius: 8,
       paddingVertical: 6,
       paddingHorizontal: 12,
-      fontSize: 15,
+      fontSize: scaled(15, f),
       color: c.textPrimary,
-      width: 80,
+      width: scaled(80, f),
       backgroundColor: c.inputBackground,
     },
     timePickerButton: {
@@ -529,15 +533,15 @@ const makeStyles = (c: ThemeColors) =>
       paddingVertical: 8,
       paddingHorizontal: 12,
       backgroundColor: c.inputBackground,
-      minWidth: 130,
+      minWidth: scaled(130, f),
     },
     timePickerValue: {
-      fontSize: 16,
+      fontSize: scaled(16, f),
       fontWeight: '700',
       color: c.textPrimary,
     },
     timePickerHint: {
-      fontSize: 11,
+      fontSize: scaled(11, f),
       color: c.accent,
       marginTop: 2,
     },
@@ -545,7 +549,7 @@ const makeStyles = (c: ThemeColors) =>
       padding: 8,
     },
     removeTimeText: {
-      fontSize: 16,
+      fontSize: scaled(16, f),
       color: c.accent,
     },
     addTimeButton: {
@@ -553,35 +557,42 @@ const makeStyles = (c: ThemeColors) =>
       paddingVertical: 6,
     },
     addTimeText: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       color: c.accent,
       fontWeight: '600',
     },
     hint: {
-      fontSize: 12,
+      fontSize: scaled(12, f),
       color: c.hintStrong,
-      lineHeight: 18,
+      lineHeight: scaled(18, f),
+    },
+    footer: {
+      paddingHorizontal: 20,
+      paddingTop: 12,
+      paddingBottom: 12,
+      gap: 10,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: c.borderSoft,
+      backgroundColor: c.background,
     },
     saveButton: {
       backgroundColor: c.accent,
       borderRadius: 10,
       paddingVertical: 14,
       alignItems: 'center',
-      marginBottom: 12,
     },
     saveButtonDisabled: {
       opacity: 0.7,
     },
     saveButtonText: {
       color: c.onAccent,
-      fontSize: 16,
+      fontSize: scaled(16, f),
       fontWeight: '700',
     },
     feedbackBanner: {
       borderRadius: 10,
       paddingVertical: 12,
       paddingHorizontal: 14,
-      marginBottom: 12,
     },
     feedbackBannerSuccess: {
       backgroundColor: c.successBg,
@@ -593,14 +604,14 @@ const makeStyles = (c: ThemeColors) =>
       backgroundColor: c.errorBg,
     },
     feedbackText: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       color: c.textPrimary,
-      lineHeight: 19,
+      lineHeight: scaled(19, f),
     },
     aboutText: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       color: c.textSecondary,
-      lineHeight: 20,
+      lineHeight: scaled(20, f),
     },
     sourceEntry: {
       paddingTop: 10,
@@ -609,22 +620,22 @@ const makeStyles = (c: ThemeColors) =>
       gap: 2,
     },
     sourceTitle: {
-      fontSize: 13,
+      fontSize: scaled(13, f),
       fontWeight: '600',
       color: c.textPrimary,
     },
     sourceMeta: {
-      fontSize: 12,
+      fontSize: scaled(12, f),
       color: c.textMuted,
     },
     sourceLink: {
-      fontSize: 12,
+      fontSize: scaled(12, f),
       color: c.accent,
       textDecorationLine: 'underline',
       marginTop: 2,
     },
     sourceIssn: {
-      fontSize: 11,
+      fontSize: scaled(11, f),
       color: c.faint,
     },
   });

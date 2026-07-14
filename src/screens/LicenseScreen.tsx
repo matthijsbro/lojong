@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { appLicenseText, appLicenseTitle } from '@/content/appLicense';
 import { Language, ui } from '@/i18n/ui';
 import { useSettings } from '@/hooks/useSettings';
-import { THEMES, ThemeColors } from '@/theme/themes';
+import { FONT_SCALES, THEMES, ThemeColors, scaled } from '@/theme/themes';
 
 type Props = {
   language: Language;
@@ -15,7 +15,8 @@ export function LicenseScreen({ language, onBack }: Props) {
   const t = ui[language];
   const { settings } = useSettings();
   const colors = THEMES[settings.theme];
-  const styles = useMemo(() => makeStyles(colors), [colors]);
+  const fontScale = FONT_SCALES[settings.fontSize];
+  const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -33,7 +34,7 @@ export function LicenseScreen({ language, onBack }: Props) {
   );
 }
 
-const makeStyles = (c: ThemeColors) =>
+const makeStyles = (c: ThemeColors, f: number) =>
   StyleSheet.create({
     safe: {
       flex: 1,
@@ -47,7 +48,7 @@ const makeStyles = (c: ThemeColors) =>
       paddingVertical: 6,
     },
     backText: {
-      fontSize: 16,
+      fontSize: scaled(16, f),
       color: c.accent,
       fontWeight: '600',
     },
@@ -56,18 +57,18 @@ const makeStyles = (c: ThemeColors) =>
       gap: 12,
     },
     title: {
-      fontSize: 24,
+      fontSize: scaled(24, f),
       fontWeight: '700',
       color: c.textPrimary,
     },
     meta: {
-      fontSize: 13,
-      lineHeight: 20,
+      fontSize: scaled(13, f),
+      lineHeight: scaled(20, f),
       color: c.textMuted,
     },
     licenseText: {
-      fontSize: 12,
-      lineHeight: 18,
+      fontSize: scaled(12, f),
+      lineHeight: scaled(18, f),
       color: c.textPrimary,
       fontFamily: 'Courier',
     },

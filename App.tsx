@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import * as Notifications from 'expo-notifications';
-import { AppState } from 'react-native';
+import { AppState, BackHandler } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { LicenseScreen } from '@/screens/LicenseScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
-import { OverviewScreen } from '@/screens/OverviewScreen';
 import { CommentaryScreen } from '@/screens/CommentaryScreen';
 import { useSettings } from '@/hooks/useSettings';
 import { THEMES } from '@/theme/themes';
@@ -18,7 +17,7 @@ import {
 
 configureNotificationHandler();
 
-export type Screen = 'home' | 'settings' | 'license' | 'overview' | 'commentary';
+export type Screen = 'home' | 'settings' | 'license' | 'commentary';
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home');
@@ -83,6 +82,24 @@ export default function App() {
     };
   }, [update]);
 
+  // The Android back button/gesture steps back through the app's screens
+  // instead of leaving the app; only from the home screen does it exit.
+  useEffect(() => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (screen === 'license') {
+        setScreen('settings');
+        return true;
+      }
+      if (screen === 'settings' || screen === 'commentary') {
+        setScreen('home');
+        return true;
+      }
+      return false;
+    });
+
+    return () => sub.remove();
+  }, [screen]);
+
   useEffect(() => {
     if (!loaded) return;
     void ensureNotificationsScheduled(settings);
@@ -108,17 +125,6 @@ export default function App() {
     content = <SettingsScreen onBack={() => setScreen('home')} onOpenLicense={() => setScreen('license')} />;
   } else if (screen === 'license') {
     content = <LicenseScreen language={settings.language} onBack={() => setScreen('settings')} />;
-  } else if (screen === 'overview') {
-    content = (
-      <OverviewScreen
-        onBack={() => setScreen('home')}
-        onSelectSlogan={(sloganId) => {
-          setFocusSloganId(sloganId);
-          setFocusIntro(false);
-          setScreen('home');
-        }}
-      />
-    );
   } else if (screen === 'commentary') {
     content = (
       <CommentaryScreen
@@ -130,7 +136,6 @@ export default function App() {
     content = (
       <HomeScreen
         onOpenSettings={() => setScreen('settings')}
-        onOpenOverview={() => setScreen('overview')}
         onOpenCommentary={(sloganId) => {
           setCommentarySloganId(sloganId);
           setScreen('commentary');
