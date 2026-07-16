@@ -40,7 +40,17 @@
           "sounds": []
         }
       ],
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "extraProguardRules": "# Java serialization protocol methods are invoked reflectively; R8 strips them otherwise. expo-notifications persists scheduled notifications via Serializable with custom writeObject/readObject (NotificationContent holds a non-serializable JSONObject), which breaks scheduling without these rules.\n-keepclassmembers class * implements java.io.Serializable {\n    static final long serialVersionUID;\n    private static final java.io.ObjectStreamField[] serialPersistentFields;\n    private void writeObject(java.io.ObjectOutputStream);\n    private void readObject(java.io.ObjectInputStream);\n    java.lang.Object writeReplace();\n    java.lang.Object readResolve();\n}"
+          }
+        }
+      ]
     ],
     "extra": {
       "eas": {
