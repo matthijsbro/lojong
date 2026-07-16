@@ -137,14 +137,14 @@ Ruhe in einer Erfahrung jenseits des Denkens.`,
       slogan: `Let even the antidote be freed in its own place.`,
       explanation: `As you do so, if any thought of an antidote—such as
 considering that body and mind are empty—should arise, then as the root text says:
-> Let even deity and antidote be freed in their own place.
+> Let even the antidote be freed in their own place.
 
 This means that we look into the essence of the antidote itself, and when we realize that it has no true nature, we rest with that experience.`,
     },
     de: {
       slogan: `Lass selbst das Gegenmittel in sich selbst befreit sein.`,
       explanation: `Sollte dabei irgendein Gedanke an ein Gegenmittel entstehen — etwa die Betrachtung, dass Körper und Geist leer sind —, dann sagt der Wurzeltext:
-> Lass selbst Gottheit und Gegenmittel an ihrem eigenen Ort befreit sein.
+> Lass selbst das Gegenmittel an ihrem eigenen Ort befreit sein.
 
 Das bedeutet, dass wir in die Essenz des Gegenmittels selbst schauen, und wenn wir erkennen, dass es keine wahre Natur hat, ruhen wir in dieser Erfahrung.`,
     },
