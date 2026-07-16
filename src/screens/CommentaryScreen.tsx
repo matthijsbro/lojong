@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { slogans, POINT_LABELS } from '@/content/slogans';
+import { commentaryExtras } from '@/content/commentary';
 import { useSettings } from '@/hooks/useSettings';
 import { ui } from '@/i18n/ui';
 import { AttributionFooter } from '@/components/AttributionFooter';
+import { Markdown } from '@/components/Markdown';
 import { FONT_SCALES, THEMES, ThemeColors, scaled } from '@/theme/themes';
 
 type Props = {
@@ -25,6 +27,7 @@ export function CommentaryScreen({ initialSloganId, onBack }: Props) {
   const t = ui[settings.language];
   const colors = THEMES[settings.theme];
   const fontScale = FONT_SCALES[settings.fontSize];
+  const extras = commentaryExtras[settings.language];
   const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   const scrollRef = useRef<ScrollView>(null);
@@ -47,6 +50,7 @@ export function CommentaryScreen({ initialSloganId, onBack }: Props) {
       </View>
       <ScrollView ref={scrollRef} contentContainerStyle={styles.scroll}>
         <Text style={styles.screenTitle}>{t.commentaryTitle}</Text>
+        <Markdown markdown={extras.introduction} colors={colors} fontScale={fontScale} />
         {slogans.map((slogan, index) => {
           const content = slogan[settings.language];
           const startsPoint = index === 0 || slogans[index - 1].point !== slogan.point;
@@ -67,18 +71,12 @@ export function CommentaryScreen({ initialSloganId, onBack }: Props) {
                   {t.sloganWord} {slogan.id} · {content.slogan}
                 </Text>
               </View>
-              {content.contextBefore ? (
-                <Text style={styles.body}>{content.contextBefore}</Text>
-              ) : null}
-              <View style={styles.quote}>
-                <Text style={styles.body}>{content.explanation}</Text>
-              </View>
-              {content.contextAfter ? (
-                <Text style={styles.body}>{content.contextAfter}</Text>
-              ) : null}
+              <Markdown markdown={content.explanation} colors={colors} fontScale={fontScale} />
             </View>
           );
         })}
+        <Markdown markdown={extras.conclusion} colors={colors} fontScale={fontScale} />
+        <Markdown markdown={extras.bibliography} colors={colors} fontScale={fontScale} />
         <AttributionFooter attributionKey="commentary" language={settings.language} colors={colors} />
       </ScrollView>
     </SafeAreaView>
@@ -142,17 +140,5 @@ const makeStyles = (c: ThemeColors, f: number) =>
     },
     delimiterLabelActive: {
       color: c.accent,
-    },
-    body: {
-      fontSize: scaled(15, f),
-      lineHeight: scaled(24, f),
-      color: c.textPrimary,
-      marginBottom: 8,
-    },
-    quote: {
-      borderLeftWidth: 3,
-      borderLeftColor: c.highlight,
-      paddingLeft: 12,
-      marginBottom: 8,
     },
   });

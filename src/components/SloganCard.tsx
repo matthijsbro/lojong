@@ -12,6 +12,7 @@ import { Slogan, POINT_LABELS } from '@/content/slogans';
 import { Language, ui } from '@/i18n/ui';
 import { ThemeColors, scaled } from '@/theme/themes';
 import { AttributionFooter } from './AttributionFooter';
+import { Markdown } from './Markdown';
 
 type Props = {
   slogan: Slogan;
@@ -37,15 +38,11 @@ export function SloganCard({
   const [showBack, setShowBack] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const immersionAnim = useRef(new Animated.Value(intro ? 0 : 1)).current;
-  const contextAnim = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
-  const contextRevealed = useRef(false);
-  const [contextHintVisible, setContextHintVisible] = useState(true);
 
   const t = ui[language];
   const content = slogan[language];
   const pointLabel = POINT_LABELS[slogan.point][language];
-  const hasContext = Boolean(content.contextBefore || content.contextAfter);
   const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   // Animate 0 → 1 → 0: card rotates to 90° (edge-on), content swaps, rotates back to 0°.
@@ -85,33 +82,12 @@ export function SloganCard({
     });
   };
 
-  // Once the reader starts scrolling, bring the surrounding commentary to
-  // full strength so it can be read as continuous text.
-  const revealContext = () => {
-    if (contextRevealed.current) return;
-    contextRevealed.current = true;
-    setContextHintVisible(false);
-    Animated.timing(contextAnim, {
-      toValue: 1,
-      duration: 450,
-      useNativeDriver: true,
-    }).start();
-  };
-
   React.useEffect(() => {
     flipAnim.setValue(0);
     setShowBack(false);
     isAnimating.current = false;
     immersionAnim.setValue(intro ? 0 : 1);
-    contextAnim.setValue(0);
-    contextRevealed.current = false;
-    setContextHintVisible(true);
-  }, [slogan.id, flipAnim, immersionAnim, contextAnim, intro]);
-
-  const contextOpacity = contextAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.68, 1],
-  });
+  }, [slogan.id, flipAnim, immersionAnim, intro]);
 
   return (
     <Animated.View
@@ -142,28 +118,12 @@ export function SloganCard({
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
-          onScrollBeginDrag={revealContext}
         >
           <TouchableWithoutFeedback onPress={handleFlip} accessibilityRole="button">
             <View style={styles.backContent}>
               <Text style={styles.pointText}>{t.explanation}</Text>
               <Text style={styles.sloganSmall}>{content.slogan}</Text>
-              {content.contextBefore ? (
-                <Animated.Text style={[styles.contextText, styles.contextBefore, { opacity: contextOpacity }]}>
-                  {content.contextBefore}
-                </Animated.Text>
-              ) : null}
-              <View style={hasContext ? styles.explanationHighlight : null}>
-                <Text style={styles.explanationText}>{content.explanation}</Text>
-              </View>
-              {content.contextAfter ? (
-                <Animated.Text style={[styles.contextText, styles.contextAfter, { opacity: contextOpacity }]}>
-                  {content.contextAfter}
-                </Animated.Text>
-              ) : null}
-              {hasContext && contextHintVisible ? (
-                <Text style={styles.contextHint}>{t.contextHint}</Text>
-              ) : null}
+              <Markdown markdown={content.explanation} colors={colors} fontScale={fontScale} />
               <TouchableOpacity
                 onPress={onOpenCommentary}
                 style={styles.commentaryLink}
@@ -250,35 +210,6 @@ const makeStyles = (c: ThemeColors, f: number) =>
       color: c.textSecondary,
       marginBottom: 12,
       fontStyle: 'italic',
-    },
-    explanationText: {
-      fontSize: scaled(15, f),
-      color: c.textPrimary,
-      lineHeight: scaled(23, f),
-    },
-    explanationHighlight: {
-      borderLeftWidth: 3,
-      borderLeftColor: c.highlight,
-      paddingLeft: 12,
-      marginVertical: 10,
-    },
-    contextText: {
-      fontSize: scaled(15, f),
-      color: c.textPrimary,
-      lineHeight: scaled(23, f),
-    },
-    contextBefore: {
-      marginBottom: 2,
-    },
-    contextAfter: {
-      marginTop: 2,
-    },
-    contextHint: {
-      fontSize: scaled(11, f),
-      color: c.hintStrong,
-      fontStyle: 'italic',
-      textAlign: 'center',
-      marginTop: 14,
     },
     commentaryLink: {
       marginTop: 18,

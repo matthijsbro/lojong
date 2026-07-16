@@ -14,9 +14,9 @@ export type ThemeColors = {
   onAccent: string;
   border: string;
   borderSoft: string;
-  highlight: string; // explanation quote marker
+  highlight: string; // markdown blockquote marker
   hint: string; // flip hint
-  hintStrong: string; // context hint
+  hintStrong: string; // stronger hint text (settings notes)
   disabled: string;
   successBg: string;
   warningBg: string;

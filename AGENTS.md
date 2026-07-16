@@ -2,7 +2,7 @@
 
 ## Project Purpose
 
-A React Native (Expo) flashcard app for Lojong Buddhist mind-training slogans. The app shows one slogan per card; tapping flips it to reveal an explanation. Users can receive daily reminders (one or several per day, at fixed or random times; on by default) and configure display order, language (English/German), font size and color scheme. An overview screen lists all slogans, and a commentary screen presents the full original commentary text with per-slogan delimiters.
+A React Native (Expo) flashcard app for Lojong Buddhist mind-training slogans. The app shows one slogan per card; tapping flips it to reveal an explanation. Users can receive daily reminders (one or several per day, at fixed or random times; on by default) and configure display order, language (English/German), font size and color scheme. An overview screen lists all slogans, and a commentary screen presents the full original commentary text with per-slogan delimiters, plus introduction, conclusion and bibliography sections.
 
 **Important:** All content is sourced from Lotsawa House under CC BY-NC 4.0. The app is non-commercial. Attribution must remain visible in the app.
 
@@ -24,17 +24,19 @@ A React Native (Expo) flashcard app for Lojong Buddhist mind-training slogans. T
 ```
 src/
   content/
-    slogans.ts        ← ALL content lives here (slogans + explanations, EN + DE)
+    slogans.ts        ← ALL per-slogan content (slogans + markdown explanations, EN + DE); hand-edited source of truth
+    commentary.ts     ← Markdown for the commentary screen's introduction / conclusion / bibliography
     attribution.ts    ← License/attribution metadata for each source text
   components/
     SloganCard.tsx    ← Flippable card (front = slogan, back = explanation)
+    Markdown.tsx      ← Minimal markdown renderer (headings, lists, bold/italic, blockquotes)
     SloganDeck.tsx    ← Accordion overlay: full slogan list the card folds into / unfolds from
     AttributionFooter.tsx ← Tappable attribution shown on card back
     LanguageToggle.tsx    ← EN/DE switch in header
   screens/
     HomeScreen.tsx    ← Main card view; bottom-center chevron folds the card into the SloganDeck overlay
     SettingsScreen.tsx ← Notifications, order, language, font size, color scheme, About; Save in a sticky footer
-    CommentaryScreen.tsx ← Full commentary text with per-slogan delimiters
+    CommentaryScreen.tsx ← Full commentary text: intro, per-slogan sections with delimiters, conclusion, bibliography
   hooks/
     useSettings.ts       ← Read/write persisted app settings; one shared snapshot across all instances
     useActiveSlogans.ts  ← Returns the ordered/shuffled slogan list
@@ -89,11 +91,11 @@ Open [src/content/slogans.ts](src/content/slogans.ts). Each entry has this shape
   point: 6,                     // Which of the Seven Points (1–7)
   en: {
     slogan: 'The slogan text',
-    explanation: 'A brief explanation of the slogan.',
+    explanation: 'An explanation of the slogan, in markdown.',
   },
   de: {
     slogan: 'Der Leitsatz',
-    explanation: 'Eine kurze Erklärung.',
+    explanation: 'Eine Erklärung, in Markdown.',
   },
   attributionKey: 'root-text',  // Must match a key in attribution.ts
 },
@@ -103,6 +105,9 @@ Rules:
 - `id` must be unique and stable (used in notification payloads)
 - `point` is 1–7; used for grouping only, not enforced at runtime
 - `attributionKey` must reference an existing entry in `attribution.ts`
+- `explanation` is markdown rendered by `src/components/Markdown.tsx`: blank line = new paragraph, single newline = verse line break; supports `#`/`##`/`###` headings, `-` bullets, `1.` numbered lists, `**bold**`, `*italic*` and `>` blockquotes (no links, tables or images)
+
+The introduction, conclusion and bibliography shown on the commentary screen live in [src/content/commentary.ts](src/content/commentary.ts), using the same markdown syntax.
 
 ### Adding an attribution source
 

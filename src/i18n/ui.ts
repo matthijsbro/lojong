@@ -9,7 +9,6 @@ export type UiStrings = {
   // Home screen
   tapToFlip: string;
   explanation: string;
-  contextHint: string;
   backToSlogan: string;
   next: string;
   previous: string;
@@ -84,13 +83,12 @@ export const ui: Record<Language, UiStrings> = {
 
     tapToFlip: 'Tap card to see explanation',
     explanation: 'Explanation',
-    contextHint: 'Scroll to read the commentary in context',
     backToSlogan: 'Back to slogan',
     next: 'Next',
     previous: 'Previous',
     point: 'Point',
     of: 'of',
-    readFullCommentary: 'Read the full commentary',
+    readFullCommentary: "See in context in Tokme Zangpo's text",
 
     overviewTitle: 'All slogans',
     overviewOpenLabel: 'Slogan overview',
@@ -155,13 +153,12 @@ export const ui: Record<Language, UiStrings> = {
 
     tapToFlip: 'Karte antippen für Erklärung',
     explanation: 'Erklärung',
-    contextHint: 'Scrolle, um den Kommentar im Zusammenhang zu lesen',
     backToSlogan: 'Zurück zum Leitsatz',
     next: 'Weiter',
     previous: 'Zurück',
     point: 'Punkt',
     of: 'von',
-    readFullCommentary: 'Den vollständigen Kommentar lesen',
+    readFullCommentary: 'Im Zusammenhang in Tokme Zangpos Text lesen',
 
     overviewTitle: 'Alle Leitsätze',
     overviewOpenLabel: 'Übersicht der Leitsätze',
