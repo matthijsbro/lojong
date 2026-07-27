@@ -15,8 +15,9 @@ import { SloganDeck } from '@/components/SloganDeck';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { useSettings } from '@/hooks/useSettings';
 import { useActiveSlogans } from '@/hooks/useActiveSlogans';
+import { useFontScale } from '@/hooks/useFontScale';
 import { ui } from '@/i18n/ui';
-import { FONT_SCALES, THEMES, ThemeColors, scaled } from '@/theme/themes';
+import { THEMES, ThemeColors, scaled, scaledBox } from '@/theme/themes';
 
 type Props = {
   onOpenSettings: () => void;
@@ -50,7 +51,7 @@ export function HomeScreen({
   const activeSlogans = useActiveSlogans(settings.order);
   const t = ui[settings.language];
   const colors = THEMES[settings.theme];
-  const fontScale = FONT_SCALES[settings.fontSize];
+  const fontScale = useFontScale(settings.fontSize);
   const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   const persistCurrentSlogan = useCallback(
@@ -194,7 +195,7 @@ export function HomeScreen({
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Text style={styles.title}>{t.appName}</Text>
+        <Text style={styles.title} numberOfLines={1}>{t.appName}</Text>
         <View style={styles.headerActions}>
           <LanguageToggle
             language={settings.language}
@@ -311,11 +312,13 @@ const makeStyles = (c: ThemeColors, f: number) =>
       fontWeight: '700',
       color: c.textSecondary,
       letterSpacing: 1,
+      flexShrink: 1,
     },
     headerActions: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: 12,
+      flexShrink: 0,
     },
     iconButton: {
       padding: 4,
@@ -341,9 +344,9 @@ const makeStyles = (c: ThemeColors, f: number) =>
       paddingTop: 12,
     },
     navButton: {
-      width: scaled(64, f),
-      height: scaled(44, f),
-      borderRadius: scaled(22, f),
+      width: scaledBox(64, f),
+      height: scaledBox(44, f),
+      borderRadius: scaledBox(22, f),
       borderWidth: 1,
       borderColor: c.border,
       backgroundColor: c.surface,
@@ -357,22 +360,22 @@ const makeStyles = (c: ThemeColors, f: number) =>
     // so they render and center identically on every platform font. The
     // margin offsets compensate for the vertex sitting off the layout center.
     chevron: {
-      width: scaled(12, f),
-      height: scaled(12, f),
+      width: scaledBox(12, f),
+      height: scaledBox(12, f),
       borderColor: c.accent,
       borderRightWidth: 2,
       borderBottomWidth: 2,
     },
     chevronDown: {
       transform: [{ rotate: '45deg' }],
-      marginTop: -scaled(4, f),
+      marginTop: -scaledBox(4, f),
     },
     chevronLeft: {
       transform: [{ rotate: '135deg' }],
-      marginLeft: scaled(4, f),
+      marginLeft: scaledBox(4, f),
     },
     chevronRight: {
       transform: [{ rotate: '-45deg' }],
-      marginLeft: -scaled(4, f),
+      marginLeft: -scaledBox(4, f),
     },
   });

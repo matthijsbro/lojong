@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ThemeColors, scaled } from '@/theme/themes';
+import { ThemeColors, scaled, scaledBox } from '@/theme/themes';
 
 // Minimal markdown renderer for the app's hand-edited content
 // (slogans.ts, commentary.ts). Supported syntax:
@@ -215,7 +215,10 @@ const makeStyles = (c: ThemeColors, f: number) =>
       flexDirection: 'row',
     },
     listMarker: {
-      width: scaled(22, f),
+      // minWidth: two-digit ordered markers outgrow the slot at large font
+      // scales and should push the item text instead of clipping.
+      minWidth: scaledBox(22, f),
+      paddingRight: 4,
     },
     listText: {
       flex: 1,

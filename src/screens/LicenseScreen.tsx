@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { appLicenseText, appLicenseTitle } from '@/content/appLicense';
 import { Language, ui } from '@/i18n/ui';
 import { useSettings } from '@/hooks/useSettings';
-import { FONT_SCALES, THEMES, ThemeColors, scaled } from '@/theme/themes';
+import { THEMES, ThemeColors, scaled } from '@/theme/themes';
+import { useFontScale } from '@/hooks/useFontScale';
 
 type Props = {
   language: Language;
@@ -15,7 +16,7 @@ export function LicenseScreen({ language, onBack }: Props) {
   const t = ui[language];
   const { settings } = useSettings();
   const colors = THEMES[settings.theme];
-  const fontScale = FONT_SCALES[settings.fontSize];
+  const fontScale = useFontScale(settings.fontSize);
   const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   return (

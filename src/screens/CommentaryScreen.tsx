@@ -14,7 +14,8 @@ import { useSettings } from '@/hooks/useSettings';
 import { ui } from '@/i18n/ui';
 import { AttributionFooter } from '@/components/AttributionFooter';
 import { Markdown } from '@/components/Markdown';
-import { FONT_SCALES, THEMES, ThemeColors, scaled } from '@/theme/themes';
+import { THEMES, ThemeColors, scaled } from '@/theme/themes';
+import { useFontScale } from '@/hooks/useFontScale';
 
 type Props = {
   // The card the reader came from; the text opens scrolled to its section.
@@ -26,7 +27,7 @@ export function CommentaryScreen({ initialSloganId, onBack }: Props) {
   const { settings } = useSettings();
   const t = ui[settings.language];
   const colors = THEMES[settings.theme];
-  const fontScale = FONT_SCALES[settings.fontSize];
+  const fontScale = useFontScale(settings.fontSize);
   const extras = commentaryExtras[settings.language];
   const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
@@ -77,7 +78,12 @@ export function CommentaryScreen({ initialSloganId, onBack }: Props) {
         })}
         <Markdown markdown={extras.conclusion} colors={colors} fontScale={fontScale} />
         <Markdown markdown={extras.bibliography} colors={colors} fontScale={fontScale} />
-        <AttributionFooter attributionKey="commentary" language={settings.language} colors={colors} />
+        <AttributionFooter
+          attributionKey="commentary"
+          language={settings.language}
+          colors={colors}
+          fontScale={fontScale}
+        />
       </ScrollView>
     </SafeAreaView>
   );

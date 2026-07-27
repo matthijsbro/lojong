@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { slogans, POINT_LABELS } from '@/content/slogans';
 import { Language, ui } from '@/i18n/ui';
-import { ThemeColors, scaled } from '@/theme/themes';
+import { ThemeColors, scaled, scaledBox } from '@/theme/themes';
 
 type Props = {
   language: Language;
@@ -43,7 +43,7 @@ export function SloganDeck({
   // Accordion offsets: at progress 0 every row sits at the current row's
   // position; opening spreads them out to their natural places. Clamped so
   // far-away rows simply slide in from just beyond the viewport edges.
-  const rowUnit = scaled(52, fontScale);
+  const rowUnit = scaledBox(52, fontScale);
   const foldOffset = (index: number) => {
     const rows = currentIndex - index;
     return Math.max(-560, Math.min(560, rows * rowUnit));
@@ -62,8 +62,11 @@ export function SloganDeck({
   const handleRowLayout = (index: number) => (event: LayoutChangeEvent) => {
     if (index !== currentIndex || scrolledToCurrent.current) return;
     scrolledToCurrent.current = true;
-    const y = event.nativeEvent.layout.y - Math.max(0, viewportHeight.current * 0.5 - rowUnit);
-    scrollRef.current?.scrollTo({ y: Math.max(0, y), animated: false });
+    // Use the measured row height, not rowUnit: at large font scales rows
+    // grow past the estimate and the centering would drift.
+    const { y, height } = event.nativeEvent.layout;
+    const target = y - Math.max(0, viewportHeight.current * 0.5 - height);
+    scrollRef.current?.scrollTo({ y: Math.max(0, target), animated: false });
   };
 
   const backdropOpacity = progress.interpolate({
@@ -186,7 +189,7 @@ const makeStyles = (c: ThemeColors, f: number) =>
       fontSize: scaled(13, f),
       fontWeight: '700',
       color: c.faint,
-      minWidth: scaled(22, f),
+      minWidth: scaledBox(22, f),
       textAlign: 'right',
     },
     rowText: {

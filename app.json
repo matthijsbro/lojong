@@ -41,6 +41,7 @@
         }
       ],
       "@react-native-community/datetimepicker",
+      "./plugins/withFontScaleReload.js",
       [
         "expo-build-properties",
         {

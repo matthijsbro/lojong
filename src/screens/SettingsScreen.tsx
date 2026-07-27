@@ -17,7 +17,8 @@ import { ui, Language } from '@/i18n/ui';
 import { FontSize, MAX_REMINDERS_PER_DAY, NotifMode, Order, ThemeName } from '@/store/settings';
 import { attributions } from '@/content/attribution';
 import { scheduleNotifications, cancelAllNotifications } from '@/notifications/scheduler';
-import { FONT_SCALES, THEMES, ThemeColors, scaled } from '@/theme/themes';
+import { THEMES, ThemeColors, scaled, scaledBox } from '@/theme/themes';
+import { useFontScale } from '@/hooks/useFontScale';
 
 type Props = {
   onBack: () => void;
@@ -41,7 +42,7 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
 
   const t = ui[draftSettings.language];
   const colors = THEMES[draftSettings.theme];
-  const fontScale = FONT_SCALES[draftSettings.fontSize];
+  const fontScale = useFontScale(draftSettings.fontSize);
   const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   const parseTimeToDate = (time: string): Date => {
@@ -473,7 +474,7 @@ const makeStyles = (c: ThemeColors, f: number) =>
     chip: {
       paddingVertical: 7,
       paddingHorizontal: 14,
-      borderRadius: scaled(20, f),
+      borderRadius: scaledBox(20, f),
       borderWidth: 1,
       borderColor: c.border,
       backgroundColor: c.surface,
@@ -496,9 +497,9 @@ const makeStyles = (c: ThemeColors, f: number) =>
       gap: 6,
     },
     themeSwatch: {
-      width: scaled(14, f),
-      height: scaled(14, f),
-      borderRadius: scaled(7, f),
+      width: scaledBox(14, f),
+      height: scaledBox(14, f),
+      borderRadius: scaledBox(7, f),
       borderWidth: StyleSheet.hairlineWidth,
       borderColor: c.textMuted,
     },
@@ -509,6 +510,7 @@ const makeStyles = (c: ThemeColors, f: number) =>
     timeRow: {
       flexDirection: 'row',
       alignItems: 'center',
+      flexWrap: 'wrap',
       gap: 12,
     },
     fieldLabel: {
@@ -523,7 +525,7 @@ const makeStyles = (c: ThemeColors, f: number) =>
       paddingHorizontal: 12,
       fontSize: scaled(15, f),
       color: c.textPrimary,
-      width: scaled(80, f),
+      minWidth: scaledBox(80, f),
       backgroundColor: c.inputBackground,
     },
     timePickerButton: {
@@ -533,7 +535,7 @@ const makeStyles = (c: ThemeColors, f: number) =>
       paddingVertical: 8,
       paddingHorizontal: 12,
       backgroundColor: c.inputBackground,
-      minWidth: scaled(130, f),
+      minWidth: scaledBox(130, f),
     },
     timePickerValue: {
       fontSize: scaled(16, f),

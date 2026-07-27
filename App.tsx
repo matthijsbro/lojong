@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as Notifications from 'expo-notifications';
-import { AppState, BackHandler } from 'react-native';
+import { AppState, BackHandler, useWindowDimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { HomeScreen } from '@/screens/HomeScreen';
@@ -28,6 +28,11 @@ export default function App() {
   const [focusIntro, setFocusIntro] = useState(false);
   const [commentarySloganId, setCommentarySloganId] = useState<number | null>(null);
   const { settings, loaded, update } = useSettings();
+  // The manifest opts out of activity recreation on OS font-scale changes
+  // (Fabric repaints already-mounted text at the new scale without
+  // re-measuring it, which clips descenders). Remounting the tree instead
+  // gives every Text a fresh, correctly-sized layout.
+  const { fontScale: systemFontScale } = useWindowDimensions();
 
   useEffect(() => {
     const markReminderProgress = async (rawSloganId: unknown) => {
@@ -148,7 +153,7 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider key={systemFontScale}>
       <StatusBar
         style={colors.statusBarStyle}
         backgroundColor={colors.background}

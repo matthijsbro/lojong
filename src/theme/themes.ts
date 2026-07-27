@@ -1,3 +1,4 @@
+import { PixelRatio } from 'react-native';
 import { FontSize, ThemeName } from '@/store/settings';
 
 export type ThemeColors = {
@@ -128,6 +129,19 @@ export const FONT_SCALES: Record<FontSize, number> = {
   xlarge: 1.6,
 };
 
+// The OS font scale multiplies on top of the in-app setting (allowFontScaling
+// defaults to true); past this combined factor layouts degrade into clipping.
+export const MAX_COMBINED_FONT_SCALE = 2.0;
+
+// For fontSize/lineHeight: RN itself multiplies rendered text by the system
+// font scale, so divide it out here — the rendered result is size × scale,
+// with scale already clamped by useFontScale.
 export function scaled(size: number, scale: number): number {
+  return Math.round((size * scale) / PixelRatio.getFontScale());
+}
+
+// For layout dims (widths, heights, radii, offsets) that should track text
+// size. RN does not apply the system scale to layout, so bake the full factor.
+export function scaledBox(size: number, scale: number): number {
   return Math.round(size * scale);
 }

@@ -135,24 +135,33 @@ export function SloganCard({
                 attributionKey={slogan.attributionKey}
                 language={language}
                 colors={colors}
+                fontScale={fontScale}
               />
               <Text style={styles.flipHint}>{t.backToSlogan}</Text>
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>
       ) : (
-        <TouchableWithoutFeedback onPress={handleFlip} accessibilityRole="button">
-          <View style={styles.frontContent}>
-            <Text style={styles.pointText}>
-              {t.point} {slogan.point} · {pointLabel}
-            </Text>
-            <Text style={styles.sloganText}>{content.slogan}</Text>
-            <View>
-              <Text style={styles.counter}>{slogan.id} {t.of} {total}</Text>
-              <Text style={styles.flipHint}>{t.tapToFlip}</Text>
+        // Same touchable-inside-ScrollView structure as the back: at large
+        // font scales a long slogan can outgrow the card, and must scroll
+        // rather than clip.
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <TouchableWithoutFeedback onPress={handleFlip} accessibilityRole="button">
+            <View style={styles.frontContent}>
+              <Text style={styles.pointText}>
+                {t.point} {slogan.point} · {pointLabel}
+              </Text>
+              <Text style={styles.sloganText}>{content.slogan}</Text>
+              <View>
+                <Text style={styles.counter}>{slogan.id} {t.of} {total}</Text>
+                <Text style={styles.flipHint}>{t.tapToFlip}</Text>
+              </View>
             </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </ScrollView>
       )}
     </Animated.View>
   );
@@ -177,7 +186,10 @@ const makeStyles = (c: ThemeColors, f: number) =>
       backgroundColor: c.surfaceAlt,
     },
     frontContent: {
-      flex: 1,
+      // flexGrow (not flex: 1, which zeroes flexBasis and ignores intrinsic
+      // content height): fills the card when content fits, exceeds it — and
+      // scrolls — when the slogan outgrows the viewport.
+      flexGrow: 1,
       justifyContent: 'space-between',
     },
     scrollContent: {
@@ -195,7 +207,7 @@ const makeStyles = (c: ThemeColors, f: number) =>
       marginBottom: 20,
     },
     sloganText: {
-      flex: 1,
+      flexGrow: 1,
       fontSize: scaled(22, f),
       fontWeight: '500',
       color: c.textPrimary,

@@ -2,19 +2,25 @@ import React, { useMemo } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { getAttribution } from '@/content/attribution';
 import { Language } from '@/i18n/ui';
-import { ThemeColors, THEMES } from '@/theme/themes';
+import { ThemeColors, THEMES, scaled } from '@/theme/themes';
 
 type Props = {
   attributionKey: string;
   language: Language;
   colors?: ThemeColors;
+  fontScale?: number;
 };
 
-export function AttributionFooter({ attributionKey, language, colors = THEMES.warm }: Props) {
+export function AttributionFooter({
+  attributionKey,
+  language,
+  colors = THEMES.warm,
+  fontScale = 1,
+}: Props) {
   const attr = getAttribution(attributionKey);
   const title = language === 'de' && attr.titleDe ? attr.titleDe : attr.titleEn;
   const translator = language === 'de' && attr.translatorDe ? attr.translatorDe : attr.translator;
-  const styles = useMemo(() => makeStyles(colors), [colors]);
+  const styles = useMemo(() => makeStyles(colors, fontScale), [colors, fontScale]);
 
   return (
     <View style={styles.container}>
@@ -28,7 +34,7 @@ export function AttributionFooter({ attributionKey, language, colors = THEMES.wa
   );
 }
 
-const makeStyles = (c: ThemeColors) =>
+const makeStyles = (c: ThemeColors, f: number) =>
   StyleSheet.create({
     container: {
       marginTop: 20,
@@ -38,7 +44,7 @@ const makeStyles = (c: ThemeColors) =>
       gap: 2,
     },
     line: {
-      fontSize: 11,
+      fontSize: scaled(11, f),
       color: c.accent,
     },
     title: {
