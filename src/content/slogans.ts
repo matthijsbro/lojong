@@ -135,15 +135,15 @@ Ruhe in einer Erfahrung jenseits des Denkens.`,
     point: 2,
     en: {
       slogan: `Let even the antidote be freed in its own place.`,
-      explanation: `As you do so, if any thought of an antidote—such as
-considering that body and mind are empty—should arise, then as the root text says:
+      explanation: `As you do so, if any thought of an antidote, such as
+considering that body and mind are empty should arise, then as the root text says:
 > Let even the antidote be freed in their own place.
 
 This means that we look into the essence of the antidote itself, and when we realize that it has no true nature, we rest with that experience.`,
     },
     de: {
       slogan: `Lass selbst das Gegenmittel in sich selbst befreit sein.`,
-      explanation: `Sollte dabei irgendein Gedanke an ein Gegenmittel entstehen — etwa die Betrachtung, dass Körper und Geist leer sind —, dann sagt der Wurzeltext:
+      explanation: `Sollte dabei irgendein Gedanke an ein Gegenmittel entstehen, etwa die Betrachtung dass Körper und Geist leer sind, dann sagt der Wurzeltext:
 > Lass selbst das Gegenmittel an ihrem eigenen Ort befreit sein.
 
 Das bedeutet, dass wir in die Essenz des Gegenmittels selbst schauen, und wenn wir erkennen, dass es keine wahre Natur hat, ruhen wir in dieser Erfahrung.`,
@@ -158,7 +158,7 @@ Das bedeutet, dass wir in die Essenz des Gegenmittels selbst schauen, und wenn w
       explanation: `As for how to rest, the root text says:
 >Rest in the *ālaya*, the essence.
 
-Avoiding all the projection and absorption associated with the other seven types of consciousness, we must settle with lucid clarity in an experience that is beyond thought. nWe must not mentally fixate in any way on what has no fixed character at all.`,
+Avoiding all the projection and absorption associated with the other seven types of consciousness, we must settle with lucid clarity in an experience that is beyond thought. We must not mentally fixate in any way on what has no fixed character at all.`,
     },
     de: {
       slogan: `Verweile in ālaya, der Essenz.`,
@@ -654,7 +654,7 @@ One might wonder about the instructions for the moment of death according to thi
 > The mahāyāna advice for transference
 > Involves the same five strengths. Conduct is important.
 
-When someone who practises this teaching contracts an illness that is certain to prove fatal, the practice of *wholesome seeds* is to offer all one's possessions to thegreatest possible source of merit, such as the teacher or the Three Jewels. This should be done without any clinging or attachment. 
+When someone who practises this teaching contracts an illness that is certain to prove fatal, the practice of *wholesome seeds* is to offer all one's possessions to the greatest possible source of merit, such as the teacher or the Three Jewels. This should be done without any clinging or attachment. 
 
 Then the strength of *aspiration* is to offer the seven branches to the guru and Three Jewels and to make fervent prayers of aspiration such as, "Grant your blessings so that during the bardo and in all my future lives, I may continue to train in twofold bodhicitta! Grant your blessings so that I may encounter a guru who teaches this instruction!"
 
