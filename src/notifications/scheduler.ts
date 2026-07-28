@@ -58,6 +58,13 @@ function settingsFingerprint(settings: AppSettings): string {
   return `${settings.notifMode}|${times}|${perDay}|${settings.order}|${settings.language}`;
 }
 
+// Status check without prompting — used by onboarding to skip the
+// permission step entirely when it is already settled.
+export async function hasNotificationPermission(): Promise<boolean> {
+  const current = await Notifications.getPermissionsAsync();
+  return current.status === 'granted';
+}
+
 export async function requestNotificationPermission(): Promise<boolean> {
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync(CHANNEL_ID, {

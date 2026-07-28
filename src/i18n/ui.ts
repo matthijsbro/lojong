@@ -60,6 +60,19 @@ export type UiStrings = {
   settingsSaveErrorMessage: string;
   notifTimeInvalidMessage: string;
   backLabel: string;
+  germanAiNote: string;
+
+  // Onboarding
+  onbWelcomeTitle: string;
+  onbWelcomeBody: string;
+  onbRemindersBody: string;
+  onbPermissionTitle: string;
+  onbPermissionBody: string;
+  onbDoneTitle: string;
+  onbDoneBody: string;
+  onbContinue: string;
+  onbSkip: string;
+  onbStart: string;
 
   // About screen
   aboutTitle: string;
@@ -116,7 +129,7 @@ export const ui: Record<Language, UiStrings> = {
     fontMedium: 'Medium',
     fontLarge: 'Larger',
     fontXLarge: 'Extra large',
-    colorScheme: 'Color scheme',
+    colorScheme: 'Theme',
     themeWarm: 'Warm',
     themeSage: 'Sage',
     themeDark: 'Dark',
@@ -131,6 +144,20 @@ export const ui: Record<Language, UiStrings> = {
     settingsSaveErrorMessage: 'Settings could not be saved. Please try again.',
     notifTimeInvalidMessage: 'Enter a valid time in HH:MM format.',
     backLabel: 'Back',
+    germanAiNote:
+      'The German explanations in this app were AI-translated from the English commentary and may not be perfect.',
+
+    onbWelcomeTitle: 'Welcome to Lojong',
+    onbWelcomeBody:
+      'A daily reminder app based on the mind-training slogans of Chekawa Yeshe Dorje, with commentary by Gyalse Tokme Zangpo.',
+    onbRemindersBody: 'You can receive daily reminders to support your practice.',
+    onbPermissionTitle: 'Allow notifications',
+    onbPermissionBody: 'Lojong asks for your permission to show the daily reminders.',
+    onbDoneTitle: "You're all set",
+    onbDoneBody: 'You can change all of this later in the settings.',
+    onbContinue: 'Continue',
+    onbSkip: 'Skip',
+    onbStart: 'Get started',
 
     aboutTitle: 'About Lojong',
     aboutIntro:
@@ -186,7 +213,7 @@ export const ui: Record<Language, UiStrings> = {
     fontMedium: 'Mittel',
     fontLarge: 'Größer',
     fontXLarge: 'Extra groß',
-    colorScheme: 'Farbschema',
+    colorScheme: 'Design',
     themeWarm: 'Warm',
     themeSage: 'Salbei',
     themeDark: 'Dunkel',
@@ -201,6 +228,20 @@ export const ui: Record<Language, UiStrings> = {
     settingsSaveErrorMessage: 'Die Einstellungen konnten nicht gespeichert werden. Bitte versuche es erneut.',
     notifTimeInvalidMessage: 'Gib eine gueltige Uhrzeit im Format HH:MM ein.',
     backLabel: 'Zurück',
+    germanAiNote:
+      'Die deutschen Erläuterungen in der App wurden durch KI aus dem englischen Kommentartext übertragen und sind möglicherweise nicht perfekt.',
+
+    onbWelcomeTitle: 'Willkommen bei Lojong',
+    onbWelcomeBody:
+      'Eine App für tägliche Erinnerungen, basierend auf den Leitsätzen des Geistestrainings von Chekawa Yeshe Dorje, mit dem Kommentar von Gyalse Tokme Zangpo.',
+    onbRemindersBody: 'Du kannst tägliche Erinnerungen erhalten, die deine Praxis unterstützen.',
+    onbPermissionTitle: 'Benachrichtigungen erlauben',
+    onbPermissionBody: 'Lojong bittet um deine Erlaubnis, die täglichen Erinnerungen anzuzeigen.',
+    onbDoneTitle: 'Alles bereit',
+    onbDoneBody: 'Du kannst all das später in den Einstellungen ändern.',
+    onbContinue: 'Weiter',
+    onbSkip: 'Überspringen',
+    onbStart: "Los geht's",
 
     aboutTitle: 'Über Lojong',
     aboutIntro:

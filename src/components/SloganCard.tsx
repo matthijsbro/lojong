@@ -21,9 +21,6 @@ type Props = {
   colors: ThemeColors;
   fontScale: number;
   onOpenCommentary: () => void;
-  // Card arrived via a notification tap: start subdued/translucent and become
-  // fully present ("immersive") once the user engages by flipping it.
-  intro?: boolean;
 };
 
 export function SloganCard({
@@ -33,11 +30,9 @@ export function SloganCard({
   colors,
   fontScale,
   onOpenCommentary,
-  intro = false,
 }: Props) {
   const [showBack, setShowBack] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
-  const immersionAnim = useRef(new Animated.Value(intro ? 0 : 1)).current;
   const isAnimating = useRef(false);
 
   const t = ui[language];
@@ -54,13 +49,6 @@ export function SloganCard({
   const handleFlip = () => {
     if (isAnimating.current) return;
     isAnimating.current = true;
-
-    // Engaging with the card ends the subdued notification-intro state.
-    Animated.timing(immersionAnim, {
-      toValue: 1,
-      duration: 650,
-      useNativeDriver: true,
-    }).start();
 
     // First half: 0 → 0.5 (rotate to 90°)
     Animated.timing(flipAnim, {
@@ -86,29 +74,14 @@ export function SloganCard({
     flipAnim.setValue(0);
     setShowBack(false);
     isAnimating.current = false;
-    immersionAnim.setValue(intro ? 0 : 1);
-  }, [slogan.id, flipAnim, immersionAnim, intro]);
+  }, [slogan.id, flipAnim]);
 
   return (
     <Animated.View
       style={[
         styles.card,
         showBack ? styles.cardBack : styles.cardFront,
-        {
-          opacity: immersionAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0.55, 1],
-          }),
-          transform: [
-            { rotateY: rotate },
-            {
-              scale: immersionAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0.96, 1],
-              }),
-            },
-          ],
-        },
+        { transform: [{ rotateY: rotate }] },
       ]}
     >
       {showBack ? (

@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SloganCard } from '@/components/SloganCard';
 import { SloganDeck } from '@/components/SloganDeck';
 import { LanguageToggle } from '@/components/LanguageToggle';
+import { Toast } from '@/components/Toast';
 import { useSettings } from '@/hooks/useSettings';
 import { useActiveSlogans } from '@/hooks/useActiveSlogans';
 import { useFontScale } from '@/hooks/useFontScale';
@@ -24,8 +25,6 @@ type Props = {
   onOpenCommentary: (sloganId: number) => void;
   // Slogan to jump to (from a notification tap).
   focusSloganId?: number | null;
-  // Whether the focused card should start in the subdued notification-intro state.
-  focusIntro?: boolean;
   onFocusHandled?: () => void;
 };
 
@@ -33,14 +32,11 @@ export function HomeScreen({
   onOpenSettings,
   onOpenCommentary,
   focusSloganId = null,
-  focusIntro = false,
   onFocusHandled,
 }: Props) {
   const { settings, update, loaded } = useSettings();
   const [index, setIndex] = useState(0);
-  // Slogan opened from a notification tap: its card starts subdued and turns
-  // immersive when the user flips it. Cleared as soon as the user navigates.
-  const [introSloganId, setIntroSloganId] = useState<number | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   // The deck: the card folds accordion-style into its row in the full slogan
   // list, and unfolds from the row the user picks.
   const [deckVisible, setDeckVisible] = useState(false);
@@ -129,9 +125,8 @@ export function HomeScreen({
     if (!loaded || focusSloganId == null) return;
 
     showSloganById(focusSloganId);
-    setIntroSloganId(focusIntro ? focusSloganId : null);
     onFocusHandled?.();
-  }, [loaded, focusSloganId, focusIntro, onFocusHandled, showSloganById]);
+  }, [loaded, focusSloganId, onFocusHandled, showSloganById]);
 
   const goTo = useCallback(
     (nextIndex: number) => {
@@ -148,7 +143,6 @@ export function HomeScreen({
       }).start();
 
       setIndex(clamped);
-      setIntroSloganId(null);
       void persistCurrentSlogan(clamped);
     },
     [activeSlogans.length, index, persistCurrentSlogan, slideAnim],
@@ -201,9 +195,12 @@ export function HomeScreen({
             language={settings.language}
             colors={colors}
             fontScale={fontScale}
-            onToggle={() =>
-              update({ language: settings.language === 'en' ? 'de' : 'en' })
-            }
+            onToggle={() => {
+              const next = settings.language === 'en' ? 'de' : 'en';
+              void update({ language: next });
+              // The German commentary is AI-translated; say so once per switch.
+              setToastMessage(next === 'de' ? ui.de.germanAiNote : null);
+            }}
           />
           <TouchableOpacity
             onPress={onOpenSettings}
@@ -236,7 +233,6 @@ export function HomeScreen({
             colors={colors}
             fontScale={fontScale}
             onOpenCommentary={() => onOpenCommentary(currentSlogan.id)}
-            intro={introSloganId != null && currentSlogan.id === introSloganId}
           />
         </Animated.View>
 
@@ -249,7 +245,6 @@ export function HomeScreen({
             progress={deckProgress}
             onSelectSlogan={(sloganId) => {
               showSloganById(sloganId);
-              setIntroSloganId(null);
               closeDeck();
             }}
           />
@@ -290,6 +285,13 @@ export function HomeScreen({
           </TouchableOpacity>
         </Animated.View>
       </View>
+
+      <Toast
+        message={toastMessage}
+        onDismiss={() => setToastMessage(null)}
+        colors={colors}
+        fontScale={fontScale}
+      />
     </SafeAreaView>
   );
 }

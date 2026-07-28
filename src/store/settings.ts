@@ -21,6 +21,7 @@ export type AppSettings = {
   lastSloganIndex: number;
   lastSloganId: number;
   lastReminderSloganId: number;
+  onboardingCompleted: boolean;
 };
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -36,6 +37,9 @@ export const DEFAULT_SETTINGS: AppSettings = {
   lastSloganIndex: 0,
   lastSloganId: 1,
   lastReminderSloganId: 1,
+  // Deliberately NOT backfilled in migrate(): installs from before this flag
+  // existed go through onboarding once after updating.
+  onboardingCompleted: false,
 };
 
 const STORAGE_KEY = '@lojong_settings';

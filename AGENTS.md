@@ -14,7 +14,7 @@ A React Native (Expo) flashcard app for Lojong Buddhist mind-training slogans. T
 - **React Native** with TypeScript (strict mode)
 - **AsyncStorage** (`@react-native-async-storage/async-storage`) for settings persistence
 - **expo-notifications** for daily reminder scheduling with slogan-id targeting
-- **React Navigation** (stack) for screen routing
+- No navigation library — `App.tsx` switches screens with a `Screen` union + if/else chain
 - No state management library — local state + custom hooks only
 
 ---
@@ -33,10 +33,13 @@ src/
     SloganDeck.tsx    ← Accordion overlay: full slogan list the card folds into / unfolds from
     AttributionFooter.tsx ← Tappable attribution shown on card back
     LanguageToggle.tsx    ← EN/DE switch in header
+    ChipRow.tsx       ← Shared selectable chip row (optional color swatch per chip)
+    Toast.tsx         ← Self-dismissing overlay note (e.g. German-is-AI-translated on language switch)
   screens/
     HomeScreen.tsx    ← Main card view; bottom-center chevron folds the card into the SloganDeck overlay
     SettingsScreen.tsx ← Notifications, order, language, font size, color scheme, About; Save in a sticky footer
     CommentaryScreen.tsx ← Full commentary text: intro, per-slogan sections with delimiters, conclusion, bibliography
+    OnboardingScreen.tsx ← First-launch flow (welcome/language/reminders/theme), overlays home; persists choices as you go
   hooks/
     useSettings.ts       ← Read/write persisted app settings; one shared snapshot across all instances
     useActiveSlogans.ts  ← Returns the ordered/shuffled slogan list
@@ -55,6 +58,8 @@ src/
 ## Notification System
 
 Reminders are **on by default** (`notifMode: 'fixed'` at 08:00) for fresh installs; a stored 'off' choice is respected.
+
+The OS notification-permission dialog is only requested during the onboarding reminders step (context first): both scheduling effects in `App.tsx` are gated on `settings.onboardingCompleted`, so nothing schedules (or prompts) before onboarding finishes.
 
 ### Reminders Per Day
 Users can configure several reminders per day (max `MAX_REMINDERS_PER_DAY = 4`): a list of fixed times (`notifTimes`), or a count of random times (`notifRandomCount`, each drawn from an equal window of 6:00–22:00). The scheduler keeps a stack of up to 60 pending notifications (below iOS's 64 cap), so the scheduled horizon shrinks as reminders per day grow (60 days at 1/day, 15 days at 4/day). Each pending reminder stores `{sloganId, fireAt, slot, fingerprint}`; `ensureNotificationsScheduled` self-heals the stack (dedupes by day+slot, rebuilds on stale fingerprint, tops up continuing the slogan sequence with modulo wrap).

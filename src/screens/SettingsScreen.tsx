@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { ChipRow } from '@/components/ChipRow';
 import { useSettings } from '@/hooks/useSettings';
 import { ui, Language } from '@/i18n/ui';
 import { FontSize, MAX_REMINDERS_PER_DAY, NotifMode, Order, ThemeName } from '@/store/settings';
@@ -168,19 +169,13 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
     selected: T,
     onSelect: (value: T) => void,
   ) => (
-    <View style={styles.row}>
-      {options.map(([value, label]) => (
-        <TouchableOpacity
-          key={String(value)}
-          style={[styles.chip, selected === value && styles.chipActive]}
-          onPress={() => onSelect(value)}
-        >
-          <Text style={[styles.chipText, selected === value && styles.chipTextActive]}>
-            {label}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <ChipRow
+      options={options.map(([value, label]) => ({ value, label }))}
+      selected={selected}
+      onSelect={onSelect}
+      colors={colors}
+      fontScale={fontScale}
+    />
   );
 
   return (
@@ -206,69 +201,12 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
             draftSettings.language,
             handleLanguage,
           )}
-        </View>
-
-        {/* Display order */}
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>{t.displayOrder}</Text>
-          {chipRow(
-            [
-              ['fixed', t.orderFixed],
-              ['random', t.orderRandom],
-            ] as [Order, string][],
-            draftSettings.order,
-            handleOrder,
+          {draftSettings.language === 'de' && (
+            <Text style={styles.hint}>{t.germanAiNote}</Text>
           )}
         </View>
 
-        {/* Font size */}
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>{t.fontSizeLabel}</Text>
-          {chipRow(
-            [
-              ['small', t.fontSmall],
-              ['medium', t.fontMedium],
-              ['large', t.fontLarge],
-              ['xlarge', t.fontXLarge],
-            ] as [FontSize, string][],
-            draftSettings.fontSize,
-            handleFontSize,
-          )}
-        </View>
-
-        {/* Color scheme */}
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>{t.colorScheme}</Text>
-          <View style={styles.row}>
-            {(
-              [
-                ['warm', t.themeWarm],
-                ['sage', t.themeSage],
-                ['dark', t.themeDark],
-                ['contrast', t.themeContrast],
-              ] as [ThemeName, string][]
-            ).map(([value, label]) => (
-              <TouchableOpacity
-                key={value}
-                style={[styles.chip, draftSettings.theme === value && styles.chipActive]}
-                onPress={() => handleTheme(value)}
-              >
-                <View style={styles.themeChipContent}>
-                  <View
-                    style={[styles.themeSwatch, { backgroundColor: THEMES[value].background }]}
-                  />
-                  <Text
-                    style={[styles.chipText, draftSettings.theme === value && styles.chipTextActive]}
-                  >
-                    {label}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
-        {/* Notifications */}
+        {/* Daily reminders + display order */}
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>{t.notifications}</Text>
           {chipRow(
@@ -339,20 +277,51 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
               <Text style={styles.hint}>{t.notifRandomDesc}</Text>
             </View>
           )}
+
+          <Text style={[styles.sectionLabel, styles.subsectionLabel]}>{t.displayOrder}</Text>
+          {chipRow(
+            [
+              ['fixed', t.orderFixed],
+              ['random', t.orderRandom],
+            ] as [Order, string][],
+            draftSettings.order,
+            handleOrder,
+          )}
         </View>
 
-        {/* About / Attribution */}
+        {/* Theme: colors + font size */}
         <View style={styles.section}>
-          <Text style={styles.sectionLabel}>{t.aboutTitle}</Text>
-          <Text style={styles.aboutText}>{t.aboutIntro}</Text>
-          <Text style={styles.aboutText}>{t.nonCommercial}</Text>
-          <TouchableOpacity onPress={onOpenLicense}>
-            <Text style={styles.sourceLink}>{t.readAppLicense}</Text>
-          </TouchableOpacity>
-          <Text style={styles.aboutText}>{t.privacyNote}</Text>
-          <TouchableOpacity onPress={() => Linking.openURL('https://github.com/matthijsbro/lojong')}>
-            <Text style={styles.sourceLink}>{t.viewSourceCode}</Text>
-          </TouchableOpacity>
+          <Text style={styles.sectionLabel}>{t.colorScheme}</Text>
+          <ChipRow
+            options={(
+              [
+                ['warm', t.themeWarm],
+                ['sage', t.themeSage],
+                ['dark', t.themeDark],
+                ['contrast', t.themeContrast],
+              ] as [ThemeName, string][]
+            ).map(([value, label]) => ({
+              value,
+              label,
+              swatchColor: THEMES[value].background,
+            }))}
+            selected={draftSettings.theme}
+            onSelect={handleTheme}
+            colors={colors}
+            fontScale={fontScale}
+          />
+
+          <Text style={[styles.sectionLabel, styles.subsectionLabel]}>{t.fontSizeLabel}</Text>
+          {chipRow(
+            [
+              ['small', t.fontSmall],
+              ['medium', t.fontMedium],
+              ['large', t.fontLarge],
+              ['xlarge', t.fontXLarge],
+            ] as [FontSize, string][],
+            draftSettings.fontSize,
+            handleFontSize,
+          )}
         </View>
 
         <View style={styles.section}>
@@ -376,6 +345,20 @@ export function SettingsScreen({ onBack, onOpenLicense }: Props) {
               </View>
             );
           })}
+        </View>
+
+        {/* About */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>{t.aboutTitle}</Text>
+          <Text style={styles.aboutText}>{t.aboutIntro}</Text>
+          <Text style={styles.aboutText}>{t.nonCommercial}</Text>
+          <TouchableOpacity onPress={onOpenLicense}>
+            <Text style={styles.sourceLink}>{t.readAppLicense}</Text>
+          </TouchableOpacity>
+          <Text style={styles.aboutText}>{t.privacyNote}</Text>
+          <TouchableOpacity onPress={() => Linking.openURL('https://github.com/matthijsbro/lojong')}>
+            <Text style={styles.sourceLink}>{t.viewSourceCode}</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
@@ -466,42 +449,9 @@ const makeStyles = (c: ThemeColors, f: number) =>
       textTransform: 'uppercase',
       letterSpacing: 0.8,
     },
-    row: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      gap: 8,
-    },
-    chip: {
-      paddingVertical: 7,
-      paddingHorizontal: 14,
-      borderRadius: scaledBox(20, f),
-      borderWidth: 1,
-      borderColor: c.border,
-      backgroundColor: c.surface,
-    },
-    chipActive: {
-      backgroundColor: c.accent,
-      borderColor: c.accent,
-    },
-    chipText: {
-      fontSize: scaled(13, f),
-      color: c.textSecondary,
-    },
-    chipTextActive: {
-      color: c.onAccent,
-      fontWeight: '600',
-    },
-    themeChipContent: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 6,
-    },
-    themeSwatch: {
-      width: scaledBox(14, f),
-      height: scaledBox(14, f),
-      borderRadius: scaledBox(7, f),
-      borderWidth: StyleSheet.hairlineWidth,
-      borderColor: c.textMuted,
+    // Second label within a shared card (e.g. display order under reminders).
+    subsectionLabel: {
+      marginTop: 10,
     },
     timesColumn: {
       gap: 8,

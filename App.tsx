@@ -7,6 +7,7 @@ import { HomeScreen } from '@/screens/HomeScreen';
 import { LicenseScreen } from '@/screens/LicenseScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
 import { CommentaryScreen } from '@/screens/CommentaryScreen';
+import { OnboardingScreen } from '@/screens/OnboardingScreen';
 import { useSettings } from '@/hooks/useSettings';
 import { THEMES } from '@/theme/themes';
 import {
@@ -21,11 +22,8 @@ export type Screen = 'home' | 'settings' | 'license' | 'commentary';
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home');
-  // Slogan the home screen should jump to, plus whether it should get the
-  // subdued notification-intro treatment (true for notification taps, false
-  // when picked from the overview).
+  // Slogan the home screen should jump to (from a notification tap).
   const [focusSloganId, setFocusSloganId] = useState<number | null>(null);
-  const [focusIntro, setFocusIntro] = useState(false);
   const [commentarySloganId, setCommentarySloganId] = useState<number | null>(null);
   const { settings, loaded, update } = useSettings();
   // The manifest opts out of activity recreation on OS font-scale changes
@@ -65,7 +63,6 @@ export default function App() {
       }
 
       setFocusSloganId(sloganId);
-      setFocusIntro(true);
       setScreen('home');
       await dismissDisplayedReminders();
       await Notifications.clearLastNotificationResponseAsync();
@@ -105,14 +102,17 @@ export default function App() {
     return () => sub.remove();
   }, [screen]);
 
+  // Both scheduling effects wait for onboarding: scheduling triggers the OS
+  // notification-permission dialog, which must only appear on the onboarding
+  // reminders step (context first), never cold on first launch.
   useEffect(() => {
-    if (!loaded) return;
+    if (!loaded || !settings.onboardingCompleted) return;
     void ensureNotificationsScheduled(settings);
   }, [loaded, settings]);
 
   useEffect(() => {
     const sub = AppState.addEventListener('change', (state) => {
-      if (state === 'active' && loaded) {
+      if (state === 'active' && loaded && settings.onboardingCompleted) {
         // The user is in the app; any reminder still in the tray is stale.
         void dismissDisplayedReminders();
         void ensureNotificationsScheduled(settings);
@@ -146,9 +146,24 @@ export default function App() {
           setScreen('commentary');
         }}
         focusSloganId={focusSloganId}
-        focusIntro={focusIntro}
         onFocusHandled={() => setFocusSloganId(null)}
       />
+    );
+  }
+
+  if (!loaded) {
+    // Render nothing until settings resolve, so onboarding never flashes for
+    // users who already completed it. AsyncStorage resolves in milliseconds.
+    content = null;
+  } else if (!settings.onboardingCompleted) {
+    // Onboarding overlays the regular content: home stays mounted beneath it,
+    // so the finish animation reveals it, and a notification tap during
+    // onboarding jumps the underlying home screen as usual.
+    content = (
+      <>
+        {content}
+        <OnboardingScreen />
+      </>
     );
   }
 
