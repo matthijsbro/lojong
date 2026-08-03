@@ -353,7 +353,10 @@ The root text says:
 > When all the world is filled with evil, 
 > Transform adversity into the path of enlightenment.
 
-As a result of unwholesome actions, the environment's resources become depleted, beings become unruly and so on. When many such forms of suffering arise, they can be transformed into the path of  enlightenment through both intention and action.`,
+As a result of unwholesome actions, the environment's resources become depleted, beings become unruly and so on. When many such forms of suffering arise, they can be transformed into the path of  enlightenment through both intention and action.
+
+## i. Intention
+Intention itself has two aspects: transforming adversity into the path of enlightenment through relative bodhicitta and through ultimate bodhicitta.`,
     },
     de: {
       slogan: `Wenn die ganze Welt mit Leid erfüllt ist, transformiere Widrigkeiten in den Weg zu Erleuchtung.`,
@@ -362,7 +365,10 @@ Der Wurzeltext sagt:
 > Wenn die ganze Welt mit Leid erfüllt ist,
 > transformiere Widrigkeiten in den Weg zu Erleuchtung.
 
-Infolge unheilsamer Handlungen erschöpfen sich die Ressourcen der Umwelt, die Wesen werden zügellos und so weiter. Wenn viele solche Formen des Leidens entstehen, können sie sowohl durch die Absicht als auch durch die Handlung in den Weg zur Erleuchtung verwandelt werden.`,
+Infolge unheilsamer Handlungen erschöpfen sich die Ressourcen der Umwelt, die Wesen werden zügellos und so weiter. Wenn viele solche Formen des Leidens entstehen, können sie sowohl durch die Absicht als auch durch die Handlung in den Weg zur Erleuchtung verwandelt werden.
+
+## i. Absicht
+Die Absicht selbst hat zwei Aspekte: Widrigkeiten durch relatives Bodhicitta und durch letztendliches Bodhicitta in den Weg zur Erleuchtung zu transformieren.`,
     },
     attributionKey: 'commentary',
   },
@@ -372,9 +378,6 @@ Infolge unheilsamer Handlungen erschöpfen sich die Ressourcen der Umwelt, die W
     en: {
       slogan: `Drive all blames into one.`,
       explanation: `
-## i. Intention
-Intention itself has two aspects: transforming adversity into the path of enlightenment through relative bodhicitta and through ultimate bodhicitta.
-
 **Transforming Adversity into the Path of Enlightenment through Relative Bodhicitta**
 In the past when we experienced suffering we did not recognize self-grasping as the enemy, and, failing to recognize the great kindness of sentient beings, we blamed them. Now in order to highlight the fact that all suffering is the fault of self-grasping, the root text says:
 > Drive all blames into one.
@@ -411,9 +414,7 @@ Viewing self-grasping as the enemy and avoiding it is what Shawopa called "the D
     },
     de: {
       slogan: `Suche alle Schuld in einem.`,
-      explanation: `## i. Absicht
-Die Absicht selbst hat zwei Aspekte: Widrigkeiten durch relatives Bodhicitta und durch letztendliches Bodhicitta in den Weg zur Erleuchtung zu transformieren.
-
+      explanation: `
 **Widrigkeiten durch relatives Bodhicitta in den Weg zur Erleuchtung transformieren**
 Wenn wir in der Vergangenheit Leiden erlebten, erkannten wir das Greifen nach dem Selbst nicht als den Feind, und da wir die große Güte der fühlenden Wesen nicht erkannten, gaben wir ihnen die Schuld. Um nun hervorzuheben, dass alles Leiden die Schuld des Greifens nach dem Selbst ist, sagt der Wurzeltext:
 > Suche alle Schuld in einem.
@@ -700,7 +701,7 @@ The purpose of all the teachings of the greater and lesser vehicles is to tame s
     },
     de: {
       slogan: `Alle Belehrungen haben das gleiche Ziel.`,
-      explanation: `# 5. Das Ausmaß des Geistestrainings
+      explanation: `# 5. Der Maßstab des Geistestrainings
 Der Wurzeltext sagt:
 > Alle Belehrungen haben das gleiche Ziel.
 
@@ -1463,7 +1464,7 @@ export const POINT_LABELS: Record<number, { en: string; de: string }> = {
     en: 'Applying the Practice throughout the Whole of Life',
     de: 'Die Praxis im ganzen Leben anwenden',
   },
-  5: { en: 'The Measure of Mind Training', de: 'Das Ausmaß des Geistestrainings' },
+  5: { en: 'The Measure of Mind Training', de: 'Der Maßstab des Geistestrainings' },
   6: { en: 'The Commitments of Mind Training', de: 'Die Verpflichtungen des Geistestrainings' },
   7: { en: 'The Precepts of Mind Training', de: 'Die Gebote des Geistestrainings' },
 };

@@ -152,7 +152,7 @@ Es gibt viele verschiedene Arten, diese Unterweisung darzulegen, doch die Tradit
 2. die Hauptpraxis des Trainings in Bodhicitta;
 3. wie man Widrigkeiten in den Weg zur Erleuchtung bringt;
 4. wie man die Praxis im ganzen Leben anwendet;
-5. das Ausmaß des Geistestrainings;
+5. der Maßstab des Geistestrainings;
 6. die Verpflichtungen des Geistestrainings; und
 7. die Gebote des Geistestrainings.
 `,
