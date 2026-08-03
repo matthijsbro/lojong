@@ -40,7 +40,7 @@ function fixedTimes(settings: AppSettings): string[] {
   return capped.length > 0 ? capped.sort() : ['08:00'];
 }
 
-function remindersPerDay(settings: AppSettings): number {
+export function remindersPerDay(settings: AppSettings): number {
   const count =
     settings.notifMode === 'fixed' ? fixedTimes(settings).length : settings.notifRandomCount;
   return Math.min(Math.max(Math.floor(count) || 1, 1), MAX_REMINDERS_PER_DAY);

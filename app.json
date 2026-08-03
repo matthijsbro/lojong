@@ -2,7 +2,8 @@
   "expo": {
     "name": "Lojong",
     "slug": "lojong",
-    "version": "1.5.0",
+    "scheme": "lojong",
+    "version": "1.6.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -50,6 +51,25 @@
             "enableShrinkResourcesInReleaseBuilds": true,
             "extraProguardRules": "# Java serialization protocol methods are invoked reflectively; R8 strips them otherwise. expo-notifications persists scheduled notifications via Serializable with custom writeObject/readObject (NotificationContent holds a non-serializable JSONObject), which breaks scheduling without these rules.\n-keepclassmembers class * implements java.io.Serializable {\n    static final long serialVersionUID;\n    private static final java.io.ObjectStreamField[] serialPersistentFields;\n    private void writeObject(java.io.ObjectOutputStream);\n    private void readObject(java.io.ObjectInputStream);\n    java.lang.Object writeReplace();\n    java.lang.Object readResolve();\n}"
           }
+        }
+      ],
+      [
+        "react-native-android-widget",
+        {
+          "widgets": [
+            {
+              "name": "SloganOfTheDay",
+              "label": "Slogan of the Day",
+              "description": "Today's lojong slogan",
+              "minWidth": "250dp",
+              "minHeight": "60dp",
+              "targetCellWidth": 4,
+              "targetCellHeight": 1,
+              "resizeMode": "horizontal|vertical",
+              "updatePeriodMillis": 1800000,
+              "previewImage": "./assets/widget-preview.png"
+            }
+          ]
         }
       ]
     ],

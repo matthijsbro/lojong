@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { AppState, BackHandler, useWindowDimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -15,6 +16,7 @@ import {
   dismissDisplayedReminders,
   ensureNotificationsScheduled,
 } from '@/notifications/scheduler';
+import { refreshSloganWidget } from '@/widget/updateWidget';
 
 configureNotificationHandler();
 
@@ -84,6 +86,22 @@ export default function App() {
     };
   }, [update]);
 
+  // The home-screen widget deep-links to the slogan it shows
+  // (lojong://slogan/<id>), so a tap opens the app on that slogan instead of
+  // the last one viewed in the app.
+  useEffect(() => {
+    const openSloganUrl = (url: string | null) => {
+      const match = url?.match(/^lojong:\/\/slogan\/(\d+)$/);
+      if (!match) return;
+      setFocusSloganId(Number(match[1]));
+      setScreen('home');
+    };
+
+    void Linking.getInitialURL().then(openSloganUrl);
+    const sub = Linking.addEventListener('url', (event) => openSloganUrl(event.url));
+    return () => sub.remove();
+  }, []);
+
   // The Android back button/gesture steps back through the app's screens
   // instead of leaving the app; only from the home screen does it exit.
   useEffect(() => {
@@ -107,7 +125,9 @@ export default function App() {
   // reminders step (context first), never cold on first launch.
   useEffect(() => {
     if (!loaded || !settings.onboardingCompleted) return;
-    void ensureNotificationsScheduled(settings);
+    // After the stack is healthy, redraw the home-screen widget so it picks
+    // up settings changes (language, order) and today's slogan right away.
+    void ensureNotificationsScheduled(settings).then(refreshSloganWidget);
   }, [loaded, settings]);
 
   useEffect(() => {
@@ -115,7 +135,7 @@ export default function App() {
       if (state === 'active' && loaded && settings.onboardingCompleted) {
         // The user is in the app; any reminder still in the tray is stale.
         void dismissDisplayedReminders();
-        void ensureNotificationsScheduled(settings);
+        void ensureNotificationsScheduled(settings).then(refreshSloganWidget);
       }
     });
 
